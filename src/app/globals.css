@@ -1,0 +1,109 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Thin.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-ExtraLight.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: "Pretendard JP";
+  src: url("/fonts/PretendardJP-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* 커스텀 브랜드 색상 */
+  --color-primary: #b7c774;
+  --color-primaryLight: #ddebb0;
+  --color-primaryDark: #8a9e4e;
+  --color-limeOlive: #b7c774;
+
+  /* 중립 계열 (Gray Scale) */
+  --color-grayDark: #4b5563;
+  --color-gray: #6b7280;
+  --color-grayLight: #d1d5db;
+  --color-grayLighter: #f3f4f6;
+  --color-grayBackground: #fafafa;
+  --color-hintText: #9ca3af;
+  --color-hoverBackground: #f3f4f6;
+
+  /* 상태 색상 */
+  --color-error: #ef4444;
+  --color-red: #ff3b30;
+
+  /* Divider, Border */
+  --color-divider: #d1d5db;
+  --color-dividerGray: #6b7280;
+
+  /* 텍스트 컬러 */
+  --color-textDefault: #6b7280;
+  --color-textMuted: #d1d5db;
+  --color-textHeading: #000000;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "Pretendard JP", Arial, sans-serif;
+}

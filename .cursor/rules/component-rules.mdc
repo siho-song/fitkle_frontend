@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+---
+
+공통 컴포넌트는 src/components/에, 기능별 컴포넌트는 src/features/에 분리한다.
+페이지는 src/app/(app router) 또는 src/pages/(pages router)에 위치시킨다.
+반응형은 Tailwind의 반응형 유틸리티(sm:, md:, lg: 등)로 구현한다.

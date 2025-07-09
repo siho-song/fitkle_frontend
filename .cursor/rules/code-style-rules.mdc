@@ -1,0 +1,18 @@
+---
+alwaysApply: true
+---
+
+
+함수형/선언형 스타일을 우선한다.
+변수명, 함수명은 명확하고 일관성 있게 작성한다(예: isLoading, hasError).
+컴포넌트는 최대한 작고 명확하게 분리한다.
+불필요하게 긴 코드/로직은 작은 함수로 분리한다.
+불필요한 주석/코드는 남기지 않는다.
+console.log 대신 log 유틸리티 사용(필요시).
+복잡한 로직, 비직관적 코드에는 간단한 주석을 남긴다.
+공식 Next.js, Tailwind, 상태관리 라이브러리 공식문서를 참고해 구현한다.
+
+코드 라인 길이 80자 이하 권장, 여러 prop/인자/클래스는 줄바꿈 및 trailing comma 사용.
+공통 유틸리티 함수는 src/utils/에 작성한다.
+API 통신은 src/api/ 또는 src/features/xxx/api/에서 관리한다.
+테스트는 Jest/React Testing Library 등으로 작성한다(권장).

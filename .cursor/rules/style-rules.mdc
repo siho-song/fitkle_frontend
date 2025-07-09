@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+---
+
+
+글로벌 색상/폰트/테마는 tailwind.config.js에서 관리한다.
+공통 색상/폰트/라운드/여백 등은 반드시 Tailwind 커스텀 변수로 등록해서 사용한다.
+버튼, 메뉴 등 클릭 가능한 요소에는 cursor-pointer와 hover: 효과를 반드시 적용한다.
+버튼 배경색은 bg-primary(ex: limeOlive) 등 공통 색상 클래스를 사용한다.
+글로벌 스타일은 src/app/globals.css 또는 src/styles/에서 관리한다.

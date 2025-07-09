@@ -1,0 +1,6 @@
+---
+description: API 엔드포인트 작성 규칙
+globs: 
+alwaysApply: false
+---
+- 모든 API은 Restful 원칙을 따릅니다.

@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+---
+
+간단한 상태는 React의 useState/useContext, 복잡한 상태는 Zustand, Recoil, Jotai, Redux 등을 사용한다(팀 표준에 맞춤).
+서버 상태는 React Query(TanStack Query) 등으로 관리한다.
