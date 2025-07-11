@@ -1,7 +1,9 @@
 import React from 'react';
+import { Container } from './Container';
 
 interface FooterProps {
   className?: string;
+  containerVariant?: 'default' | 'wide' | 'narrow' | 'full';
 }
 
 const footerLinks = [
@@ -13,10 +15,13 @@ const footerLinks = [
   '개인정보처리방침',
 ];
 
-export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
+export const Footer: React.FC<FooterProps> = ({ 
+  className = '',
+  containerVariant = 'default'
+}) => {
   return (
     <footer className={`w-full py-8 text-sm ${className}`}>
-      <div className="max-w-screen-2xl mx-auto px-4 md:px-8 flex flex-col md:flex-row md:justify-between md:items-start gap-6">
+      <Container variant={containerVariant} className="flex flex-col md:flex-row md:justify-between md:items-start gap-6">
         <div>
           <div className="text-gray-500 font-medium">© 2025 fitkle. All rights reserved.</div>
           <div className="text-gray-400 text-xs mt-1">Contact: fitkle@gmail.com</div>
@@ -29,7 +34,7 @@ export const Footer: React.FC<FooterProps> = ({ className = '' }) => {
             </React.Fragment>
           ))}
         </div>
-      </div>
+      </Container>
     </footer>
   );
 }; 

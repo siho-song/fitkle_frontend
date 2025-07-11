@@ -9,6 +9,7 @@ const submenuItems = [
   { label: '내 정보' },
   { label: '전문가 정보' },
   { label: '알림 설정' },
+  { label: '내가 쓴 글' },
 ];
 
 export const ProfileSubmenu: React.FC<ProfileSubmenuProps> = ({ onSubmenuTap, className = '' }) => {

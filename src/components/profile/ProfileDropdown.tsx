@@ -5,6 +5,7 @@ import { useAuthStore } from "@/features/auth/store/authStore";
 import { ROUTES } from "@/constants/routes";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { ProfileSubmenu } from "./ProfileSubmenu";
 
 interface ProfileDropdownProps {
   className?: string;
@@ -16,7 +17,6 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const submenuRef = useRef<HTMLDivElement>(null);
   const closeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const submenuTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const { userNickname, logout } = useAuthStore();
@@ -56,8 +56,39 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
   const handleMouseLeave = () => {
     closeTimeoutRef.current = setTimeout(() => {
       setIsOpen(false);
-      setSubmenuOpen(false);
     }, 200);
+  };
+
+
+  const handleLogout = async () => {
+    await logout();
+    setIsOpen(false);
+    router.push(ROUTES.HOME);
+  };
+
+  const handleProfileClick = () => {
+    setIsOpen(false);
+    router.push(ROUTES.PROFILE_MANAGE);
+  };
+
+  const handleMenuClick = (action: string) => {
+    setIsOpen(false);
+    setSubmenuOpen(false);
+
+    switch (action) {
+      case "프로필 관리":
+        handleProfileClick();
+        break;
+      case "친구 초대":
+        router.push(ROUTES.FRIEND_INVITE);
+        break;
+      case "고객센터":
+        router.push(ROUTES.CUSTOMER_CENTER);
+        break;
+      case "로그아웃":
+        handleLogout();
+        break;
+    }
   };
 
   const handleSubmenuMouseEnter = () => {
@@ -73,60 +104,26 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
     }, 200);
   };
 
-  const handleLogout = async () => {
-    await logout();
-    setIsOpen(false);
-    router.push(ROUTES.HOME);
-  };
-
-  const handleProfileClick = () => {
+  const handleSubmenuTap = (label: string) => {
     setIsOpen(false);
     setSubmenuOpen(false);
-    router.push(ROUTES.PROFILE_EDIT);
-  };
-
-  const handleMenuClick = (action: string) => {
-    setIsOpen(false);
-    setSubmenuOpen(false);
-
-    switch (action) {
-      case "프로필 관리":
-        handleProfileClick();
-        break;
-      case "친구 초대":
-        // 추후 구현
-        break;
-      case "고객센터":
-        // 추후 구현
-        break;
-      case "전문가 등록":
-        // 추후 구현
-        break;
-      case "비즈계정 신청":
-        // 추후 구현
-        break;
-      case "로그아웃":
-        handleLogout();
-        break;
-    }
-  };
-
-  const handleSubmenuClick = (action: string) => {
-    setIsOpen(false);
-    setSubmenuOpen(false);
-
-    switch (action) {
+    
+    switch (label) {
       case "내 정보":
-        // 추후 구현
+        router.push(ROUTES.PROFILE_MANAGE);
         break;
       case "전문가 정보":
         // 추후 구현
         break;
       case "알림 설정":
-        // 추후 구현
+        router.push(ROUTES.NOTIFICATION_SETTINGS);
+        break;
+      case "내가 쓴 글":
+        router.push(ROUTES.MY_POSTS);
         break;
     }
   };
+
 
   // 기본 프로필 이미지 URL (랜덤 아바타 생성 서비스 사용)
   const defaultProfileImage = `https://api.dicebear.com/7.x/avataaars/svg?seed=${
@@ -182,23 +179,38 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
             onClick={() => handleMenuClick("프로필 관리")}
           />
 
-          <MenuItemWithSubmenu
-            text="내 정보 관리"
-            isSubmenuOpen={submenuOpen}
+          {/* 내 정보 관리 메뉴 (서브메뉴 있음) */}
+          <div 
+            className="relative"
             onMouseEnter={handleSubmenuMouseEnter}
             onMouseLeave={handleSubmenuMouseLeave}
-            submenuItems={[
-              { text: "내 정보", onClick: () => handleSubmenuClick("내 정보") },
-              {
-                text: "전문가 정보",
-                onClick: () => handleSubmenuClick("전문가 정보"),
-              },
-              {
-                text: "알림 설정",
-                onClick: () => handleSubmenuClick("알림 설정"),
-              },
-            ]}
-          />
+          >
+            <div className="w-full text-left px-4 py-3 text-sm font-medium hover:bg-gray-50 transition-colors cursor-pointer flex items-center justify-between">
+              내 정보 관리
+              <svg 
+                className="w-4 h-4 text-gray-400" 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </div>
+            
+            {/* 서브메뉴 */}
+            {submenuOpen && (
+              <div 
+                className="absolute left-full top-0 ml-1"
+                onMouseEnter={handleSubmenuMouseEnter}
+                onMouseLeave={handleSubmenuMouseLeave}
+              >
+                <ProfileSubmenu 
+                  onSubmenuTap={handleSubmenuTap}
+                  className="shadow-lg"
+                />
+              </div>
+            )}
+          </div>
 
           <MenuItem
             text="친구 초대"
@@ -213,11 +225,6 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
           <MenuItem
             text="전문가 등록"
             onClick={() => handleMenuClick("전문가 등록")}
-          />
-
-          <MenuItem
-            text="비즈계정 신청"
-            onClick={() => handleMenuClick("비즈계정 신청")}
           />
 
           <div className="border-t border-gray-100 my-1"></div>
@@ -255,70 +262,3 @@ const MenuItem: React.FC<MenuItemProps> = ({
   );
 };
 
-// 서브메뉴가 있는 메뉴 아이템 컴포넌트
-interface MenuItemWithSubmenuProps {
-  text: string;
-  isSubmenuOpen: boolean;
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  submenuItems: Array<{
-    text: string;
-    onClick: () => void;
-  }>;
-}
-
-const MenuItemWithSubmenu: React.FC<MenuItemWithSubmenuProps> = ({
-  text,
-  isSubmenuOpen,
-  onMouseEnter,
-  onMouseLeave,
-  submenuItems,
-}) => {
-  return (
-    <div
-      className="relative"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-    >
-      <button
-        className={`w-full text-left px-4 py-3 text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-between cursor-pointer ${
-          isSubmenuOpen ? "bg-gray-50" : ""
-        }`}
-      >
-        {text}
-        <svg
-          className="w-4 h-4 text-gray-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M9 5l7 7-7 7"
-          />
-        </svg>
-      </button>
-
-      {/* 서브메뉴 */}
-      {isSubmenuOpen && (
-        <div
-          className="absolute left-full top-0 ml-1 w-40 bg-white rounded-xl shadow-lg border border-gray-200 py-2 z-60"
-          onMouseEnter={onMouseEnter}
-          onMouseLeave={onMouseLeave}
-        >
-          {submenuItems.map((item, index) => (
-            <button
-              key={index}
-              onClick={item.onClick}
-              className="w-full text-left px-4 py-3 text-sm font-medium hover:bg-gray-50 transition-colors cursor-pointer"
-            >
-              {item.text}
-            </button>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-};

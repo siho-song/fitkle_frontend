@@ -32,10 +32,12 @@ const categories = [
 
 export function HomeHeroSection() {
   return (
-    <section className="py-12 flex flex-col items-center">
-      <h2 className="text-2xl font-extrabold text-center mb-8">당신에게 핏한 맞춤형 레슨</h2>
-      <div className="w-full max-w-xl mb-8">
-        <div className="flex items-center bg-gray-100 border border-gray-200 rounded-full px-4 h-12">
+    <div className="py-12 flex flex-col items-center">
+      <h2 className="text-[30px] font-bold text-center mb-8 mt-4">당신에게 핏한 맞춤형 레슨</h2>
+      
+      {/* 검색바 */}
+      <div className="w-full max-w-xl mb-12">
+        <div className="flex items-center bg-gray-100 border border-gray-200 rounded-lg px-4 h-12">
           <SearchIcon className="mr-2" sx={{ color: '#bdbdbd' }} />
           <input
             type="text"
@@ -44,14 +46,20 @@ export function HomeHeroSection() {
           />
         </div>
       </div>
-      <div className="flex gap-6 w-full max-w-3xl overflow-x-auto scrollbar-hide">
-        {categories.map((cat) => (
-          <div key={cat.label} className="flex flex-col items-center text-xs text-gray-600 min-w-[64px]">
-            {cat.icon}
-            <span className="text-center leading-tight whitespace-nowrap mt-1">{cat.label}</span>
-          </div>
-        ))}
+      
+      {/* 카테고리 아이콘들 - 반응형 그리드 */}
+      <div className="w-full">
+        <div className="grid grid-cols-6 lg:grid-cols-12 gap-4 lg:gap-6">
+          {categories.map((cat) => (
+            <div key={cat.label} className="flex flex-col items-center text-xs text-gray-600 cursor-pointer hover:text-primary transition-colors">
+              <div className="mb-2">
+                {cat.icon}
+              </div>
+              <span className="text-center leading-tight whitespace-nowrap">{cat.label}</span>
+            </div>
+          ))}
+        </div>
       </div>
-    </section>
+    </div>
   );
 } 

@@ -22,7 +22,7 @@ export function MainBannerWidget() {
   }, [current]);
 
   return (
-    <div className="relative w-full h-[200px] sm:h-[260px] md:h-[300px] rounded-xl overflow-hidden mb-12">
+    <div className="relative w-full h-[200px] sm:h-[260px] md:h-[250px] rounded-lg overflow-hidden mb-12">
       {bannerImages.map((img, idx) => (
         <Image
           key={img}

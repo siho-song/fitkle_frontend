@@ -100,3 +100,6 @@ temp/
 
 # Claude Code
 .claude/
+
+# YoYo AI version control directory
+.yoyo/
