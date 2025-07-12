@@ -11,6 +11,7 @@ const ClientEmailRegisterPage: React.FC = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const type = searchParams.get("type"); // 'tutee' or 'tutor'
+  
 
   // Form state
   const [agreeAll, setAgreeAll] = useState(false);

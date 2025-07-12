@@ -27,12 +27,28 @@ export const TutorsScreen: React.FC = () => {
   // 샘플 데이터 로드 (개발용)
   useEffect(() => {
     if (!isInitialized && tutors.length === 0) {
-      sampleTutors.forEach(tutor => {
-        addTutor(tutor);
-      });
+      console.log('Loading sample tutors:', sampleTutors.length);
+      // 중복을 방지하기 위해 배치로 추가
+      const addAllTutors = () => {
+        sampleTutors.forEach(tutor => {
+          // 이미 존재하는지 확인
+          const existingTutor = tutors.find(t => t.id === tutor.id);
+          if (!existingTutor) {
+            addTutor(tutor);
+          }
+        });
+      };
+      addAllTutors();
       setIsInitialized(true);
+      console.log('Sample tutors loaded');
     }
-  }, [tutors.length, addTutor, isInitialized]);
+  }, [isInitialized]); // dependency 최소화
+
+  // 디버깅용
+  useEffect(() => {
+    console.log('TutorsScreen - tutors count:', tutors.length);
+    console.log('TutorsScreen - filteredTutors count:', filteredTutors.length);
+  }, [tutors.length, filteredTutors.length]);
 
   const toggleFilters = () => {
     setIsFilterOpen(!isFilterOpen);

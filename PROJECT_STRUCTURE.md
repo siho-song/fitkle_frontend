@@ -1,289 +1,436 @@
-# FITKLE 프로젝트 구조 분석
+# Fitkle Frontend - 프로젝트 구조
 
-## 1. 프로젝트 개요
+## 개요
 
-### 기술 스택
-- **프레임워크**: Next.js 15.3.5 (App Router)
-- **런타임**: React 19.0.0
-- **언어**: TypeScript 5.x
-- **스타일링**: Tailwind CSS 4.1.11
-- **상태 관리**: Zustand 5.0.6
-- **서버 상태**: TanStack Query 5.81.5
-- **HTTP 클라이언트**: Axios 1.10.0
-- **UI 라이브러리**: Material-UI 7.2.0 (부분적 사용)
-- **테스팅**: Jest 30.0.4, React Testing Library 16.3.0
+Fitkle Frontend는 튜터링 플랫폼을 위한 Next.js 기반 웹 애플리케이션입니다. 본 문서는 프로젝트의 전체적인 구조와 아키텍처를 상세히 설명합니다.
 
-### 프로젝트 특징
-- **아키텍처**: Clean Architecture 기반 Feature-First 구조
-- **반응형**: Desktop/Mobile 대응 (Desktop 우선 구현)
-- **타입 안정성**: 엄격한 TypeScript 설정
-- **개발 환경**: Turbopack 사용으로 빠른 개발 서버
+## 기술 스택
 
-## 2. 폴더 구조 및 각 폴더의 역할
+### 주요 기술
+- **Framework**: Next.js 14 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **State Management**: Zustand
+- **UI Components**: Material-UI Icons
+- **Package Manager**: npm
+
+### 개발 도구
+- **IDE**: Visual Studio Code 권장
+- **Version Control**: Git
+- **Code Quality**: ESLint, Prettier
+- **Type Checking**: TypeScript
+
+## 프로젝트 디렉토리 구조
 
 ```
-fitkle/
-├── public/                    # 정적 파일
-│   ├── assets/               # 이미지, 아이콘 등
-│   │   └── logo/            # 브랜드 로고
-│   └── fonts/               # 커스텀 폰트 (Pretendard JP)
-├── src/                      # 소스 코드
-│   ├── app/                 # Next.js App Router
-│   ├── components/          # 공통 컴포넌트
-│   ├── constants/           # 상수 정의
-│   ├── features/            # 기능별 모듈
-│   ├── context/             # React Context (현재 미사용)
-│   ├── core/                # 핵심 유틸리티 (현재 미사용)
-│   ├── theme/               # 테마 관련
-│   └── need/                # 임시 파일 (삭제 예정)
-├── tailwind.config.js       # Tailwind CSS 설정
-├── next.config.ts           # Next.js 설정
-├── tsconfig.json           # TypeScript 설정
-└── package.json            # 프로젝트 의존성
+fitkle_frontend/
+├── public/                          # 정적 파일
+├── src/                            # 소스 코드
+│   ├── app/                        # Next.js App Router 페이지
+│   │   ├── globals.css            # 글로벌 스타일
+│   │   ├── layout.tsx             # 루트 레이아웃
+│   │   ├── page.tsx               # 홈 페이지
+│   │   ├── chat/                  # 채팅 페이지
+│   │   ├── community/             # 커뮤니티 페이지
+│   │   ├── customer-center/       # 고객센터 페이지
+│   │   ├── favorites/             # 찜 목록 페이지
+│   │   ├── friend-invite/         # 친구 초대 페이지
+│   │   ├── login/                 # 로그인 페이지
+│   │   ├── my-posts/              # 내가 쓴 글 페이지
+│   │   ├── notification-settings/ # 알림 설정 페이지
+│   │   ├── orders/                # 주문 관리 페이지
+│   │   ├── post/                  # 게시글 페이지
+│   │   │   ├── [id]/             # 게시글 상세
+│   │   │   └── write/            # 게시글 작성
+│   │   ├── profile/               # 프로필 페이지
+│   │   │   ├── edit/             # 프로필 편집
+│   │   │   ├── manage/           # 프로필 관리
+│   │   │   └── user/             # 사용자 프로필
+│   │   ├── signup/                # 회원가입 페이지
+│   │   ├── tutor/                 # 튜터 상세 페이지
+│   │   │   └── [id]/
+│   │   └── tutors/                # 튜터 목록 페이지
+│   ├── components/                # 재사용 가능한 UI 컴포넌트
+│   │   ├── auth/                  # 인증 관련 컴포넌트
+│   │   ├── chat/                  # 채팅 관련 컴포넌트
+│   │   ├── common/                # 공통 컴포넌트
+│   │   ├── community/             # 커뮤니티 관련 컴포넌트
+│   │   ├── customer-center/       # 고객센터 관련 컴포넌트
+│   │   ├── favorites/             # 찜 목록 관련 컴포넌트
+│   │   ├── friend-invite/         # 친구 초대 관련 컴포넌트
+│   │   ├── home/                  # 홈 페이지 관련 컴포넌트
+│   │   ├── layouts/               # 레이아웃 컴포넌트
+│   │   ├── login/                 # 로그인 관련 컴포넌트
+│   │   ├── my-posts/              # 내가 쓴 글 관련 컴포넌트
+│   │   ├── notification-settings/ # 알림 설정 관련 컴포넌트
+│   │   ├── notification/          # 알림 관련 컴포넌트
+│   │   ├── orders/                # 주문 관련 컴포넌트
+│   │   ├── profile/               # 프로필 관련 컴포넌트
+│   │   └── tutors/                # 튜터 관련 컴포넌트
+│   ├── constants/                 # 상수 정의
+│   │   ├── categories.ts          # 카테고리 정의
+│   │   ├── postTypes.ts           # 게시글 유형
+│   │   ├── regionMap.ts           # 지역 데이터
+│   │   └── routes.ts              # 라우트 상수
+│   ├── data/                      # 샘플/목업 데이터
+│   │   ├── sampleCommunityData.ts # 커뮤니티 샘플 데이터
+│   │   ├── sampleFavorites.ts     # 찜 목록 샘플 데이터
+│   │   ├── sampleOrders.ts        # 주문 샘플 데이터
+│   │   └── sampleTutors.ts        # 튜터 샘플 데이터
+│   ├── dto/                       # 백엔드 연동용 DTO
+│   │   ├── auth/                  # 인증 관련 DTO
+│   │   ├── chat/                  # 채팅 관련 DTO
+│   │   ├── common/                # 공통 DTO
+│   │   ├── community/             # 커뮤니티 관련 DTO
+│   │   ├── order/                 # 주문 관련 DTO
+│   │   ├── tutor/                 # 튜터 관련 DTO
+│   │   └── index.ts               # DTO 통합 익스포트
+│   ├── features/                  # 기능별 모듈
+│   │   ├── app/                   # 앱 전역 기능
+│   │   ├── auth/                  # 인증 기능
+│   │   ├── chat/                  # 채팅 기능
+│   │   ├── community/             # 커뮤니티 기능
+│   │   ├── customer-center/       # 고객센터 기능
+│   │   ├── favorites/             # 찜 목록 기능
+│   │   ├── friend-invite/         # 친구 초대 기능
+│   │   ├── home/                  # 홈 페이지 기능
+│   │   ├── my-posts/              # 내가 쓴 글 기능
+│   │   ├── notification-settings/ # 알림 설정 기능
+│   │   ├── orders/                # 주문 관리 기능
+│   │   ├── profile/               # 프로필 관리 기능
+│   │   ├── store/                 # 스토어 통합
+│   │   ├── survey/                # 설문 기능
+│   │   └── tutors/                # 튜터 관련 기능
+│   ├── hooks/                     # 커스텀 React 훅
+│   │   ├── useFormValidation.ts   # 폼 유효성 검사 훅
+│   │   └── useMessageTemplates.ts # 메시지 템플릿 훅
+│   ├── store/                     # Zustand 전역 상태 관리
+│   │   ├── communityStore.ts      # 커뮤니티 스토어
+│   │   ├── customerCenterStore.ts # 고객센터 스토어
+│   │   ├── favoritesStore.ts      # 찜 목록 스토어
+│   │   ├── friendInviteStore.ts   # 친구 초대 스토어
+│   │   ├── myPostsStore.ts        # 내가 쓴 글 스토어
+│   │   ├── notificationSettingsStore.ts # 알림 설정 스토어
+│   │   ├── ordersStore.ts         # 주문 스토어
+│   │   ├── postStore.ts           # 게시글 스토어
+│   │   └── tutorsStore.ts         # 튜터 스토어
+│   ├── types/                     # TypeScript 타입 정의
+│   │   ├── api/                   # API 관련 타입
+│   │   ├── components/            # 컴포넌트 관련 타입
+│   │   ├── constants/             # 상수 관련 타입
+│   │   ├── entities/              # 엔티티 타입
+│   │   ├── store/                 # 스토어 관련 타입
+│   │   ├── index.ts               # 타입 통합 익스포트
+│   │   └── messageTemplate.ts     # 메시지 템플릿 타입
+│   └── utils/                     # 유틸리티 함수
+│       └── validation.ts          # 유효성 검사 유틸리티
+├── API_SPECIFICATION.md           # API 명세서
+├── PROJECT_STRUCTURE.md           # 프로젝트 구조 문서 (본 문서)
+├── CLAUDE.md                      # 프로젝트 가이드라인
+├── README.md                      # 프로젝트 소개
+├── next.config.js                 # Next.js 설정
+├── tailwind.config.ts             # Tailwind CSS 설정
+├── tsconfig.json                  # TypeScript 설정
+└── package.json                   # 패키지 의존성
 ```
 
-## 3. 주요 파일들과 그 역할
+## 아키텍처 패턴
 
-### 설정 파일
-- **`next.config.ts`**: 외부 이미지 도메인 설정 (picsum.photos, api.dicebear.com)
-- **`tailwind.config.js`**: 커스텀 색상 팔레트, 폰트 설정
-- **`tsconfig.json`**: 경로 별칭 설정 (`@/*` -> `./src/*`)
-- **`globals.css`**: 전역 스타일, 폰트 정의, CSS 변수
+### 1. 기능 기반 아키텍처 (Feature-Based Architecture)
 
-### 핵심 파일
-- **`src/app/layout.tsx`**: 루트 레이아웃, 폰트 설정
-- **`src/app/page.tsx`**: 홈페이지 진입점
-- **`src/constants/routes.ts`**: 라우트 경로 상수 관리
-- **`src/features/store/index.ts`**: Zustand 스토어 통합 관리
+프로젝트는 기능별로 모듈을 분리하여 관리합니다:
 
-## 4. 아키텍처 패턴
+- **features/**: 각 기능별로 완전히 독립된 모듈
+- **components/**: 기능별로 분류된 재사용 가능한 UI 컴포넌트
+- **store/**: 기능별 상태 관리
+- **types/**: 중앙 집중식 타입 관리
 
-### Page vs Screen 컴포넌트 구조
+### 2. 레이어드 아키텍처 (Layered Architecture)
+
 ```
-src/app/page.tsx              # Next.js 페이지 (라우팅)
-    ↓
-src/features/home/presentation/screens/HomeScreen.tsx  # 비즈니스 로직
-    ↓
-src/components/layouts/MainLayout.tsx                  # 레이아웃
-    ↓
-src/components/home/HomeHeroSection.tsx               # UI 컴포넌트
+┌─────────────────────────────────┐
+│        Presentation Layer       │ ← pages/, components/
+├─────────────────────────────────┤
+│        Business Logic Layer     │ ← features/, hooks/
+├─────────────────────────────────┤
+│        Data Access Layer        │ ← store/, dto/
+├─────────────────────────────────┤
+│        Infrastructure Layer     │ ← utils/, constants/
+└─────────────────────────────────┘
 ```
 
-### Clean Architecture 적용
+## 주요 모듈 상세 설명
+
+### 1. 페이지 라우팅 (`src/app/`)
+
+Next.js 14 App Router를 사용하여 파일 기반 라우팅을 구현합니다.
+
+**주요 페이지:**
+- `/`: 홈 페이지
+- `/tutors`: 튜터 목록
+- `/tutor/[id]`: 튜터 상세 페이지
+- `/community`: 커뮤니티 게시판
+- `/post/[id]`: 게시글 상세
+- `/chat`: 채팅 페이지
+- `/orders`: 주문 관리
+- `/profile/manage`: 프로필 관리
+
+### 2. 컴포넌트 시스템 (`src/components/`)
+
+재사용 가능한 UI 컴포넌트들을 기능별로 분류하여 관리합니다.
+
+**분류 기준:**
+- **common/**: 프로젝트 전반에서 사용되는 공통 컴포넌트
+- **layouts/**: 페이지 레이아웃 컴포넌트
+- **기능별 폴더**: 특정 기능에서만 사용되는 컴포넌트
+
+**주요 공통 컴포넌트:**
+- `Calendar`: 달력 컴포넌트
+- `DatePicker`: 날짜 선택기
+- `Logo`: 로고 컴포넌트
+- `AppButton`: 버튼 컴포넌트
+
+### 3. 상태 관리 (`src/store/`)
+
+Zustand를 사용한 전역 상태 관리:
+
+**스토어 구조:**
+- `authStore`: 인증 상태 관리
+- `tutorsStore`: 튜터 목록 및 필터링
+- `communityStore`: 커뮤니티 게시글 관리
+- `ordersStore`: 주문 상태 관리
+- `favoritesStore`: 찜 목록 관리
+
+**특징:**
+- 각 스토어는 독립적으로 동작
+- localStorage를 통한 데이터 영속성
+- TypeScript를 통한 타입 안정성
+
+### 4. 타입 시스템 (`src/types/`)
+
+중앙 집중식 TypeScript 타입 정의:
+
+**구조:**
+- `entities/`: 도메인 엔티티 타입
+- `components/`: 컴포넌트 Props 타입
+- `store/`: 스토어 상태 타입
+- `api/`: API 요청/응답 타입
+
+### 5. 데이터 전송 객체 (`src/dto/`)
+
+백엔드 API 연동을 위한 DTO 정의:
+
+**구조:**
+- `auth/`: 인증 관련 요청/응답 DTO
+- `tutor/`: 튜터 관련 DTO
+- `community/`: 커뮤니티 관련 DTO
+- `order/`: 주문 관련 DTO
+- `chat/`: 채팅 관련 DTO
+- `common/`: 공통 응답 구조 DTO
+
+### 6. 기능 모듈 (`src/features/`)
+
+각 기능별로 완전히 독립된 모듈:
+
+**모듈 구조:**
 ```
-features/
-├── domain/          # 엔티티, 유스케이스
-├── data/           # 데이터 레이어 (DTO, Repository)
-├── presentation/   # 프레젠테이션 레이어 (Screen, Components)
-└── store/          # 상태 관리
-```
-
-## 5. 상태 관리 (Zustand)
-
-### 스토어 구조
-```typescript
-// src/features/store/index.ts - 통합 Export
-export * from '../auth/store/authStore';
-export * from '../app/store/appStore';
-
-// 각 스토어별 역할
-- authStore: 인증 상태 관리 (로그인, 로그아웃, 사용자 정보)
-- appStore: 앱 전역 상태 (테마, 언어, 첫 실행 여부)
-- tutorSearchStore: 튜터 검색 상태 관리
-```
-
-### 특징
-- **타입 안정성**: TypeScript 인터페이스 활용
-- **로컬 스토리지**: 상태 지속성 보장
-- **에러 처리**: 각 액션별 에러 상태 관리
-- **셀렉터**: 성능 최적화를 위한 개별 셀렉터 제공
-
-## 6. 스타일링 (Tailwind CSS)
-
-### 커스텀 색상 팔레트
-```javascript
-// tailwind.config.js
-colors: {
-  // 브랜드 색상
-  primary: '#B7C774',
-  primaryLight: '#F7FBEA',
-  primaryDark: '#8A9E4E',
-  
-  // 중립 계열
-  grayDark: '#4B5563',
-  gray: '#6B7280',
-  grayLight: '#D1D5DB',
-  
-  // 텍스트 색상
-  textDefault: '#6B7280',
-  textHeading: '#000000',
-}
-```
-
-### 폰트 시스템
-- **기본 폰트**: Pretendard JP (한국어 최적화)
-- **웹 폰트**: Geist Sans, Geist Mono (Google Fonts)
-- **가중치**: 100-900 전 범위 지원
-
-### 반응형 설계
-- **브레이크포인트**: `sm:`, `md:`, `lg:` 활용
-- **컨테이너**: `max-w-7xl mx-auto` 중심 정렬
-- **패딩**: `px-4 py-4` 기본 여백
-
-## 7. 라우팅 구조
-
-### App Router 구조
-```
-src/app/
-├── page.tsx                  # 홈페이지 (/)
-├── login/page.tsx           # 로그인 (/login)
-├── signup/page.tsx          # 회원가입 (/signup)
-├── search/page.tsx          # 검색 (/search)
-├── profile/
-│   └── user/
-│       ├── page.tsx         # 프로필 조회 (/profile/user)
-│       └── edit/page.tsx    # 프로필 편집 (/profile/user/edit)
-└── test-*/                  # 개발/테스트 페이지들
-```
-
-### 라우트 관리
-```typescript
-// src/constants/routes.ts
-export const ROUTES = {
-  HOME: '/',
-  SEARCH: '/search',
-  SIGNUP: '/signup',
-  LOGIN: '/login',
-  PROFILE_MANAGE: (nickname = ':nickname') => `/profile/${nickname}`,
-  TUTOR_DETAIL: (id = ':id') => `/tutor/${id}`,
-};
+features/[feature-name]/
+├── presentation/
+│   └── screens/           # 페이지 레벨 컴포넌트
+├── store/                 # 기능별 상태 관리
+└── types/                 # 기능별 타입 정의
 ```
 
-## 8. 컴포넌트 구조
+### 7. 상수 관리 (`src/constants/`)
 
-### 공통 컴포넌트 (src/components/)
-```
-components/
-├── common/                  # 기본 UI 컴포넌트
-│   ├── AppButton.tsx       # 공통 버튼
-│   ├── AppFormBox.tsx      # 폼 컨테이너
-│   ├── Logo.tsx            # 로고 컴포넌트
-│   └── NativeInputBox.tsx  # 입력 필드
-├── layouts/                # 레이아웃 컴포넌트
-│   ├── MainLayout.tsx      # 메인 레이아웃
-│   ├── Header.tsx          # 헤더
-│   └── Footer.tsx          # 푸터
-├── home/                   # 홈 페이지 전용
-├── login/                  # 로그인 관련
-└── profile/                # 프로필 관련
-```
+애플리케이션 전반에서 사용되는 상수:
 
-### 기능별 컴포넌트 (src/features/)
+- `routes.ts`: 라우트 경로 상수
+- `categories.ts`: 카테고리 정의
+- `postTypes.ts`: 게시글 유형
+- `regionMap.ts`: 지역 데이터
+
+### 8. 샘플 데이터 (`src/data/`)
+
+개발 및 테스트용 모의 데이터:
+
+- `sampleTutors.ts`: 튜터 샘플 데이터
+- `sampleCommunityData.ts`: 커뮤니티 게시글 샘플
+- `sampleOrders.ts`: 주문 샘플 데이터
+- `sampleFavorites.ts`: 찜 목록 샘플
+
+## 데이터 플로우
+
+### 1. 사용자 인터랙션 플로우
+
 ```
-features/
-├── auth/                   # 인증 기능
-│   ├── presentation/screens/
-│   ├── store/
-│   └── types/
-├── search/                 # 검색 기능
-│   ├── data/              # 데이터 레이어
-│   ├── domain/            # 비즈니스 로직
-│   ├── presentation/      # UI 컴포넌트
-│   └── store/             # 상태 관리
-└── tutor/                 # 튜터 관련
+User Action → Component → Store → API (Future) → Store Update → UI Re-render
 ```
 
-## 9. 데이터 계층 구조
+### 2. 상태 관리 플로우
 
-### Repository Pattern
-```typescript
-// src/features/search/data/repositories/tutorSearchRepository.ts
-- API 통신 추상화
-- DTO 변환 처리
-- 에러 핸들링
+```
+Local State (useState) → Global State (Zustand) → Persistent Storage (localStorage)
 ```
 
-### DTO 시스템
-```typescript
-// src/features/search/data/dto/
-- tutorSearchResponseDto.ts     # API 응답 타입
-- tutorSearchDtoMapper.ts       # DTO ↔ Entity 변환
+### 3. 라우팅 플로우
+
+```
+URL Change → Next.js Router → Page Component → Feature Module → UI Components
 ```
 
-### Mock 데이터
-```typescript
-// src/features/search/data/mock/
-- 개발 단계 테스트 데이터
-- API 구현 전 프론트엔드 개발 지원
-```
+## 스타일링 가이드
 
-## 10. 주요 기능별 아키텍처
+### Tailwind CSS 활용
 
-### 검색 기능 (features/search)
-- **Domain**: 검색 파라미터, 결과 엔티티
-- **Data**: API 통신, DTO 변환
-- **Presentation**: 검색 화면, 결과 목록, 필터 UI
-- **Store**: 검색 상태, 필터 상태 관리
+**색상 시스템:**
+- Primary: 라임 올리브 계열
+- 글로벌 색상 변수를 tailwind.config.ts에서 관리
 
-### 인증 기능 (features/auth)
-- **Store**: 로그인 상태, 사용자 정보
-- **Presentation**: 로그인/회원가입 화면
-- **Types**: 인증 관련 타입 정의
+**반응형 디자인:**
+- 모바일 퍼스트 접근
+- Tailwind의 반응형 유틸리티 활용 (sm:, md:, lg:, xl:)
 
-### 튜터 기능 (features/tutor)
-- **Domain**: 튜터 엔티티, 유스케이스
-- **Data**: 튜터 정보 API, DTO
-- **Presentation**: 튜터 상세, 프로필 설정
+**컴포넌트 스타일:**
+- 재사용 가능한 스타일 클래스 정의
+- hover, focus 상태 일관성 유지
 
-## 11. 개발 환경 설정
+## 개발 가이드라인
 
-### TypeScript 설정
-- **엄격 모드**: `strict: true`
-- **경로 별칭**: `@/*` 패턴
-- **타겟**: ES2017
+### 1. 코딩 스타일
 
-### 린팅 및 테스팅
-- **ESLint**: Next.js 권장 설정
-- **Jest**: 단위 테스트
-- **React Testing Library**: 컴포넌트 테스트
+**함수형 프로그래밍:**
+- React 함수 컴포넌트 사용
+- 커스텀 훅을 통한 로직 분리
+- 불변성 원칙 준수
 
-### 빌드 최적화
-- **Turbopack**: 개발 서버 성능 향상
-- **PostCSS**: CSS 처리 파이프라인
-- **자동 타입 체크**: `typecheck` 스크립트
+**네이밍 컨벤션:**
+- 컴포넌트: PascalCase
+- 파일명: camelCase
+- 상수: UPPER_SNAKE_CASE
+- 함수/변수: camelCase
 
-## 12. 향후 확장 계획
+### 2. 폴더 구조 규칙
 
-### 미구현 기능
-- 모바일 버전 UI
-- 다국어 지원 (i18n)
-- 실시간 알림
-- 결제 시스템
+**컴포넌트 조직:**
+- 기능별 폴더 분리
+- index.ts를 통한 깔끔한 import
+- 컴포넌트별 타입 정의 분리
 
-### 최적화 계획
-- 코드 스플리팅
-- 이미지 최적화
-- SEO 개선
-- 접근성 향상
+**파일 명명:**
+- 컴포넌트: ComponentName.tsx
+- 스토어: featureStore.ts
+- 타입: types.ts 또는 index.ts
+- 유틸리티: functionName.ts
 
-## 13. 개발 가이드라인
+### 3. 상태 관리 규칙
 
-### 컴포넌트 작성 원칙
-- 함수형 컴포넌트 사용
-- 단일 책임 원칙 준수
-- 재사용성 고려
-- 타입 안정성 보장
-
-### 스타일 가이드
-- Tailwind CSS 우선 사용
-- 일관된 색상 팔레트 활용
-- 반응형 디자인 필수
-- 접근성 고려
-
-### 상태 관리 패턴
-- Zustand 중심 상태 관리
+**Zustand 스토어:**
 - 기능별 스토어 분리
-- 셀렉터 패턴 활용
-- 에러 상태 관리
+- 액션과 상태를 명확히 구분
+- TypeScript 타입 정의 필수
 
-이 구조는 확장 가능하고 유지보수가 용이한 현대적인 React/Next.js 애플리케이션을 위한 베스트 프랙티스를 따르고 있습니다.
+**로컬 상태:**
+- 컴포넌트 단위의 UI 상태만 로컬 관리
+- 전역적으로 필요한 데이터는 스토어 활용
+
+## 성능 최적화
+
+### 1. 코드 분할
+
+- Next.js의 자동 코드 분할 활용
+- dynamic import를 통한 지연 로딩
+- 페이지별 번들 최적화
+
+### 2. 이미지 최적화
+
+- Next.js Image 컴포넌트 사용
+- 적절한 이미지 포맷 선택
+- Lazy loading 적용
+
+### 3. 상태 최적화
+
+- 불필요한 리렌더링 방지
+- 메모이제이션 적절히 활용
+- 상태 구조 최적화
+
+## 테스트 전략
+
+### 1. 단위 테스트
+- 컴포넌트 단위 테스트
+- 유틸리티 함수 테스트
+- 스토어 로직 테스트
+
+### 2. 통합 테스트
+- 페이지 레벨 테스트
+- 사용자 시나리오 테스트
+- API 연동 테스트
+
+### 3. E2E 테스트
+- 핵심 사용자 플로우 테스트
+- 크로스 브라우저 테스트
+
+## 배포 및 DevOps
+
+### 1. 빌드 프로세스
+```bash
+npm run build     # 프로덕션 빌드
+npm run start     # 프로덕션 서버 실행
+npm run dev       # 개발 서버 실행
+npm run lint      # 코드 품질 검사
+```
+
+### 2. 환경 변수
+- `.env.local`: 로컬 개발 환경
+- `.env.production`: 프로덕션 환경
+- Next.js 환경 변수 규칙 준수
+
+### 3. CI/CD
+- Git 기반 워크플로우
+- 자동화된 테스트 실행
+- 배포 파이프라인 구축
+
+## 확장성 고려사항
+
+### 1. 모듈화
+- 기능별 독립적인 모듈 구조
+- 의존성 최소화
+- 플러그인 형태의 기능 확장
+
+### 2. 국제화 (i18n)
+- 다국어 지원 준비
+- 지역별 설정 대응
+- 문화적 차이 고려
+
+### 3. 접근성 (a11y)
+- WCAG 가이드라인 준수
+- 키보드 네비게이션 지원
+- 스크린 리더 호환성
+
+## 보안 고려사항
+
+### 1. 클라이언트 보안
+- XSS 방지
+- CSRF 토큰 관리
+- 민감한 정보 노출 방지
+
+### 2. 데이터 검증
+- 클라이언트 사이드 유효성 검사
+- 서버 사이드 검증 의존
+- 타입 안정성 확보
+
+## 마이그레이션 가이드
+
+### 1. 레거시 코드 통합
+- 점진적 마이그레이션 전략
+- 기존 API와의 호환성 유지
+- 단계적 기능 전환
+
+### 2. 버전 업그레이드
+- 의존성 관리 전략
+- 호환성 테스트
+- 롤백 계획 수립
+
+---
+
+이 문서는 Fitkle Frontend 프로젝트의 구조를 이해하고 개발을 진행하는 데 필요한 모든 정보를 포함하고 있습니다. 프로젝트가 발전함에 따라 이 문서도 지속적으로 업데이트될 예정입니다.

@@ -3,7 +3,6 @@
 
 export const ROUTES = {
   HOME: '/',
-  SEARCH: '/search',
   SIGNUP: '/signup',
   LOGIN: '/login',
   PROFILE_MANAGE: '/profile/manage',

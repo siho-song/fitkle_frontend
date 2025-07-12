@@ -1,34 +1,19 @@
-import React from 'react';
-import { Container } from './Container';
+import React from "react";
 
 interface SectionProps {
   children: React.ReactNode;
-  variant?: 'default' | 'wide' | 'narrow' | 'full';
-  disableContainer?: boolean;
   className?: string;
-  containerClassName?: string;
+  padding?: boolean;
 }
 
-export const Section: React.FC<SectionProps> = ({ 
-  children, 
-  variant = 'default',
-  disableContainer = false,
-  className = '',
-  containerClassName = ''
+export const Section: React.FC<SectionProps> = ({
+  children,
+  className = "",
+  padding = true
 }) => {
-  if (disableContainer) {
-    return (
-      <section className={className}>
-        {children}
-      </section>
-    );
-  }
-
   return (
-    <section className={className}>
-      <Container variant={variant} className={containerClassName}>
-        {children}
-      </Container>
+    <section className={`${padding ? 'py-8' : ''} ${className}`}>
+      {children}
     </section>
   );
 };

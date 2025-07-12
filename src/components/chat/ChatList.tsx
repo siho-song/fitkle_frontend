@@ -1,95 +1,207 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useMemo } from 'react';
 import Image from 'next/image';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import CircleIcon from '@mui/icons-material/Circle';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import VideocamIcon from '@mui/icons-material/Videocam';
+import { ChatFilter, ChatFilterOptions } from './ChatFilter';
+import type { UserType } from '@/features/auth/types/auth';
 
 interface ChatRoom {
   id: string;
-  tutorName: string;
-  tutorAvatar: string;
-  tutorCategory: string;
+  contactName: string;
+  contactAvatar: string;
+  contactCategory?: string;
   lastMessage: string;
   lastMessageTime: string;
   unreadCount: number;
   isOnline: boolean;
   messageType: 'text' | 'image' | 'video' | 'file';
-  status: 'waiting' | 'in_progress' | 'completed';
 }
 
-const mockChatRooms: ChatRoom[] = [
+// 튜티용 채팅방 데이터 (여러 분야 튜터와 대화)
+const tuteeChatRooms: ChatRoom[] = [
   {
     id: '1',
-    tutorName: '김셰프',
-    tutorAvatar: '👨‍🍳',
-    tutorCategory: '요리',
+    contactName: '김셰프',
+    contactAvatar: '👨‍🍳',
+    contactCategory: '요리',
     lastMessage: '파스타 영상 확인했어요! 소스 농도가 문제네요',
     lastMessageTime: '2분 전',
     unreadCount: 2,
     isOnline: true,
-    messageType: 'text',
-    status: 'in_progress'
+    messageType: 'text'
   },
   {
     id: '2',
-    tutorName: '이기타',
-    tutorAvatar: '🎸',
-    tutorCategory: '악기',
+    contactName: '이기타',
+    contactAvatar: '🎸',
+    contactCategory: '악기',
     lastMessage: 'F코드 연습 영상 보내드릴게요',
     lastMessageTime: '15분 전',
     unreadCount: 0,
     isOnline: true,
-    messageType: 'video',
-    status: 'completed'
+    messageType: 'video'
   },
   {
     id: '3',
-    tutorName: '박트레이너',
-    tutorAvatar: '💪',
-    tutorCategory: '운동',
+    contactName: '박트레이너',
+    contactAvatar: '💪',
+    contactCategory: '운동',
     lastMessage: '운동 자세 사진 잘 받았습니다',
     lastMessageTime: '1시간 전',
     unreadCount: 1,
     isOnline: false,
-    messageType: 'image',
-    status: 'waiting'
+    messageType: 'image'
   },
   {
     id: '4',
-    tutorName: '최영어',
-    tutorAvatar: '🗣️',
-    tutorCategory: '언어',
+    contactName: '최영어',
+    contactAvatar: '🗣️',
+    contactCategory: '언어',
     lastMessage: '발음 교정 음성파일 첨부했어요',
     lastMessageTime: '3시간 전',
     unreadCount: 0,
     isOnline: true,
-    messageType: 'file',
-    status: 'completed'
+    messageType: 'file'
   },
   {
     id: '5',
-    tutorName: '김아티스트',
-    tutorAvatar: '🎨',
-    tutorCategory: '디자인',
+    contactName: '김아티스트',
+    contactAvatar: '🎨',
+    contactCategory: '디자인',
     lastMessage: '그림 구도에 대해 조언드릴게요',
     lastMessageTime: '어제',
     unreadCount: 0,
     isOnline: false,
-    messageType: 'text',
-    status: 'in_progress'
+    messageType: 'text'
+  }
+];
+
+// 튜터용 채팅방 데이터 (수강생들과 대화, 카테고리 불필요)
+const tutorChatRooms: ChatRoom[] = [
+  {
+    id: '1',
+    contactName: '정수강생',
+    contactAvatar: '😊',
+    lastMessage: '오늘 수업 감사했어요! 다음 주에도 잘 부탁드릴게요',
+    lastMessageTime: '10분 전',
+    unreadCount: 1,
+    isOnline: true,
+    messageType: 'text'
+  },
+  {
+    id: '2',
+    contactName: '김학습자',
+    contactAvatar: '🧑‍🎓',
+    lastMessage: '좋아요! 과제 영상 보내드릴게요',
+    lastMessageTime: '30분 전',
+    unreadCount: 0,
+    isOnline: true,
+    messageType: 'video'
+  },
+  {
+    id: '3',
+    contactName: '이초보',
+    contactAvatar: '🙋‍♀️',
+    lastMessage: '과제 사진 찍어서 보내드릴게요',
+    lastMessageTime: '1시간 전',
+    unreadCount: 2,
+    isOnline: false,
+    messageType: 'image'
+  },
+  {
+    id: '4',
+    contactName: '박열심',
+    contactAvatar: '💪',
+    lastMessage: '과제 파일 첨부했습니다',
+    lastMessageTime: '2시간 전',
+    unreadCount: 0,
+    isOnline: true,
+    messageType: 'file'
+  },
+  {
+    id: '5',
+    contactName: '최노력',
+    contactAvatar: '😎',
+    lastMessage: '오늘 수업 정말 도움이 되었어요',
+    lastMessageTime: '어제',
+    unreadCount: 0,
+    isOnline: false,
+    messageType: 'text'
   }
 ];
 
 interface ChatListProps {
   onChatSelect: (chatId: string) => void;
   selectedChatId?: string;
+  userType?: UserType;
 }
 
-export function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
+export function ChatList({ onChatSelect, selectedChatId, userType = 'tutee' }: ChatListProps) {
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<ChatFilterOptions>({
+    searchTerm: '',
+    dateFilter: 'all'
+  });
+  
+  const allChatRooms = userType === 'tutor' ? tutorChatRooms : tuteeChatRooms;
+  
+  // 채팅방에 날짜 정보 추가 (실제로는 API에서 가져올 데이터)
+  const chatRoomsWithDates = useMemo(() => {
+    return allChatRooms.map(room => ({
+      ...room,
+      lastMessageDate: new Date(2024, 0, Math.floor(Math.random() * 30) + 1) // 예시 날짜
+    }));
+  }, [allChatRooms]);
+  
+  // 필터링된 채팅방 목록
+  const filteredChatRooms = useMemo(() => {
+    let filtered = chatRoomsWithDates;
+    
+    // 이름으로 검색
+    if (filters.searchTerm) {
+      filtered = filtered.filter(room => 
+        room.contactName.toLowerCase().includes(filters.searchTerm.toLowerCase())
+      );
+    }
+    
+    // 날짜 필터
+    if (filters.dateFilter !== 'all') {
+      const now = new Date();
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      
+      filtered = filtered.filter(room => {
+        const messageDate = room.lastMessageDate;
+        
+        switch (filters.dateFilter) {
+          case 'today':
+            return messageDate >= today;
+          case 'thisWeek':
+            const weekStart = new Date(today);
+            weekStart.setDate(today.getDate() - today.getDay());
+            return messageDate >= weekStart;
+          case 'thisMonth':
+            const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+            return messageDate >= monthStart;
+          case 'custom':
+            if (filters.customDateRange) {
+              const startDate = new Date(filters.customDateRange.startDate);
+              const endDate = new Date(filters.customDateRange.endDate);
+              return messageDate >= startDate && messageDate <= endDate;
+            }
+            return true;
+          default:
+            return true;
+        }
+      });
+    }
+    
+    return filtered;
+  }, [chatRoomsWithDates, filters]);
   const getMessageIcon = (type: string) => {
     switch (type) {
       case 'image':
@@ -103,43 +215,43 @@ export function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
     }
   };
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'waiting':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'in_progress':
-        return 'bg-blue-100 text-blue-800';
-      case 'completed':
-        return 'bg-green-100 text-green-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case 'waiting':
-        return '답변 대기';
-      case 'in_progress':
-        return '상담 중';
-      case 'completed':
-        return '완료';
-      default:
-        return '';
-    }
-  };
 
   return (
-    <div className="h-full bg-white border-r border-gray-200">
+    <div className="h-full bg-white rounded-xl overflow-hidden flex flex-col">
       {/* 헤더 */}
-      <div className="p-4 border-b border-gray-200">
-        <h2 className="text-xl font-bold text-gray-900">채팅</h2>
-        <p className="text-sm text-gray-600">튜터와의 대화</p>
+      <div className="p-4 border-b border-gray-200 bg-white">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-bold text-gray-900">채팅</h2>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className="p-2 text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            🔍
+          </button>
+        </div>
       </div>
+      
+      {/* 필터 */}
+      {showFilters && (
+        <div className="border-b border-gray-200">
+          <div className="p-4">
+            <ChatFilter onFilterChange={setFilters} />
+          </div>
+        </div>
+      )}
 
       {/* 채팅 리스트 */}
-      <div className="overflow-y-auto h-full">
-        {mockChatRooms.map((chat) => (
+      <div className="flex-1 overflow-y-auto">
+        {filteredChatRooms.length === 0 ? (
+          <div className="p-8 text-center text-gray-500">
+            <div className="text-4xl mb-4">💬</div>
+            <p>채팅방이 없습니다.</p>
+            {filters.searchTerm && (
+              <p className="text-sm mt-2">검색 조건을 변경해보세요.</p>
+            )}
+          </div>
+        ) : (
+          filteredChatRooms.map((chat) => (
           <div
             key={chat.id}
             onClick={() => onChatSelect(chat.id)}
@@ -148,10 +260,10 @@ export function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
             }`}
           >
             <div className="flex items-start gap-3">
-              {/* 튜터 아바타 */}
+              {/* 연락처 아바타 */}
               <div className="relative">
                 <div className="w-12 h-12 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center text-xl">
-                  {chat.tutorAvatar}
+                  {chat.contactAvatar}
                 </div>
                 {chat.isOnline && (
                   <CircleIcon 
@@ -166,20 +278,17 @@ export function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
                 <div className="flex items-center justify-between mb-1">
                   <div className="flex items-center gap-2">
                     <h3 className="font-semibold text-gray-900 truncate">
-                      {chat.tutorName}
+                      {chat.contactName}
                     </h3>
-                    <span className="text-xs text-primary font-medium">
-                      {chat.tutorCategory}
-                    </span>
+                    {chat.contactCategory && (
+                      <span className="text-xs text-primary font-medium">
+                        {chat.contactCategory}
+                      </span>
+                    )}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(chat.status)}`}>
-                      {getStatusText(chat.status)}
-                    </span>
-                    <span className="text-xs text-gray-500 whitespace-nowrap">
-                      {chat.lastMessageTime}
-                    </span>
-                  </div>
+                  <span className="text-xs text-gray-500 whitespace-nowrap">
+                    {chat.lastMessageTime}
+                  </span>
                 </div>
 
                 <div className="flex items-center justify-between">
@@ -199,7 +308,8 @@ export function ChatList({ onChatSelect, selectedChatId }: ChatListProps) {
               </div>
             </div>
           </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

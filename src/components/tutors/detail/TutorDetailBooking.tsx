@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useState } from 'react';
-import { TutorItem } from '@/store/tutorsStore';
+import { TutorItem } from '@/types';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
 import MessageIcon from '@mui/icons-material/Message';
 import BookmarkIcon from '@mui/icons-material/Bookmark';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import { DatePicker } from '@/components/common/DatePicker';
 
 interface TutorDetailBookingProps {
   tutor: TutorItem;
@@ -18,26 +19,15 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
   const [selectedTime, setSelectedTime] = useState('');
   const [sessionCount, setSessionCount] = useState(1);
   const [sessionType, setSessionType] = useState<'single' | 'package'>('single');
-  const { favoriteTutors, addFavoriteTutor, removeFavoriteTutor } = useFavoritesStore();
+  const { isFavoriteTutor, addFavoriteTutor, removeFavoriteTutor } = useFavoritesStore();
 
-  const isFavorite = favoriteTutors.some(fav => fav.id === tutor.id);
+  const isFavorite = isFavoriteTutor(tutor.id);
 
   const handleToggleFavorite = () => {
     if (isFavorite) {
       removeFavoriteTutor(tutor.id);
     } else {
-      addFavoriteTutor({
-        id: tutor.id,
-        name: tutor.name,
-        avatar: tutor.avatar,
-        category: tutor.category,
-        categoryEmoji: tutor.categoryEmoji,
-        rating: tutor.rating,
-        reviewCount: tutor.reviewCount,
-        pricePerHour: tutor.pricePerHour,
-        specialties: tutor.specialties,
-        addedAt: new Date().toISOString()
-      });
+      addFavoriteTutor(tutor.id);
     }
   };
 
@@ -64,19 +54,24 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
     return basePrice;
   };
 
-  const getNextWeekDates = () => {
+  const getAvailableDates = () => {
     const dates = [];
-    for (let i = 1; i <= 7; i++) {
+    // 다음 30일 동안의 날짜 중 튜터가 가능한 날짜만 필터링
+    for (let i = 1; i <= 30; i++) {
       const date = new Date();
       date.setDate(date.getDate() + i);
-      dates.push({
-        value: date.toISOString().split('T')[0],
-        label: date.toLocaleDateString('ko-KR', { 
-          month: 'short', 
-          day: 'numeric',
-          weekday: 'short' 
-        })
-      });
+      const dayOfWeek = date.toLocaleDateString('en', { weekday: 'short' }).toLowerCase();
+      
+      const dayMap: { [key: string]: keyof typeof tutor.availability } = {
+        'sun': 'sun', 'mon': 'mon', 'tue': 'tue', 'wed': 'wed', 
+        'thu': 'thu', 'fri': 'fri', 'sat': 'sat'
+      };
+      
+      // 해당 요일에 가능한 시간이 있는지 확인
+      const availableTimes = tutor.availability[dayMap[dayOfWeek]];
+      if (availableTimes && availableTimes.length > 0) {
+        dates.push(date.toISOString().split('T')[0]);
+      }
     }
     return dates;
   };
@@ -153,21 +148,15 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
           <CalendarTodayIcon sx={{ fontSize: 16 }} />
           날짜 선택
         </label>
-        <select
-          value={selectedDate}
-          onChange={(e) => {
-            setSelectedDate(e.target.value);
+        <DatePicker
+          selectedDate={selectedDate}
+          onDateSelect={(date) => {
+            setSelectedDate(date);
             setSelectedTime(''); // 시간 초기화
           }}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
-        >
-          <option value="">날짜를 선택하세요</option>
-          {getNextWeekDates().map(date => (
-            <option key={date.value} value={date.value}>
-              {date.label}
-            </option>
-          ))}
-        </select>
+          availableDates={getAvailableDates()}
+          placeholder="날짜를 선택하세요"
+        />
       </div>
 
       {/* 시간 선택 */}
@@ -176,19 +165,33 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
           <AccessTimeIcon sx={{ fontSize: 16 }} />
           시간 선택
         </label>
-        <select
-          value={selectedTime}
-          onChange={(e) => setSelectedTime(e.target.value)}
-          disabled={!selectedDate}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent disabled:bg-gray-100 disabled:cursor-not-allowed"
-        >
-          <option value="">시간을 선택하세요</option>
-          {getAvailableTimes(selectedDate).map(time => (
-            <option key={time} value={time}>
-              {time}
-            </option>
-          ))}
-        </select>
+        {!selectedDate ? (
+          <div className="p-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 text-center">
+            먼저 날짜를 선택해주세요
+          </div>
+        ) : (
+          <div className="grid grid-cols-3 gap-2">
+            {getAvailableTimes(selectedDate).length === 0 ? (
+              <div className="col-span-3 p-3 border border-gray-200 rounded-lg bg-gray-50 text-gray-500 text-center">
+                선택한 날짜에 가능한 시간이 없습니다
+              </div>
+            ) : (
+              getAvailableTimes(selectedDate).map(time => (
+                <button
+                  key={time}
+                  onClick={() => setSelectedTime(time)}
+                  className={`p-2 rounded-lg border text-sm font-medium transition-all duration-200 ${
+                    selectedTime === time
+                      ? 'bg-primary text-white border-primary shadow-md'
+                      : 'bg-white text-gray-700 border-gray-300 hover:bg-primary hover:text-white hover:border-primary'
+                  }`}
+                >
+                  {time}
+                </button>
+              ))
+            )}
+          </div>
+        )}
       </div>
 
       {/* 총 가격 */}

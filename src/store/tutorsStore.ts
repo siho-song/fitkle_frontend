@@ -1,55 +1,61 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { TutorItem, TutorsStore } from '@/types';
 
-export interface TutorItem {
-  id: string;
-  name: string;
-  avatar: string;
-  category: string;
-  categoryEmoji: string;
-  specialties: string[];
-  rating: number;
-  reviewCount: number;
-  studentCount: number;
-  experience: string;
-  pricePerHour: number;
-  description: string;
-  tags: string[];
-  isOnline: boolean;
-  responseTime: string;
-  languages: string[];
-  education: string[];
-  certifications: string[];
-  introduction: string;
-  achievements: string[];
-  availability: {
-    [key: string]: string[]; // 요일별 가능 시간
-  };
-}
+const filterAndSortTutors = (state: TutorsStore): TutorItem[] => {
+  let filtered = [...state.tutors];
 
-interface TutorsStore {
-  tutors: TutorItem[];
-  searchQuery: string;
-  categoryFilter: string;
-  priceRange: [number, number];
-  ratingFilter: number;
-  sortBy: 'popular' | 'rating' | 'price_low' | 'price_high' | 'newest';
-  onlineOnly: boolean;
-  
-  // 액션들
-  addTutor: (tutor: TutorItem) => void;
-  setSearchQuery: (query: string) => void;
-  setCategoryFilter: (category: string) => void;
-  setPriceRange: (range: [number, number]) => void;
-  setRatingFilter: (rating: number) => void;
-  setSortBy: (sort: 'popular' | 'rating' | 'price_low' | 'price_high' | 'newest') => void;
-  setOnlineOnly: (online: boolean) => void;
-  clearFilters: () => void;
-  
-  // 계산된 속성들
-  filteredTutors: TutorItem[];
-  categories: string[];
-}
+  // 검색어 필터
+  if (state.searchQuery) {
+    const query = state.searchQuery.toLowerCase();
+    filtered = filtered.filter(tutor => 
+      tutor.name.toLowerCase().includes(query) ||
+      tutor.description.toLowerCase().includes(query) ||
+      tutor.specialties.some(spec => spec.toLowerCase().includes(query)) ||
+      tutor.tags.some(tag => tag.toLowerCase().includes(query))
+    );
+  }
+
+  // 카테고리 필터
+  if (state.categoryFilter !== 'all') {
+    filtered = filtered.filter(tutor => tutor.category === state.categoryFilter);
+  }
+
+  // 가격 필터
+  filtered = filtered.filter(tutor => 
+    tutor.pricePerHour >= state.priceRange[0] && 
+    tutor.pricePerHour <= state.priceRange[1]
+  );
+
+  // 평점 필터
+  if (state.ratingFilter > 0) {
+    filtered = filtered.filter(tutor => tutor.rating >= state.ratingFilter);
+  }
+
+  // 온라인 필터
+  if (state.onlineOnly) {
+    filtered = filtered.filter(tutor => tutor.isOnline);
+  }
+
+  // 정렬
+  filtered.sort((a, b) => {
+    switch (state.sortBy) {
+      case 'rating':
+        return b.rating - a.rating;
+      case 'price_low':
+        return a.pricePerHour - b.pricePerHour;
+      case 'price_high':
+        return b.pricePerHour - a.pricePerHour;
+      case 'newest':
+        return 0; // 실제로는 생성일 기준
+      case 'popular':
+      default:
+        return b.studentCount - a.studentCount;
+    }
+  });
+
+  return filtered;
+};
 
 export const useTutorsStore = create<TutorsStore>()((set, get) => ({
   tutors: [],
@@ -61,82 +67,72 @@ export const useTutorsStore = create<TutorsStore>()((set, get) => ({
   onlineOnly: false,
 
   addTutor: (tutor) => {
-    set((state) => ({
-      tutors: [...state.tutors, tutor]
-    }));
+    set((state) => {
+      // 중복 체크
+      const existingIndex = state.tutors.findIndex(t => t.id === tutor.id);
+      if (existingIndex >= 0) {
+        console.warn(`Tutor with id ${tutor.id} already exists. Skipping.`);
+        return state; // 중복이면 상태 변경 없음
+      }
+      
+      const newTutors = [...state.tutors, tutor];
+      return {
+        tutors: newTutors,
+        filteredTutors: filterAndSortTutors({
+          ...state,
+          tutors: newTutors
+        })
+      };
+    });
   },
 
-  setSearchQuery: (query) => set({ searchQuery: query }),
-  setCategoryFilter: (category) => set({ categoryFilter: category }),
-  setPriceRange: (range) => set({ priceRange: range }),
-  setRatingFilter: (rating) => set({ ratingFilter: rating }),
-  setSortBy: (sort) => set({ sortBy: sort }),
-  setOnlineOnly: (online) => set({ onlineOnly: online }),
+  setSearchQuery: (query) => set((state) => ({
+    searchQuery: query,
+    filteredTutors: filterAndSortTutors({ ...state, searchQuery: query })
+  })),
+  
+  setCategoryFilter: (category) => set((state) => ({
+    categoryFilter: category,
+    filteredTutors: filterAndSortTutors({ ...state, categoryFilter: category })
+  })),
+  
+  setPriceRange: (range) => set((state) => ({
+    priceRange: range,
+    filteredTutors: filterAndSortTutors({ ...state, priceRange: range })
+  })),
+  
+  setRatingFilter: (rating) => set((state) => ({
+    ratingFilter: rating,
+    filteredTutors: filterAndSortTutors({ ...state, ratingFilter: rating })
+  })),
+  
+  setSortBy: (sort) => set((state) => ({
+    sortBy: sort,
+    filteredTutors: filterAndSortTutors({ ...state, sortBy: sort })
+  })),
+  
+  setOnlineOnly: (online) => set((state) => ({
+    onlineOnly: online,
+    filteredTutors: filterAndSortTutors({ ...state, onlineOnly: online })
+  })),
 
-  clearFilters: () => set({
-    searchQuery: '',
-    categoryFilter: 'all',
-    priceRange: [0, 200000],
-    ratingFilter: 0,
-    sortBy: 'popular',
-    onlineOnly: false
+  clearFilters: () => set((state) => {
+    const newState = {
+      ...state,
+      searchQuery: '',
+      categoryFilter: 'all',
+      priceRange: [0, 200000] as [number, number],
+      ratingFilter: 0,
+      sortBy: 'popular' as const,
+      onlineOnly: false
+    };
+    return {
+      ...newState,
+      filteredTutors: filterAndSortTutors(newState)
+    };
   }),
 
-  get filteredTutors() {
-    const state = get();
-    let filtered = [...state.tutors];
-
-    // 검색어 필터
-    if (state.searchQuery) {
-      const query = state.searchQuery.toLowerCase();
-      filtered = filtered.filter(tutor => 
-        tutor.name.toLowerCase().includes(query) ||
-        tutor.description.toLowerCase().includes(query) ||
-        tutor.specialties.some(spec => spec.toLowerCase().includes(query)) ||
-        tutor.tags.some(tag => tag.toLowerCase().includes(query))
-      );
-    }
-
-    // 카테고리 필터
-    if (state.categoryFilter !== 'all') {
-      filtered = filtered.filter(tutor => tutor.category === state.categoryFilter);
-    }
-
-    // 가격 필터
-    filtered = filtered.filter(tutor => 
-      tutor.pricePerHour >= state.priceRange[0] && 
-      tutor.pricePerHour <= state.priceRange[1]
-    );
-
-    // 평점 필터
-    if (state.ratingFilter > 0) {
-      filtered = filtered.filter(tutor => tutor.rating >= state.ratingFilter);
-    }
-
-    // 온라인 필터
-    if (state.onlineOnly) {
-      filtered = filtered.filter(tutor => tutor.isOnline);
-    }
-
-    // 정렬
-    filtered.sort((a, b) => {
-      switch (state.sortBy) {
-        case 'rating':
-          return b.rating - a.rating;
-        case 'price_low':
-          return a.pricePerHour - b.pricePerHour;
-        case 'price_high':
-          return b.pricePerHour - a.pricePerHour;
-        case 'newest':
-          return 0; // 실제로는 생성일 기준
-        case 'popular':
-        default:
-          return b.studentCount - a.studentCount;
-      }
-    });
-
-    return filtered;
-  },
+  filteredTutors: [],
 
   get categories() {
     const state = get();

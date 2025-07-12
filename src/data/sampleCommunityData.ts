@@ -1,4 +1,4 @@
-import { CommunityPost, CommunityComment } from '@/store/communityStore';
+import { CommunityPost, CommunityComment } from '@/types';
 import { getCategoryById } from '@/constants/categories';
 
 // 샘플 사용자들
@@ -79,7 +79,6 @@ export const samplePosts: CommunityPost[] = [
     commentCount: 12,
     bookmarkCount: 23,
     isPublished: true,
-    isFeatured: true,
     expertInfo: {
       experience: '기타 강사 5년차',
       specialties: ['기타', '우쿨렐레', '음악이론'],

@@ -1,13 +1,15 @@
 "use client";
 
+import React from 'react';
 import { TutorDetailScreen } from '@/features/tutors/presentation/screens/TutorDetailScreen';
 
 interface TutorDetailPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export default function TutorDetailPage({ params }: TutorDetailPageProps) {
-  return <TutorDetailScreen tutorId={params.id} />;
+  const { id } = React.use(params);
+  return <TutorDetailScreen tutorId={id} />;
 }

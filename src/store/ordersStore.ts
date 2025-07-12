@@ -1,51 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export type OrderStatus = 'pending' | 'confirmed' | 'in_progress' | 'completed' | 'cancelled' | 'refunded';
-
-export interface OrderItem {
-  id: string;
-  tutorId: string;
-  tutorName: string;
-  tutorAvatar: string;
-  category: string;
-  categoryEmoji: string;
-  sessionType: 'single' | 'package';
-  sessions: number;
-  pricePerSession: number;
-  totalPrice: number;
-  description: string;
-  scheduledDate?: string;
-  scheduledTime?: string;
-  orderDate: string;
-  status: OrderStatus;
-  paymentMethod: 'card' | 'transfer' | 'kakao_pay';
-  receiptUrl?: string;
-  notes?: string;
-  review?: {
-    rating: number;
-    comment: string;
-    createdAt: string;
-  };
-}
-
-interface OrdersStore {
-  orders: OrderItem[];
-  
-  // 주문 관련
-  addOrder: (order: Omit<OrderItem, 'id' | 'orderDate'>) => void;
-  updateOrderStatus: (orderId: string, status: OrderStatus) => void;
-  cancelOrder: (orderId: string, reason?: string) => void;
-  addReview: (orderId: string, rating: number, comment: string) => void;
-  
-  // 필터링
-  getOrdersByStatus: (status: OrderStatus) => OrderItem[];
-  getOrdersByCategory: (category: string) => OrderItem[];
-  
-  // 통계
-  getTotalSpent: () => number;
-  getCompletedOrdersCount: () => number;
-}
+import { OrderItem, OrderStatus, OrdersStore } from '@/types';
 
 export const useOrdersStore = create<OrdersStore>()(
   persist(

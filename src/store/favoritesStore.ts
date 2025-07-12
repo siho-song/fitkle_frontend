@@ -1,54 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export interface FavoriteTutor {
-  id: string;
-  name: string;
-  avatar: string;
-  specialties: string[];
-  rating: number;
-  experience: string;
-  hourlyRate: number;
-  responseTime: string;
-  category: string;
-  addedDate: string;
-}
-
-export interface FavoritePost {
-  id: string;
-  title: string;
-  author: string;
-  category: string;
-  categoryEmoji: string;
-  type: 'question' | 'tip' | 'guide';
-  timeAgo: string;
-  likes: number;
-  comments: number;
-  views: number;
-  addedDate: string;
-  authorType: 'expert' | 'student';
-}
-
-interface FavoritesStore {
-  favoriteTutors: FavoriteTutor[];
-  favoritePosts: FavoritePost[];
-  
-  // 튜터 관련
-  addFavoriteTutor: (tutor: Omit<FavoriteTutor, 'addedDate'>) => void;
-  removeFavoriteTutor: (tutorId: string) => void;
-  isFavoriteTutor: (tutorId: string) => boolean;
-  
-  // 게시글 관련
-  addFavoritePost: (post: Omit<FavoritePost, 'addedDate'>) => void;
-  removeFavoritePost: (postId: string) => void;
-  isFavoritePost: (postId: string) => boolean;
-  
-  // 전체 삭제
-  clearAllFavorites: () => void;
-  
-  // 초기화 (개발용)
-  initializeWithSampleData: (tutors: Omit<FavoriteTutor, 'addedDate'>[], posts: Omit<FavoritePost, 'addedDate'>[]) => void;
-}
+import { FavoriteTutor, FavoritePost, FavoritesStore } from '@/types';
 
 export const useFavoritesStore = create<FavoritesStore>()(
   persist(

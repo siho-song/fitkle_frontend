@@ -1,34 +1,25 @@
 "use client";
 import React from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
-import { Section } from '@/components/layouts/Section';
-import { OnePointHeroSection } from '@/components/home/OnePointHeroSection';
-import { QuickLessonSection } from '@/components/home/QuickLessonSection';
-import { CategoryLessonSection } from '@/components/home/CategoryLessonSection';
-import { SuccessStorySection } from '@/components/home/SuccessStorySection';
+import { NewHeroSection } from '@/components/home/NewHeroSection';
+import { AppPromotionSection } from '@/components/home/AppPromotionSection';
+import { PopularTutorsSection } from '@/components/home/PopularTutorsSection';
+import { StudentReviewsSection } from '@/components/home/StudentReviewsSection';
 
 export const HomeScreen: React.FC = () => {
   return (
-    <MainLayout disableContainer>
-      {/* 원포인트 레슨 히어로 섹션 */}
-      <Section>
-        <OnePointHeroSection />
-      </Section>
+    <MainLayout disableContainer={false}>
+      {/* 새로운 히어로 섹션 - 슬로건 및 검색바 */}
+      <NewHeroSection />
       
-      {/* 빠른 레슨 섹션 */}
-      <Section>
-        <QuickLessonSection />
-      </Section>
+      {/* 앱 소개 및 마케팅 배너 */}
+      <AppPromotionSection />
       
-      {/* 카테고리별 레슨 */}
-      <Section>
-        <CategoryLessonSection />
-      </Section>
+      {/* 카테고리별 인기 튜터 */}
+      <PopularTutorsSection />
       
-      {/* 성공 스토리 */}
-      <Section disableContainer>
-        <SuccessStorySection />
-      </Section>
+      {/* 수강생 후기 */}
+      <StudentReviewsSection />
     </MainLayout>
   );
 }; 

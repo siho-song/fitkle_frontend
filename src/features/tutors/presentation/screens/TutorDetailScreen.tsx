@@ -4,11 +4,12 @@ import React from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import { TutorDetailHeader } from '@/components/tutors/detail/TutorDetailHeader';
 import { TutorDetailInfo } from '@/components/tutors/detail/TutorDetailInfo';
+import { TutorDetailPortfolio } from '@/components/tutors/detail/TutorDetailPortfolio';
 import { TutorDetailReviews } from '@/components/tutors/detail/TutorDetailReviews';
 import { TutorDetailBooking } from '@/components/tutors/detail/TutorDetailBooking';
 import { useTutorsStore } from '@/store/tutorsStore';
 import { useEffect, useState } from 'react';
-import { TutorItem } from '@/store/tutorsStore';
+import { TutorItem } from '@/types';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Link from 'next/link';
 
@@ -54,6 +55,7 @@ export const TutorDetailScreen: React.FC<TutorDetailScreenProps> = ({ tutorId })
             <div className="lg:col-span-2 space-y-8">
               <TutorDetailHeader tutor={tutor} />
               <TutorDetailInfo tutor={tutor} />
+              <TutorDetailPortfolio tutor={tutor} />
               <TutorDetailReviews tutor={tutor} />
             </div>
             

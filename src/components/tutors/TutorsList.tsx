@@ -29,10 +29,10 @@ export function TutorsList() {
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link 
-            href="/search"
+            href="/tutors"
             className="inline-block bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors font-medium"
           >
-            전체 검색하기
+            전체 튜터 보기
           </Link>
           <button
             onClick={() => window.location.reload()}
@@ -48,8 +48,8 @@ export function TutorsList() {
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredTutors.map((tutor) => (
-          <TutorCard key={tutor.id} tutor={tutor} />
+        {filteredTutors.map((tutor, index) => (
+          <TutorCard key={`${tutor.id}-${index}`} tutor={tutor} />
         ))}
       </div>
       

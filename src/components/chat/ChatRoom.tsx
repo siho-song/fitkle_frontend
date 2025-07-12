@@ -10,6 +10,10 @@ import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PaymentIcon from '@mui/icons-material/Payment';
 import StarIcon from '@mui/icons-material/Star';
 import CircleIcon from '@mui/icons-material/Circle';
+import { MessageTemplateSelector } from './MessageTemplateSelector';
+import { TemplateGuidePopup } from './TemplateGuidePopup';
+import { MessageTemplate } from '@/types/messageTemplate';
+import type { UserType } from '@/features/auth/types/auth';
 
 interface Message {
   id: string;
@@ -77,21 +81,30 @@ const mockMessages: Message[] = [
 
 interface ChatRoomProps {
   chatId: string;
+  userType?: UserType;
 }
 
-export function ChatRoom({ chatId }: ChatRoomProps) {
+export function ChatRoom({ chatId, userType = 'tutee' }: ChatRoomProps) {
   const [message, setMessage] = useState('');
   const [isTyping, setIsTyping] = useState(false);
+  const [isTemplateSelectorOpen, setIsTemplateSelectorOpen] = useState(false);
+  const [isOptionsMenuOpen, setIsOptionsMenuOpen] = useState(false);
+  const [isExitDialogOpen, setIsExitDialogOpen] = useState(false);
 
   // 현재 채팅방 정보 (실제로는 API에서 가져올 데이터)
-  const tutorInfo = {
-    name: '김셰프',
-    avatar: '👨‍🍳',
-    category: '요리',
-    isOnline: true,
-    rating: 4.9,
-    responseTime: '평균 3분'
+  const getChatRoomInfo = (chatId: string) => {
+    // 실제로는 chatId를 기반으로 API에서 데이터를 가져옴
+    const mockChatRooms = {
+      '1': { name: '김셰프', avatar: '👨‍🍳', category: '요리', isOnline: true, rating: 4.9, responseTime: '평균 3분' },
+      '2': { name: '이기타', avatar: '🎸', category: '악기', isOnline: true, rating: 4.8, responseTime: '평균 5분' },
+      '3': { name: '박트레이너', avatar: '💪', category: '운동', isOnline: false, rating: 4.7, responseTime: '평균 10분' },
+      '4': { name: '최영어', avatar: '🗣️', category: '언어', isOnline: true, rating: 4.9, responseTime: '평균 2분' },
+      '5': { name: '김아티스트', avatar: '🎨', category: '디자인', isOnline: false, rating: 4.6, responseTime: '평균 15분' },
+    };
+    return mockChatRooms[chatId as keyof typeof mockChatRooms] || mockChatRooms['1'];
   };
+
+  const chatRoomInfo = getChatRoomInfo(chatId);
 
   const handleSendMessage = () => {
     if (message.trim()) {
@@ -99,6 +112,18 @@ export function ChatRoom({ chatId }: ChatRoomProps) {
       console.log('Sending message:', message);
       setMessage('');
     }
+  };
+
+  const handleTemplateSelect = (template: MessageTemplate) => {
+    setMessage(template.content);
+  };
+
+  const handleExitChatRoom = () => {
+    setIsExitDialogOpen(false);
+    setIsOptionsMenuOpen(false);
+    // 실제로는 채팅방 나가기 API 호출
+    console.log('채팅방 나가기:', chatId);
+    // 채팅방 목록으로 이동하는 로직 추가
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -124,16 +149,16 @@ export function ChatRoom({ chatId }: ChatRoomProps) {
   };
 
   return (
-    <div className="h-full flex flex-col bg-white">
+    <div className="h-full flex flex-col bg-white rounded-xl overflow-hidden">
       {/* 채팅방 헤더 */}
       <div className="p-4 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
               <div className="w-10 h-10 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center text-lg">
-                {tutorInfo.avatar}
+                {chatRoomInfo.avatar}
               </div>
-              {tutorInfo.isOnline && (
+              {chatRoomInfo.isOnline && (
                 <CircleIcon 
                   className="absolute -bottom-1 -right-1 text-green-500" 
                   sx={{ fontSize: 12 }}
@@ -141,27 +166,44 @@ export function ChatRoom({ chatId }: ChatRoomProps) {
               )}
             </div>
             <div>
-              <h3 className="font-bold text-gray-900">{tutorInfo.name}</h3>
+              <h3 className="font-bold text-gray-900">{chatRoomInfo.name}</h3>
               <div className="flex items-center gap-2 text-xs text-gray-600">
-                <span>{tutorInfo.category}</span>
+                <span>{chatRoomInfo.category}</span>
                 <span>•</span>
                 <div className="flex items-center gap-1">
                   <StarIcon sx={{ fontSize: 12 }} className="text-yellow-400" />
-                  <span>{tutorInfo.rating}</span>
+                  <span>{chatRoomInfo.rating}</span>
                 </div>
                 <span>•</span>
-                <span>{tutorInfo.responseTime}</span>
+                <span>{chatRoomInfo.responseTime}</span>
               </div>
             </div>
           </div>
           
-          <div className="flex items-center gap-2">
-            <button className="px-4 py-2 bg-primary text-white rounded-lg text-sm font-medium hover:bg-primary/90 transition-colors">
-              결제하기
-            </button>
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+          <div className="flex items-center gap-2 relative">
+            <button 
+              onClick={() => setIsOptionsMenuOpen(!isOptionsMenuOpen)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors text-black"
+            >
               <MoreVertIcon />
             </button>
+            
+            {/* 옵션 메뉴 오버레이 */}
+            {isOptionsMenuOpen && (
+              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+                <div className="py-1">
+                  <button
+                    onClick={() => {
+                      setIsExitDialogOpen(true);
+                      setIsOptionsMenuOpen(false);
+                    }}
+                    className="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 transition-colors"
+                  >
+                    채팅방 나가기
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -248,6 +290,13 @@ export function ChatRoom({ chatId }: ChatRoomProps) {
             <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors" title="음성">
               <MicIcon className="text-gray-600" />
             </button>
+            <button 
+              onClick={() => setIsTemplateSelectorOpen(true)}
+              className="p-2 hover:bg-gray-100 rounded-lg transition-colors" 
+              title="메시지 템플릿"
+            >
+              <span className="text-gray-600">📝</span>
+            </button>
           </div>
 
           {/* 메시지 입력 */}
@@ -258,25 +307,73 @@ export function ChatRoom({ chatId }: ChatRoomProps) {
                 onChange={(e) => setMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="메시지를 입력하세요..."
-                className="w-full resize-none outline-none text-sm max-h-20"
+                className="w-full resize-none outline-none text-sm max-h-20 text-black"
                 rows={1}
               />
             </div>
-            <button
-              onClick={handleSendMessage}
-              disabled={!message.trim()}
-              className="p-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
-            >
-              <SendIcon />
-            </button>
+            <div className="flex items-center gap-2">
+              <TemplateGuidePopup userType={userType} />
+              <button
+                onClick={handleSendMessage}
+                disabled={!message.trim()}
+                className="p-3 bg-primary text-white rounded-full hover:bg-primary/90 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+              >
+                <SendIcon />
+              </button>
+            </div>
           </div>
         </div>
         
         {/* 도움말 */}
         <div className="mt-2 text-xs text-gray-500 text-center">
-          사진, 영상, 음성으로 더 자세한 피드백을 받아보세요
+          사진, 영상, 음성으로 더 자세한 피드백을 받아보세요 • 📝 버튼으로 메시지 템플릿 활용하기
         </div>
       </div>
+
+      {/* 메시지 템플릿 선택 모달 */}
+      <MessageTemplateSelector
+        userType={userType}
+        onTemplateSelect={handleTemplateSelect}
+        isOpen={isTemplateSelectorOpen}
+        onClose={() => setIsTemplateSelectorOpen(false)}
+      />
+
+      {/* 채팅방 나가기 확인 다이얼로그 */}
+      {isExitDialogOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4">
+              채팅방 나가기
+            </h3>
+            <p className="text-gray-600 mb-6">
+              정말 채팅방을 나가갪습니까?<br/>
+              나가기 후에는 이전 대화 내용을 확인할 수 없습니다.
+            </p>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setIsExitDialogOpen(false)}
+                className="flex-1 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+              >
+                취소
+              </button>
+              <button
+                onClick={handleExitChatRoom}
+                className="flex-1 px-4 py-2 text-white bg-red-500 rounded-lg hover:bg-red-600 transition-colors"
+              >
+                나가기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* 옵션 메뉴 외부 클릭 시 닫기 */}
+      {isOptionsMenuOpen && (
+        <div 
+          className="fixed inset-0 z-40" 
+          onClick={() => setIsOptionsMenuOpen(false)}
+        />
+      )}
     </div>
   );
 }

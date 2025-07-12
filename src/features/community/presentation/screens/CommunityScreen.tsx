@@ -37,7 +37,7 @@ export const CommunityScreen: React.FC = () => {
   };
 
   return (
-    <MainLayout disableContainer>
+    <MainLayout disableContainer={false}>
       {/* 구분선 */}
       <div className="w-full h-px bg-gray-200 mb-6"></div>
       

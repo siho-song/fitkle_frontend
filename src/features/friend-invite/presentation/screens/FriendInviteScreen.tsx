@@ -28,7 +28,7 @@ export const FriendInviteScreen: React.FC = () => {
   ];
 
   return (
-    <MainLayout>
+    <MainLayout disableContainer={false}>
       <div className="py-8">
         <div className="max-w-4xl mx-auto">
           {/* 헤더 */}

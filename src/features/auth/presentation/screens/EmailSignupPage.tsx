@@ -37,10 +37,10 @@ const EmailSignupPage: React.FC = () => {
             <Search size={32} className="text-black" />
           </div>
           <h3 className="text-[20px] font-bold text-black mb-2">
-            의뢰인으로 이용
+            튜티로 이용
           </h3>
           <p className="text-[15px] text-[#6B7280] text-center leading-[1.5]">
-            내가 원하는 서비스의 전문가를
+            내가 원하는 서비스의 튜터를
             <br />
             찾아서 도움을 받고 싶어요
           </p>
@@ -58,10 +58,10 @@ const EmailSignupPage: React.FC = () => {
             <Laptop size={32} className="text-black" />
           </div>
           <h3 className="text-[20px] font-bold text-black mb-2">
-            전문가로 활동
+            튜터로 활동
           </h3>
           <p className="text-[15px] text-[#6B7280] text-center leading-[1.5]">
-            내가 잘하는 분야의 전문가로
+            내가 잘하는 분야의 튜터로
             <br />
             활동하고 수익을 창출하고 싶어요
           </p>
