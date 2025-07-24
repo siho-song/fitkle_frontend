@@ -1,17 +1,16 @@
 "use client";
 
 import React from 'react';
-import { TutorItem } from '@/store/tutorsStore';
+import { TutorItem } from '@/types/entities/tutor';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import { formatResponseTime } from '@/utils/formatResponseTime';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import SchoolIcon from '@mui/icons-material/School';
 import WorkIcon from '@mui/icons-material/Work';
-import WifiIcon from '@mui/icons-material/Wifi';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import LanguageIcon from '@mui/icons-material/Language';
 import VerifiedIcon from '@mui/icons-material/Verified';
 
 interface TutorDetailHeaderProps {
@@ -26,18 +25,7 @@ export function TutorDetailHeader({ tutor }: TutorDetailHeaderProps) {
     if (isFavorite) {
       removeFavoriteTutor(tutor.id);
     } else {
-      addFavoriteTutor({
-        id: tutor.id,
-        name: tutor.name,
-        avatar: tutor.avatar,
-        category: tutor.category,
-        categoryEmoji: tutor.categoryEmoji,
-        rating: tutor.rating,
-        reviewCount: tutor.reviewCount,
-        pricePerHour: tutor.pricePerHour,
-        specialties: tutor.specialties,
-        addedAt: new Date().toISOString()
-      });
+      addFavoriteTutor(tutor);
     }
   };
 
@@ -100,15 +88,9 @@ export function TutorDetailHeader({ tutor }: TutorDetailHeaderProps) {
 
           {/* 상태 정보 */}
           <div className="flex flex-wrap gap-4 mb-6">
-            {tutor.isOnline && (
-              <div className="flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-800 rounded-full">
-                <WifiIcon sx={{ fontSize: 18 }} />
-                <span className="font-medium">온라인 수업</span>
-              </div>
-            )}
             <div className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-800 rounded-full">
               <AccessTimeIcon sx={{ fontSize: 18 }} />
-              <span className="font-medium">{tutor.responseTime} 응답</span>
+              <span className="font-medium">{formatResponseTime(tutor.responseTime)}</span>
             </div>
             <div className="flex items-center gap-2 px-3 py-1 bg-purple-100 text-purple-800 rounded-full">
               <VerifiedIcon sx={{ fontSize: 18 }} />
@@ -119,13 +101,6 @@ export function TutorDetailHeader({ tutor }: TutorDetailHeaderProps) {
           {/* 소개 */}
           <p className="text-gray-700 text-lg leading-relaxed mb-6">{tutor.introduction}</p>
 
-          {/* 언어 */}
-          {tutor.languages.length > 0 && (
-            <div className="flex items-center gap-2 text-gray-600">
-              <LanguageIcon sx={{ fontSize: 20 }} />
-              <span>사용 언어: {tutor.languages.join(', ')}</span>
-            </div>
-          )}
         </div>
       </div>
 

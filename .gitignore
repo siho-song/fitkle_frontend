@@ -103,3 +103,7 @@ temp/
 
 # YoYo AI version control directory
 .yoyo/
+
+# Use cases documentation (sensitive business logic)
+/usecases/
+/images/

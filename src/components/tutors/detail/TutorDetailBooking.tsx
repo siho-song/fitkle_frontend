@@ -1,14 +1,15 @@
 "use client";
 
 import React, { useState } from 'react';
-import { TutorItem } from '@/types';
+import { TutorItem, TutorService } from '@/types/entities/tutor';
+import { useRouter } from 'next/navigation';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import MessageIcon from '@mui/icons-material/Message';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-import { useFavoritesStore } from '@/store/favoritesStore';
+import ChatIcon from '@mui/icons-material/Chat';
 import { DatePicker } from '@/components/common/DatePicker';
+import { formatResponseTime } from '@/utils/formatResponseTime';
+import { ConsultationModal } from '@/components/modals/ConsultationModal';
 
 interface TutorDetailBookingProps {
   tutor: TutorItem;
@@ -19,17 +20,17 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
   const [selectedTime, setSelectedTime] = useState('');
   const [sessionCount, setSessionCount] = useState(1);
   const [sessionType, setSessionType] = useState<'single' | 'package'>('single');
-  const { isFavoriteTutor, addFavoriteTutor, removeFavoriteTutor } = useFavoritesStore();
+  const [selectedService, setSelectedService] = useState<TutorService | null>(null);
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
+  const router = useRouter();
 
-  const isFavorite = isFavoriteTutor(tutor.id);
-
-  const handleToggleFavorite = () => {
-    if (isFavorite) {
-      removeFavoriteTutor(tutor.id);
-    } else {
-      addFavoriteTutor(tutor.id);
+  // 첫 번째 활성 서비스를 기본으로 선택
+  React.useEffect(() => {
+    if (tutor.services && tutor.services.length > 0 && !selectedService) {
+      const activeService = tutor.services.find(service => service.isActive);
+      setSelectedService(activeService || tutor.services[0]);
     }
-  };
+  }, [tutor.services, selectedService]);
 
   const handleBooking = () => {
     if (!selectedDate || !selectedTime) {
@@ -37,21 +38,39 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
       return;
     }
     
-    // 실제로는 예약 API 호출
-    alert(`예약이 요청되었습니다!\n날짜: ${selectedDate}\n시간: ${selectedTime}\n세션: ${sessionCount}회`);
-  };
-
-  const handleContactTutor = () => {
-    // 실제로는 채팅/메시지 기능으로 연결
-    alert('튜터에게 메시지를 보냅니다.');
+    // 예약 페이지로 이동
+    const params = new URLSearchParams({
+      tutorId: tutor.id,
+      serviceId: selectedService?.id || '',
+      date: selectedDate,
+      time: selectedTime,
+      sessionCount: sessionCount.toString(),
+      sessionType,
+      totalPrice: calculateTotalPrice().toString()
+    });
+    
+    router.push(`/booking?${params.toString()}`);
   };
 
   const calculateTotalPrice = () => {
-    const basePrice = tutor.pricePerHour * sessionCount;
+    if (!selectedService) return 0;
+    const basePrice = selectedService.price * sessionCount;
     if (sessionType === 'package' && sessionCount >= 4) {
       return Math.floor(basePrice * 0.9); // 10% 할인
     }
     return basePrice;
+  };
+
+  const formatDuration = (minutes: number) => {
+    if (minutes >= 60) {
+      const hours = Math.floor(minutes / 60);
+      const remainingMinutes = minutes % 60;
+      if (remainingMinutes === 0) {
+        return `${hours}시간`;
+      }
+      return `${hours}시간 ${remainingMinutes}분`;
+    }
+    return `${minutes}분`;
   };
 
   const getAvailableDates = () => {
@@ -88,16 +107,41 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
     return tutor.availability[dayMap[dayOfWeek]] || [];
   };
 
+  const activeServices = tutor.services?.filter(service => service.isActive) || [];
+
   return (
     <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-8">
-      {/* 가격 정보 */}
-      <div className="text-center mb-6">
-        <div className="text-3xl font-bold text-primary flex items-center justify-center gap-1">
-          <AttachMoneyIcon sx={{ fontSize: 32 }} />
-          {tutor.pricePerHour.toLocaleString()}원
+      {/* 서비스 선택 */}
+      {activeServices.length > 0 && (
+        <div className="mb-6">
+          <label className="block text-sm font-medium text-gray-700 mb-3">서비스 선택</label>
+          <div className="space-y-2">
+            {activeServices.map((service) => (
+              <button
+                key={service.id}
+                onClick={() => setSelectedService(service)}
+                className={`w-full text-left p-3 rounded-lg border transition-colors ${
+                  selectedService?.id === service.id
+                    ? 'bg-primary text-white border-primary'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                <div className="flex justify-between items-center">
+                  <div>
+                    <div className="font-medium">{service.name}</div>
+                    <div className="text-sm opacity-80">
+                      {formatDuration(service.duration)} • {service.description}
+                    </div>
+                  </div>
+                  <div className="font-bold">
+                    {service.price.toLocaleString()}원
+                  </div>
+                </div>
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="text-gray-600">/ 시간</div>
-      </div>
+      )}
 
       {/* 세션 타입 선택 */}
       <div className="mb-6">
@@ -202,54 +246,58 @@ export function TutorDetailBooking({ tutor }: TutorDetailBookingProps) {
             {calculateTotalPrice().toLocaleString()}원
           </span>
         </div>
-        {sessionType === 'package' && sessionCount >= 4 && (
+        {sessionType === 'package' && sessionCount >= 4 && selectedService && (
           <div className="text-sm text-green-600 mt-1">
-            패키지 할인 적용 (-{(tutor.pricePerHour * sessionCount * 0.1).toLocaleString()}원)
+            패키지 할인 적용 (-{(selectedService.price * sessionCount * 0.1).toLocaleString()}원)
+          </div>
+        )}
+        {selectedService && (
+          <div className="text-xs text-gray-500 mt-1">
+            {selectedService.name} • {formatDuration(selectedService.duration)}
           </div>
         )}
       </div>
 
-      {/* 예약 버튼 */}
-      <button
-        onClick={handleBooking}
-        disabled={!selectedDate || !selectedTime}
-        className="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed mb-3"
-      >
-        수업 예약하기
-      </button>
-
-      {/* 추가 액션 버튼들 */}
-      <div className="grid grid-cols-2 gap-3">
+      {/* 버튼들 */}
+      <div className="space-y-3">
+        {/* 사전상담 버튼 */}
         <button
-          onClick={handleContactTutor}
-          className="flex items-center justify-center gap-2 py-3 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+          onClick={() => setIsConsultationModalOpen(true)}
+          disabled={!selectedService}
+          className="w-full border-2 border-primary text-primary py-4 rounded-lg font-bold text-lg hover:bg-primary hover:text-white transition-colors disabled:border-gray-300 disabled:text-gray-400 disabled:cursor-not-allowed flex items-center justify-center gap-2"
         >
-          <MessageIcon sx={{ fontSize: 18 }} />
-          문의하기
+          <ChatIcon sx={{ fontSize: 20 }} />
+          사전상담하기
         </button>
         
+        {/* 예약 버튼 */}
         <button
-          onClick={handleToggleFavorite}
-          className={`flex items-center justify-center gap-2 py-3 rounded-lg transition-colors ${
-            isFavorite
-              ? 'bg-red-50 text-red-600 border border-red-200'
-              : 'border border-gray-300 text-gray-700 hover:bg-gray-50'
-          }`}
+          onClick={handleBooking}
+          disabled={!selectedDate || !selectedTime || !selectedService}
+          className="w-full bg-primary text-white py-4 rounded-lg font-bold text-lg hover:bg-primary/90 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
         >
-          <BookmarkIcon sx={{ fontSize: 18 }} />
-          {isFavorite ? '찜 해제' : '찜하기'}
+          수업 예약하기
         </button>
       </div>
+
 
       {/* 응답 시간 안내 */}
       <div className="mt-6 p-3 bg-blue-50 rounded-lg">
         <div className="text-sm text-blue-800">
-          <strong>응답 시간:</strong> {tutor.responseTime}
+          <strong>{formatResponseTime(tutor.responseTime)}</strong>
         </div>
         <div className="text-xs text-blue-600 mt-1">
           보통 빠른 시간 내에 답변드립니다.
         </div>
       </div>
+
+      {/* 상담 모달 */}
+      <ConsultationModal
+        isOpen={isConsultationModalOpen}
+        onClose={() => setIsConsultationModalOpen(false)}
+        tutor={tutor}
+        selectedService={selectedService}
+      />
     </div>
   );
 }

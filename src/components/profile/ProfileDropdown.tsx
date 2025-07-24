@@ -69,6 +69,9 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
       case "프로필 관리":
         handleProfileClick();
         break;
+      case "튜터 프로필 관리":
+        router.push(ROUTES.TUTOR_PROFILE);
+        break;
       case "내 정보 관리":
         router.push(ROUTES.PROFILE_MANAGE);
         break;
@@ -139,10 +142,16 @@ export const ProfileDropdown: React.FC<ProfileDropdownProps> = ({
         >
           {/* 메뉴 항목들 */}
           {userType === 'tutor' && (
-            <MenuItem
-              text="프로필 관리"
-              onClick={() => handleMenuClick("프로필 관리")}
-            />
+            <>
+              <MenuItem
+                text="프로필 관리"
+                onClick={() => handleMenuClick("프로필 관리")}
+              />
+              <MenuItem
+                text="튜터 프로필 관리"
+                onClick={() => handleMenuClick("튜터 프로필 관리")}
+              />
+            </>
           )}
 
           <MenuItem

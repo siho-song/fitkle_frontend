@@ -88,9 +88,9 @@ export interface FavoritesStore extends BaseStore {
   favoritePosts: FavoritePost[];
   
   // 액션들
-  addFavoriteTutor: (tutorId: string) => void;
+  addFavoriteTutor: (tutor: TutorItem) => void;
   removeFavoriteTutor: (tutorId: string) => void;
-  addFavoritePost: (postId: string) => void;
+  addFavoritePost: (post: CommunityPost) => void;
   removeFavoritePost: (postId: string) => void;
   
   // 헬퍼 함수들

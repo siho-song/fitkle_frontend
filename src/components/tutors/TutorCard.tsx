@@ -2,16 +2,15 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { TutorItem } from '@/store/tutorsStore';
+import { TutorItem } from '@/types/entities/tutor';
 import { useFavoritesStore } from '@/store/favoritesStore';
+import { formatResponseTime } from '@/utils/formatResponseTime';
 import StarIcon from '@mui/icons-material/Star';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import PersonIcon from '@mui/icons-material/Person';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import WifiIcon from '@mui/icons-material/Wifi';
 import SchoolIcon from '@mui/icons-material/School';
-import LanguageIcon from '@mui/icons-material/Language';
 
 interface TutorCardProps {
   tutor: TutorItem;
@@ -28,18 +27,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
     if (isFavorite) {
       removeFavoriteTutor(tutor.id);
     } else {
-      addFavoriteTutor({
-        id: tutor.id,
-        name: tutor.name,
-        avatar: tutor.avatar,
-        category: tutor.category,
-        categoryEmoji: tutor.categoryEmoji,
-        rating: tutor.rating,
-        reviewCount: tutor.reviewCount,
-        pricePerHour: tutor.pricePerHour,
-        specialties: tutor.specialties,
-        addedAt: new Date().toISOString()
-      });
+      addFavoriteTutor(tutor);
     }
   };
 
@@ -93,12 +81,6 @@ export function TutorCard({ tutor }: TutorCardProps) {
             <SchoolIcon sx={{ fontSize: 16 }} />
             <span>{tutor.studentCount}명 수강</span>
           </div>
-          {tutor.isOnline && (
-            <div className="flex items-center gap-1 text-blue-600 text-sm">
-              <WifiIcon sx={{ fontSize: 16 }} />
-              <span>온라인</span>
-            </div>
-          )}
         </div>
 
         {/* 설명 */}
@@ -107,7 +89,7 @@ export function TutorCard({ tutor }: TutorCardProps) {
         {/* 전문 분야 */}
         <div className="mb-4">
           <div className="flex flex-wrap gap-2">
-            {tutor.specialties.slice(0, 4).map((specialty) => (
+            {tutor.specialties.slice(0, 4).map((specialty: string) => (
               <span 
                 key={specialty}
                 className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-sm"
@@ -128,21 +110,14 @@ export function TutorCard({ tutor }: TutorCardProps) {
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
               <AccessTimeIcon sx={{ fontSize: 16 }} />
-              <span>{tutor.responseTime}</span>
+              <span>{formatResponseTime(tutor.responseTime)}</span>
             </div>
-            {tutor.languages.length > 0 && (
-              <div className="flex items-center gap-1">
-                <LanguageIcon sx={{ fontSize: 16 }} />
-                <span>{tutor.languages.slice(0, 2).join(', ')}</span>
-              </div>
-            )}
           </div>
           
           <div className="text-right">
-            <div className="text-2xl font-bold text-primary">
-              {tutor.pricePerHour.toLocaleString()}원
+            <div className="text-md font-bold text-primary">
+              {tutor.pricePerHour.toLocaleString()}원/시간
             </div>
-            <div className="text-sm text-gray-500">/ 시간</div>
           </div>
         </div>
       </div>

@@ -3,13 +3,11 @@
 import React from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import { TutorDetailHeader } from '@/components/tutors/detail/TutorDetailHeader';
-import { TutorDetailInfo } from '@/components/tutors/detail/TutorDetailInfo';
-import { TutorDetailPortfolio } from '@/components/tutors/detail/TutorDetailPortfolio';
-import { TutorDetailReviews } from '@/components/tutors/detail/TutorDetailReviews';
+import { TutorDetailTabs } from '@/components/tutors/detail/TutorDetailTabs';
 import { TutorDetailBooking } from '@/components/tutors/detail/TutorDetailBooking';
 import { useTutorsStore } from '@/store/tutorsStore';
 import { useEffect, useState } from 'react';
-import { TutorItem } from '@/types';
+import { TutorItem } from '@/types/entities/tutor';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Link from 'next/link';
 
@@ -47,16 +45,19 @@ export const TutorDetailScreen: React.FC<TutorDetailScreenProps> = ({ tutorId })
   }
 
   return (
-    <MainLayout>
+    <MainLayout disableContainer={true}>
       <div className="py-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="max-w-7xl mx-auto px-14">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* 메인 콘텐츠 */}
-            <div className="lg:col-span-2 space-y-8">
-              <TutorDetailHeader tutor={tutor} />
-              <TutorDetailInfo tutor={tutor} />
-              <TutorDetailPortfolio tutor={tutor} />
-              <TutorDetailReviews tutor={tutor} />
+            <div className="lg:col-span-3">
+              {/* 튜터 헤더 */}
+              <div className="mb-8">
+                <TutorDetailHeader tutor={tutor} />
+              </div>
+              
+              {/* 탭 컨텐츠 */}
+              <TutorDetailTabs tutor={tutor} />
             </div>
             
             {/* 사이드바 - 예약 */}

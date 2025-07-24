@@ -16,11 +16,21 @@ export interface TutorAvailability {
   [key: string]: string[]; // 요일별 가능 시간
 }
 
+export interface TutorService {
+  id: string;
+  name: string; // 서비스 이름 (예: "보컬 레슨", "기타 레슨")
+  description: string;
+  duration: number; // 분 단위 (30, 50, 60 등)
+  price: number; // 해당 duration에 대한 가격
+  category: string;
+  isActive: boolean;
+}
+
 export interface TutorStats {
   rating: number;
   reviewCount: number;
   studentCount: number;
-  responseTime: string;
+  responseTime: number; // minutes
 }
 
 export interface TutorItem {
@@ -37,15 +47,15 @@ export interface TutorItem {
   pricePerHour: number;
   description: string;
   tags: string[];
-  isOnline: boolean;
-  responseTime: string;
-  languages: string[];
+  responseTime: number; // minutes
   education: string[];
   certifications: string[];
   introduction: string;
   achievements: string[];
   portfolio: PortfolioItem[];
   availability: TutorAvailability;
+  consultationGuide: string; // 상담 시 학생이 작성하면 좋은 정보에 대한 가이드
+  services: TutorService[]; // 튜터가 제공하는 서비스 목록
 }
 
 export interface TutorSearchParams {

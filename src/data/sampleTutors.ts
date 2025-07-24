@@ -15,9 +15,7 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 50000,
     description: 'React 개발 실무 경험을 바탕으로 실전 프로젝트 중심의 수업을 진행합니다.',
     tags: ['프론트엔드', '웹개발', '실무경험', '프로젝트'],
-    isOnline: true,
-    responseTime: '평균 2시간',
-    languages: ['한국어', '영어'],
+    responseTime: 120,
     education: ['서울대학교 컴퓨터공학과', '카이스트 대학원'],
     certifications: ['AWS Certified Developer', 'Google Cloud Professional'],
     introduction: '안녕하세요! 현재 네이버에서 프론트엔드 개발자로 일하고 있는 김민수입니다. 실무에서 쌓은 경험을 바탕으로 실전 중심의 수업을 제공합니다.',
@@ -50,6 +48,7 @@ export const sampleTutors: TutorItem[] = [
         projectUrl: 'https://example-ecommerce.com'
       }
     ],
+    consultationGuide: '상담 시 현재 프로그래밍 경험 수준(초급/중급/고급), 관심 있는 기술 스택(React, JavaScript, TypeScript 등), 구체적인 학습 목표(취업 준비, 개인 프로젝트, 실무 스킬 향상 등)를 알려주시면 더욱 맞춤형 수업을 제공할 수 있습니다. 현재 진행 중인 프로젝트나 막히는 부분이 있다면 함께 공유해 주세요.',
     availability: {
       'mon': ['19:00', '20:00', '21:00'],
       'tue': ['19:00', '20:00', '21:00'],
@@ -58,7 +57,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['19:00', '20:00', '21:00'],
       'sat': ['10:00', '11:00', '14:00', '15:00', '16:00'],
       'sun': ['10:00', '11:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_001_1',
+        name: 'React 개발 레슨',
+        description: 'React 기초부터 고급 개념까지 실무 중심으로 학습합니다.',
+        duration: 60,
+        price: 50000,
+        category: '프로그래밍',
+        isActive: true
+      },
+      {
+        id: 'service_001_2',
+        name: 'JavaScript/TypeScript 마스터',
+        description: 'JavaScript 핵심 개념과 TypeScript 활용법을 배웁니다.',
+        duration: 90,
+        price: 70000,
+        category: '프로그래밍',
+        isActive: true
+      },
+      {
+        id: 'service_001_3',
+        name: 'Next.js 프로젝트 개발',
+        description: 'Next.js를 활용한 실제 프로젝트 개발 과정을 경험합니다.',
+        duration: 120,
+        price: 90000,
+        category: '프로그래밍',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_002',
@@ -74,9 +102,7 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 45000,
     description: 'Google에서 UX 디자이너로 근무한 경험을 바탕으로 실무 중심의 디자인 교육을 제공합니다.',
     tags: ['UX디자인', 'UI디자인', '실무경험', 'Google'],
-    isOnline: true,
-    responseTime: '평균 1시간',
-    languages: ['한국어', '영어'],
+    responseTime: 60,
     education: ['홍익대학교 시각디자인과', 'Parsons School of Design'],
     certifications: ['Google UX Design Certificate', 'Adobe Certified Expert'],
     introduction: 'Google에서 5년간 UX 디자이너로 일한 경험이 있습니다. 디자인 씽킹부터 프로토타이핑까지 전 과정을 가르쳐드립니다.',
@@ -109,6 +135,7 @@ export const sampleTutors: TutorItem[] = [
         projectUrl: 'https://example-fintech.com'
       }
     ],
+    consultationGuide: '디자인 경험 수준과 사용해본 도구들(Figma, Adobe 제품군 등)에 대해 알려주세요. 어떤 분야의 디자인에 관심이 있는지(웹/앱 UI, UX 리서치, 브랜딩 등), 포트폴리오 제작이나 취업 준비 등 구체적인 목표를 공유해 주시면 체계적인 학습 로드맵을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['09:00', '10:00', '14:00', '15:00'],
       'tue': ['09:00', '10:00', '14:00', '15:00'],
@@ -117,7 +144,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['09:00', '10:00', '14:00', '15:00'],
       'sat': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00'],
       'sun': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_002_1',
+        name: 'UI/UX 디자인 기초',
+        description: 'Figma를 활용한 UI/UX 디자인 기본기를 익힙니다.',
+        duration: 60,
+        price: 45000,
+        category: '디자인',
+        isActive: true
+      },
+      {
+        id: 'service_002_2',
+        name: '프로토타이핑 워크숍',
+        description: '실제 프로젝트를 통한 프로토타이핑 과정을 학습합니다.',
+        duration: 90,
+        price: 60000,
+        category: '디자인',
+        isActive: true
+      },
+      {
+        id: 'service_002_3',
+        name: 'Adobe Creative Suite 마스터',
+        description: 'Photoshop, Illustrator 등 Adobe 툴 활용법을 배웁니다.',
+        duration: 50,
+        price: 40000,
+        category: '디자인',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_003',
@@ -133,14 +189,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 35000,
     description: '10년간의 영어 교육 경험과 해외 거주 경험을 바탕으로 실용적인 영어를 가르칩니다.',
     tags: ['영어회화', '비즈니스영어', '토익', '해외거주'],
-    isOnline: true,
-    responseTime: '평균 30분',
-    languages: ['한국어', '영어'],
+    responseTime: 30,
     education: ['연세대학교 영어영문학과', 'University of California, Berkeley'],
     certifications: ['TESOL Certificate', 'Cambridge CELTA'],
     introduction: '미국에서 5년간 거주하며 현지에서 영어 교육을 담당했습니다. 자연스러운 영어 표현을 중심으로 가르쳐드립니다.',
     achievements: ['YBM 우수 강사상', '토익 만점 달성자'],
     portfolio: [],
+    consultationGuide: '현재 영어 실력 수준(초급/중급/고급), 주요 학습 목표(회화, 비즈니스 영어, 시험 준비 등), 선호하는 학습 스타일을 알려주세요. TOEIC이나 IELTS 등 목표 점수가 있거나, 특정 상황에서 사용할 영어(프레젠테이션, 면접, 일상 대화 등)가 있다면 구체적으로 말씀해 주시면 효과적인 맞춤 수업을 진행할 수 있습니다.',
     availability: {
       'mon': ['06:00', '07:00', '08:00', '20:00', '21:00'],
       'tue': ['06:00', '07:00', '08:00', '20:00', '21:00'],
@@ -149,7 +204,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['06:00', '07:00', '08:00', '20:00', '21:00'],
       'sat': ['08:00', '09:00', '10:00', '11:00', '12:00', '14:00', '15:00'],
       'sun': ['08:00', '09:00', '10:00', '11:00', '12:00', '14:00', '15:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_003_1',
+        name: '영어회화 레슨',
+        description: '자연스러운 영어 표현과 발음 교정에 중점을 둔 회화 수업입니다.',
+        duration: 50,
+        price: 35000,
+        category: '언어',
+        isActive: true
+      },
+      {
+        id: 'service_003_2',
+        name: 'TOEIC 집중 코칭',
+        description: 'TOEIC 고득점을 위한 문제 유형별 전략과 실전 연습입니다.',
+        duration: 60,
+        price: 40000,
+        category: '언어',
+        isActive: true
+      },
+      {
+        id: 'service_003_3',
+        name: '비즈니스 영어 마스터',
+        description: '프레젠테이션, 미팅, 이메일 등 업무 상황별 영어를 학습합니다.',
+        duration: 90,
+        price: 55000,
+        category: '언어',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_004',
@@ -165,14 +249,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 60000,
     description: '클래식부터 재즈까지, 체계적인 피아노 교육과 음악 이론을 함께 가르쳐드립니다.',
     tags: ['피아노', '클래식', '재즈', '음악이론'],
-    isOnline: false,
-    responseTime: '평균 4시간',
-    languages: ['한국어'],
+    responseTime: 240,
     education: ['서울대학교 음악대학 작곡과', 'Juilliard School'],
     certifications: ['국제피아노콩쿠르 입상', '음악지도사 자격증'],
     introduction: '줄리어드 음대 출신으로 클래식부터 재즈까지 다양한 장르의 피아노를 가르칩니다. 학생 개인의 수준에 맞춘 맞춤 수업을 제공합니다.',
     achievements: ['쇼팽 국제피아노 콩쿠르 본선 진출', 'KBS 클래식 음악회 출연'],
     portfolio: [],
+    consultationGuide: '피아노 연주 경험과 현재 수준을 알려주세요(완전 초보자, 기초 연주 가능, 중급 이상 등). 선호하는 음악 장르(클래식, 재즈, 팝 등)와 학습 목표(취미, 음대 입시, 연주회 준비 등)를 구체적으로 말씀해 주시면 개인 맞춤형 커리큘럼을 제공해 드릴 수 있습니다. 배우고 싶은 특정 곡이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['14:00', '15:00', '16:00', '17:00'],
       'tue': ['14:00', '15:00', '16:00', '17:00'],
@@ -181,7 +264,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['14:00', '15:00', '16:00', '17:00'],
       'sat': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00'],
       'sun': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_004_1',
+        name: '피아노 레슨',
+        description: '클래식부터 재즈까지 개인 수준에 맞춘 피아노 연주법을 배웁니다.',
+        duration: 60,
+        price: 60000,
+        category: '음악',
+        isActive: true
+      },
+      {
+        id: 'service_004_2',
+        name: '음악 이론 & 작곡',
+        description: '음악 이론 기초부터 작곡 실습까지 체계적으로 학습합니다.',
+        duration: 90,
+        price: 80000,
+        category: '음악',
+        isActive: true
+      },
+      {
+        id: 'service_004_3',
+        name: '재즈 피아노 특강',
+        description: '재즈 화성과 즉흥연주 기법을 집중적으로 배웁니다.',
+        duration: 50,
+        price: 55000,
+        category: '음악',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_005',
@@ -197,14 +309,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 45000,
     description: '르꼬르동 블루 출신 셰프가 알려주는 홈쿠킹부터 전문 요리까지 배워보세요.',
     tags: ['한식', '베이킹', '홈쿠킹', '르꼬르동블루'],
-    isOnline: false,
-    responseTime: '평균 2시간',
-    languages: ['한국어', '프랑스어'],
+    responseTime: 120,
     education: ['Le Cordon Bleu Paris', '경희대학교 조리학과'],
     certifications: ['조리기능장', '제과제빵기능사'],
     introduction: '파리 르꼬르동 블루에서 수학한 후 미슐랭 레스토랑에서 근무했습니다. 기초부터 전문 요리까지 단계별로 가르쳐드립니다.',
     achievements: ['미슐랭 1스타 레스토랑 수셰프', '요리 대회 금상 수상'],
     portfolio: [],
+    consultationGuide: '요리 경험 수준과 주방 환경(사용 가능한 도구, 오븐 유무 등)을 알려주세요. 관심 있는 요리 분야(한식, 베이킹, 디저트 등), 특별히 배우고 싶은 요리나 기법이 있는지 구체적으로 말씀해 주시면 단계별 맞춤 수업을 준비해 드릴 수 있습니다. 식재료 알레르기나 식단 제한사항이 있다면 미리 알려주세요.',
     availability: {
       'mon': ['10:00', '11:00', '15:00', '16:00'],
       'tue': ['10:00', '11:00', '15:00', '16:00'],
@@ -213,7 +324,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['10:00', '11:00', '15:00', '16:00'],
       'sat': ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00'],
       'sun': ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_005_1',
+        name: '한식 요리 클래스',
+        description: '전통 한식부터 현대적 한식까지 체계적으로 배웁니다.',
+        duration: 120,
+        price: 80000,
+        category: '요리',
+        isActive: true
+      },
+      {
+        id: 'service_005_2',
+        name: '베이킹 & 디저트',
+        description: '기본 베이킹부터 고급 디저트 제작까지 단계별로 학습합니다.',
+        duration: 90,
+        price: 60000,
+        category: '요리',
+        isActive: true
+      },
+      {
+        id: 'service_005_3',
+        name: '홈쿠킹 마스터',
+        description: '집에서 쉽게 만들 수 있는 실용적인 요리법을 배웁니다.',
+        duration: 60,
+        price: 45000,
+        category: '요리',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_006',
@@ -229,14 +369,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 40000,
     description: '개인의 체력과 목표에 맞춘 맞춤형 운동 프로그램을 제공합니다.',
     tags: ['헬스', '요가', '필라테스', '다이어트'],
-    isOnline: true,
-    responseTime: '평균 1시간',
-    languages: ['한국어'],
+    responseTime: 60,
     education: ['체육대학교 운동학과', 'NSCA 자격증'],
     certifications: ['생활스포츠지도사', '요가강사자격증', 'NSCA-CPT'],
     introduction: '7년간 피트니스 센터에서 PT를 담당했습니다. 개인별 맞춤 운동 프로그램으로 건강한 몸만들기를 도와드립니다.',
     achievements: ['피트니스 대회 입상', '유튜브 운동채널 10만 구독자'],
     portfolio: [],
+    consultationGuide: '현재 운동 경험과 체력 수준, 주요 운동 목표(체중 감량, 근육 증가, 체력 향상, 자세 교정 등)를 알려주세요. 관심 있는 운동 종목(헬스, 요가, 필라테스 등)과 운동 가능한 환경(헬스장, 홈트레이닝 등), 부상 이력이나 건강상 주의사항이 있다면 미리 말씀해 주시면 안전하고 효과적인 맞춤 운동 프로그램을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['06:00', '07:00', '18:00', '19:00', '20:00'],
       'tue': ['06:00', '07:00', '18:00', '19:00', '20:00'],
@@ -245,7 +384,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['06:00', '07:00', '18:00', '19:00', '20:00'],
       'sat': ['07:00', '08:00', '09:00', '10:00', '11:00', '14:00', '15:00'],
       'sun': ['07:00', '08:00', '09:00', '10:00', '11:00', '14:00', '15:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_006_1',
+        name: '퍼스널 트레이닝',
+        description: '개인 목표에 맞춘 1:1 맞춤형 운동 프로그램을 제공합니다.',
+        duration: 60,
+        price: 50000,
+        category: '운동',
+        isActive: true
+      },
+      {
+        id: 'service_006_2',
+        name: '요가 & 필라테스',
+        description: '유연성과 코어 강화를 위한 요가와 필라테스 수업입니다.',
+        duration: 50,
+        price: 35000,
+        category: '운동',
+        isActive: true
+      },
+      {
+        id: 'service_006_3',
+        name: '홈트레이닝 코칭',
+        description: '집에서 할 수 있는 효과적인 운동법과 동기부여를 제공합니다.',
+        duration: 30,
+        price: 25000,
+        category: '운동',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_007',
@@ -261,14 +429,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 40000,
     description: '베이징대 출신이 알려주는 정통 중국어, HSK부터 비즈니스 중국어까지 완벽 마스터!',
     tags: ['중국어', 'HSK', '베이징대', '비즈니스중국어'],
-    isOnline: true,
-    responseTime: '평균 2시간',
-    languages: ['한국어', '중국어', '영어'],
+    responseTime: 120,
     education: ['베이징대학교 중어중문학과', '서울대학교 중어중문학과'],
     certifications: ['HSK 6급', '중국어교원자격증'],
     introduction: '베이징대에서 5년간 수학하며 현지 문화와 언어를 완벽히 습득했습니다. 기초부터 고급까지 단계별 맞춤 수업을 제공합니다.',
     achievements: ['HSK 만점 달성', '중국어 번역대회 우수상'],
     portfolio: [],
+    consultationGuide: '현재 중국어 수준(완전 초보자, 기초 회화 가능, 중급 이상 등)과 학습 목표(HSK 시험 준비, 비즈니스 중국어, 여행 회화 등)를 알려주세요. 선호하는 학습 방식(회화 중심, 문법 중심, 실용 표현 등)과 특별히 관심 있는 중국 문화 분야가 있다면 함께 말씀해 주시면 흥미롭고 실용적인 수업을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['09:00', '10:00', '14:00', '15:00', '20:00'],
       'tue': ['09:00', '10:00', '14:00', '15:00', '20:00'],
@@ -277,7 +444,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['09:00', '10:00', '14:00', '15:00', '20:00'],
       'sat': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00'],
       'sun': ['10:00', '11:00', '12:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_007_1',
+        name: '중글 회화 레슨',
+        description: '자연스러운 중글 표현과 발음 교정에 중점을 둔 수업입니다.',
+        duration: 50,
+        price: 40000,
+        category: '어학',
+        isActive: true
+      },
+      {
+        id: 'service_007_2',
+        name: 'HSK 시험 대비',
+        description: 'HSK 각 급수별 맞춤형 학습과 실전 문제 풀이를 제공합니다.',
+        duration: 60,
+        price: 45000,
+        category: '어학',
+        isActive: true
+      },
+      {
+        id: 'service_007_3',
+        name: '비즈니스 중글 & 문화',
+        description: '비즈니스 상황에서 사용하는 중글과 중국 문화를 함께 배웁니다.',
+        duration: 90,
+        price: 60000,
+        category: '어학',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_008',
@@ -293,14 +489,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 55000,
     description: '사진 작가가 알려주는 전문적인 사진 촬영 기법과 보정 노하우를 배워보세요.',
     tags: ['사진촬영', '인물사진', '보정', '작가'],
-    isOnline: false,
-    responseTime: '평균 3시간',
-    languages: ['한국어'],
+    responseTime: 180,
     education: ['중앙대학교 사진학과', '뉴욕 사진학교'],
     certifications: ['사진기능사', 'Adobe Certified Expert'],
     introduction: '6년간 프로 사진작가로 활동하며 다양한 분야의 사진을 촬영했습니다. 기초부터 전문 기법까지 체계적으로 가르쳐드립니다.',
     achievements: ['사진공모전 대상 수상', '개인전 5회 개최'],
     portfolio: [],
+    consultationGuide: '사진 촬영 경험과 보유하고 계신 장비(카메라, 렌즈 등)를 알려주세요. 관심 있는 사진 분야(인물, 풍경, 상품, 스트리트 등)와 학습 목표(취미, 포트폴리오 제작, 전문 작가 준비 등)를 구체적으로 말씀해 주시면 단계별 맞춤 수업과 실습 프로젝트를 제공해 드릴 수 있습니다. 특히 배우고 싶은 촬영 기법이나 보정 스킬이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['13:00', '14:00', '15:00', '16:00'],
       'tue': ['13:00', '14:00', '15:00', '16:00'],
@@ -309,7 +504,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['13:00', '14:00', '15:00', '16:00'],
       'sat': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
       'sun': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_008_1',
+        name: '인물 사진 촬영법',
+        description: '자연스러운 인물 사진 촬영을 위한 조명과 구도 기법을 배웁니다.',
+        duration: 90,
+        price: 70000,
+        category: '사진',
+        isActive: true
+      },
+      {
+        id: 'service_008_2',
+        name: 'Lightroom & Photoshop 보정',
+        description: '전문적인 사진 보정과 색감 조정 기술을 익힙니다.',
+        duration: 60,
+        price: 55000,
+        category: '사진',
+        isActive: true
+      },
+      {
+        id: 'service_008_3',
+        name: '풍경 사진 마스터',
+        description: '아름다운 풍경 사진을 위한 촬영 기법과 현장 노하우를 전수합니다.',
+        duration: 120,
+        price: 85000,
+        category: '사진',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_009',
@@ -325,14 +549,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 55000,
     description: '네이버 AI 연구소 출신 개발자가 알려주는 실무 중심의 Python과 머신러닝을 배워보세요.',
     tags: ['Python', '머신러닝', '데이터분석', 'AI'],
-    isOnline: true,
-    responseTime: '평균 1시간',
-    languages: ['한국어', '영어'],
+    responseTime: 60,
     education: ['KAIST 전산학과', 'Stanford University AI 과정'],
     certifications: ['TensorFlow Developer Certificate', 'AWS ML Specialty'],
     introduction: '네이버 AI 연구소에서 5년간 머신러닝 엔지니어로 근무했습니다. 실무에서 사용하는 기술을 중심으로 가르쳐드립니다.',
     achievements: ['NIPS 논문 발표', 'Kaggle Competition 상위 1%'],
     portfolio: [],
+    consultationGuide: '프로그래밍 경험 수준과 Python 기초 지식 정도를 알려주세요. 관심 있는 분야(웹 개발, 데이터 분석, 머신러닝, AI 등)와 구체적인 학습 목표(취업 준비, 개인 프로젝트, 데이터 분석 업무 등)를 말씀해 주시면 실무 중심의 맞춤 교육을 제공해 드릴 수 있습니다. 특별히 해결하고 싶은 문제나 데이터가 있다면 함께 다뤄보겠습니다.',
     availability: {
       'mon': ['19:00', '20:00', '21:00', '22:00'],
       'tue': ['19:00', '20:00', '21:00', '22:00'],
@@ -341,7 +564,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['19:00', '20:00', '21:00', '22:00'],
       'sat': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00'],
       'sun': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_009_1',
+        name: 'Python 기초 & 실전',
+        description: 'Python 기초 문법부터 실전 프로젝트까지 단계별로 학습합니다.',
+        duration: 60,
+        price: 55000,
+        category: '프로그래밍',
+        isActive: true
+      },
+      {
+        id: 'service_009_2',
+        name: '머신러닝 & 데이터 분석',
+        description: '머신러닝 알고리즘과 데이터 분석 기법을 실무 예제로 배웁니다.',
+        duration: 90,
+        price: 75000,
+        category: '프로그래밍',
+        isActive: true
+      },
+      {
+        id: 'service_009_3',
+        name: 'Django 웹 개발',
+        description: 'Django를 활용한 전문적인 웹 개발 방법을 배웁니다.',
+        duration: 120,
+        price: 95000,
+        category: '프로그래밍',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_010',
@@ -357,14 +609,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 65000,
     description: '스타트업 창업 경험과 대기업 마케팅 경험을 바탕으로 실전 비즈니스 노하우를 전수합니다.',
     tags: ['마케팅', '창업', '브랜딩', '스타트업'],
-    isOnline: true,
-    responseTime: '평균 2시간',
-    languages: ['한국어', '영어'],
+    responseTime: 120,
     education: ['서울대학교 경영학과', 'Wharton MBA'],
     certifications: ['Google Ads 인증', 'Facebook Marketing 인증'],
     introduction: '3개의 스타트업 창업 경험과 삼성전자 마케팅팀 경력이 있습니다. 이론보다는 실제 성공 사례 중심으로 가르쳐드립니다.',
     achievements: ['스타트업 EXIT 경험', '마케팅 대상 수상'],
     portfolio: [],
+    consultationGuide: '비즈니스 경험과 현재 상황(창업 준비, 마케팅 담당자, 개인 사업 등)을 알려주세요. 특히 관심 있는 분야(디지털 마케팅, 브랜딩, 창업, SNS 마케팅 등)와 해결하고 싶은 구체적인 문제나 목표를 말씀해 주시면 실전 경험을 바탕으로 한 맞춤형 컨설팅을 제공해 드릴 수 있습니다. 현재 진행 중인 프로젝트나 사업이 있다면 함께 공유해 주세요.',
     availability: {
       'mon': ['10:00', '11:00', '15:00', '16:00', '20:00'],
       'tue': ['10:00', '11:00', '15:00', '16:00', '20:00'],
@@ -373,7 +624,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['10:00', '11:00', '15:00', '16:00', '20:00'],
       'sat': ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00'],
       'sun': ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_010_1',
+        name: '디지털 마케팅 전략',
+        description: 'SNS 마케팅부터 브랜딩까지 실전 마케팅 전략을 배웁니다.',
+        duration: 90,
+        price: 80000,
+        category: '비즈니스',
+        isActive: true
+      },
+      {
+        id: 'service_010_2',
+        name: '창업 컨설팅',
+        description: '스타트업 창업 과정과 성공 노하우를 실무 경험으로 전수합니다.',
+        duration: 120,
+        price: 120000,
+        category: '비즈니스',
+        isActive: true
+      },
+      {
+        id: 'service_010_3',
+        name: '브랜딩 & 포지셔닝',
+        description: '브랜드 전략 수립과 시장 포지셔닝 방법을 배웁니다.',
+        duration: 60,
+        price: 65000,
+        category: '비즈니스',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_011',
@@ -389,14 +669,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 42000,
     description: '도쿄대 출신이 알려주는 정통 일본어! JLPT부터 비즈니스 일본어까지 완벽 마스터하세요.',
     tags: ['일본어', 'JLPT', '도쿄대', '비즈니스일본어'],
-    isOnline: true,
-    responseTime: '평균 1시간',
-    languages: ['한국어', '일본어', '영어'],
+    responseTime: 60,
     education: ['도쿄대학교 언어학과', '고려대학교 일어일문학과'],
     certifications: ['JLPT N1', '일본어교원자격증'],
     introduction: '도쿄대에서 6년간 수학하며 일본 현지 문화와 언어를 완벽히 습득했습니다. 자연스러운 일본어 표현 중심으로 가르쳐드립니다.',
     achievements: ['JLPT N1 만점 달성', '일본어 번역대회 대상'],
     portfolio: [],
+    consultationGuide: '현재 일본어 수준(완전 초보자, 기초 회화 가능, JLPT 급수 등)과 학습 목표(JLPT 합격, 비즈니스 일본어, 일본 유학/취업 준비 등)를 알려주세요. 선호하는 학습 방식(회화 중심, 문법 체계적 학습, 실생활 표현 등)과 일본 문화나 특정 분야에 관심이 있다면 함께 말씀해 주시면 흥미롭고 실용적인 수업을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['18:00', '19:00', '20:00', '21:00'],
       'tue': ['18:00', '19:00', '20:00', '21:00'],
@@ -405,7 +684,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['18:00', '19:00', '20:00', '21:00'],
       'sat': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00'],
       'sun': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_011_1',
+        name: '일본어 회화 레슨',
+        description: '자연스러운 일본어 표현과 발음에 중점을 둔 회화 수업입니다.',
+        duration: 50,
+        price: 42000,
+        category: '언어',
+        isActive: true
+      },
+      {
+        id: 'service_011_2',
+        name: 'JLPT 시험 대비',
+        description: 'JLPT 각 급수별 맞춤형 학습과 실전 문제 풀이를 제공합니다.',
+        duration: 60,
+        price: 48000,
+        category: '언어',
+        isActive: true
+      },
+      {
+        id: 'service_011_3',
+        name: '비즈니스 일본어 & 문화',
+        description: '비즈니스 상황에서 사용하는 일본어와 일본 문화를 함께 배웁니다.',
+        duration: 90,
+        price: 65000,
+        category: '언어',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_012',
@@ -421,14 +729,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 58000,
     description: '삼성전자 데이터 분석팀 출신이 알려주는 실무 데이터 분석! 엑셀부터 고급 BI 툴까지.',
     tags: ['데이터분석', 'Excel', 'SQL', 'BI툴'],
-    isOnline: true,
-    responseTime: '평균 1시간',
-    languages: ['한국어', '영어'],
+    responseTime: 60,
     education: ['연세대학교 통계학과', 'MIT 데이터사이언스 과정'],
     certifications: ['Microsoft Excel Expert', 'Tableau Certified Professional'],
     introduction: '삼성전자에서 9년간 데이터 분석 업무를 담당했습니다. 실무에서 바로 쓸 수 있는 데이터 분석 스킬을 가르쳐드립니다.',
     achievements: ['삼성전자 우수사원상', 'Tableau 공식 트레이너'],
     portfolio: [],
+    consultationGuide: '데이터 분석 경험과 현재 사용하고 계신 도구들(Excel, SQL, BI 툴 등)을 알려주세요. 업무 분야나 분석하고 싶은 데이터 종류, 구체적인 학습 목표(업무 효율성 향상, 커리어 전환, 자격증 취득 등)를 말씀해 주시면 실무 중심의 맞춤 교육을 제공해 드릴 수 있습니다. 특별히 해결하고 싶은 데이터 분석 과제가 있다면 함께 다뤄보겠습니다.',
     availability: {
       'mon': ['19:00', '20:00', '21:00'],
       'tue': ['19:00', '20:00', '21:00'],
@@ -437,7 +744,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['19:00', '20:00', '21:00'],
       'sat': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
       'sun': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_012_1',
+        name: 'Excel 데이터 분석',
+        description: 'Excel의 고급 기능을 활용한 데이터 분석 방법을 배웁니다.',
+        duration: 60,
+        price: 50000,
+        category: '데이터 분석',
+        isActive: true
+      },
+      {
+        id: 'service_012_2',
+        name: 'SQL & 데이터베이스',
+        description: 'SQL 기초부터 고급 쿼리까지 실무 중심으로 배웁니다.',
+        duration: 90,
+        price: 70000,
+        category: '데이터 분석',
+        isActive: true
+      },
+      {
+        id: 'service_012_3',
+        name: 'Tableau & Power BI 마스터',
+        description: '전문적인 BI 도구를 활용한 데이터 시각화를 배웁니다.',
+        duration: 120,
+        price: 85000,
+        category: '데이터 분석',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_013',
@@ -453,14 +789,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 48000,
     description: '홍익대 미술대학 출신 작가가 알려주는 전문적인 회화 기법과 창작 노하우를 배워보세요.',
     tags: ['미술', '회화', '드로잉', '작가'],
-    isOnline: false,
-    responseTime: '평균 4시간',
-    languages: ['한국어'],
+    responseTime: 240,
     education: ['홍익대학교 회화과', '파리 국립미술학교'],
     certifications: ['미술교사자격증', '미술치료사자격증'],
     introduction: '12년간 작가로 활동하며 다수의 개인전과 단체전을 가졌습니다. 기초 드로잉부터 전문 회화까지 체계적으로 가르쳐드립니다.',
     achievements: ['개인전 8회 개최', '미술대전 대상 수상'],
     portfolio: [],
+    consultationGuide: '미술 경험과 관심 있는 분야(수채화, 유화, 드로잉, 캐릭터 디자인 등)를 알려주세요. 현재 수준과 학습 목표(취미, 입시 준비, 작품 활동 등), 사용 가능한 재료나 작업 공간에 대해 말씀해 주시면 개인 맞춤형 커리큘럼을 제공해 드릴 수 있습니다. 그리고 싶은 특정 주제나 스타일이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['10:00', '11:00', '14:00', '15:00', '16:00'],
       'tue': ['10:00', '11:00', '14:00', '15:00', '16:00'],
@@ -469,7 +804,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['10:00', '11:00', '14:00', '15:00', '16:00'],
       'sat': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
       'sun': ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_013_1',
+        name: '드로잉 기초',
+        description: '기초 스케치부터 정확한 형태 잡는 법까지 드로잉의 기본을 배웁니다.',
+        duration: 60,
+        price: 48000,
+        category: '미술',
+        isActive: true
+      },
+      {
+        id: 'service_013_2',
+        name: '수채화 & 유화',
+        description: '수채화와 유화의 특성을 이해하고 다양한 기법을 익힙니다.',
+        duration: 90,
+        price: 65000,
+        category: '미술',
+        isActive: true
+      },
+      {
+        id: 'service_013_3',
+        name: '캐릭터 디자인',
+        description: '창의적인 캐릭터 디자인과 스토리텔링 기법을 배웁니다.',
+        duration: 120,
+        price: 80000,
+        category: '미술',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_014',
@@ -485,14 +849,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 65000,
     description: '서울대 수학과 출신 15년 경력의 수학 전문 강사가 알려주는 체계적인 수학 학습법.',
     tags: ['수학', '고등수학', '미적분', '입시'],
-    isOnline: true,
-    responseTime: '평균 2시간',
-    languages: ['한국어'],
+    responseTime: 120,
     education: ['서울대학교 수학과', '서울대학교 수학교육학과 석사'],
     certifications: ['수학교사자격증', '대학강사자격증'],
     introduction: '15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.',
     achievements: ['수학 올림피아드 출제위원', '교육청 우수강사상'],
     portfolio: [],
+    consultationGuide: '현재 수학 수준과 학습 목표(내신 향상, 수능 준비, 대학수학 선행 등)를 구체적으로 알려주세요. 특히 어려워하는 단원이나 개념, 선호하는 학습 방식(개념 중심, 문제 풀이 중심, 단계별 설명 등)을 말씀해 주시면 개인 맞춤형 수업 계획을 세워드릴 수 있습니다. 목표 점수나 시험 일정이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['17:00', '18:00', '19:00', '20:00'],
       'tue': ['17:00', '18:00', '19:00', '20:00'],
@@ -501,7 +864,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['17:00', '18:00', '19:00', '20:00'],
       'sat': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
       'sun': ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_014_1',
+        name: '고등수학 마스터',
+        description: '수능 수학부터 대학 수학까지 단계별 맞춤 수업입니다.',
+        duration: 90,
+        price: 70000,
+        category: '수학',
+        isActive: true
+      },
+      {
+        id: 'service_014_2',
+        name: '미적분 & 통계',
+        description: '미적분과 통계의 개념부터 실전 응용까지 체계적으로 학습합니다.',
+        duration: 60,
+        price: 65000,
+        category: '수학',
+        isActive: true
+      },
+      {
+        id: 'service_014_3',
+        name: '수학 올림피아드 대비',
+        description: '수학 올림피아드와 고난도 문제 해결 능력을 기릉니다.',
+        duration: 120,
+        price: 90000,
+        category: '수학',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_015',
@@ -517,14 +909,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 75000,
     description: '12년 투자 경험과 연 20% 수익률을 유지하는 투자 전문가가 알려주는 실전 투자 노하우.',
     tags: ['투자', '주식', '부동산', '재테크'],
-    isOnline: true,
-    responseTime: '평균 3시간',
-    languages: ['한국어', '영어'],
+    responseTime: 180,
     education: ['서울대학교 경제학과', 'CFA 자격증'],
     certifications: ['투자자문사', 'CFA Level 3'],
     introduction: '12년간 개인 투자자로 활동하며 연평균 20%의 수익률을 달성했습니다. 리스크 관리부터 포트폴리오 구성까지 체계적으로 가르쳐드립니다.',
     achievements: ['연 20% 수익률 10년 유지', '투자 서적 2권 출간'],
     portfolio: [],
+    consultationGuide: '투자 경험과 관심 있는 투자 분야(주식, 부동산, 암호화폐 등)를 알려주세요. 현재 자산 규모와 투자 목표(안정적 수익, 자산 증식, 은퇴 준비 등), 위험 감수 수준을 구체적으로 말씀해 주시면 개인 맞춤형 포트폴리오와 투자 전략을 제공해 드릴 수 있습니다. 투자 기간과 목표 수익률이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['20:00', '21:00', '22:00'],
       'tue': ['20:00', '21:00', '22:00'],
@@ -533,7 +924,36 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['20:00', '21:00', '22:00'],
       'sat': ['10:00', '11:00', '12:00', '15:00', '16:00', '17:00'],
       'sun': ['10:00', '11:00', '12:00', '15:00', '16:00', '17:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_015_1',
+        name: '주식투자 기초 & 실전',
+        description: '기초 주식 투자부터 고급 투자 전략까지 실전 경험으로 배웁니다.',
+        duration: 90,
+        price: 85000,
+        category: '투자',
+        isActive: true
+      },
+      {
+        id: 'service_015_2',
+        name: '부동산 투자 컨설팅',
+        description: '부동산 투자의 기본부터 수익률 극대화 전략까지 제공합니다.',
+        duration: 120,
+        price: 120000,
+        category: '투자',
+        isActive: true
+      },
+      {
+        id: 'service_015_3',
+        name: '포트폴리오 관리 & 재테크',
+        description: '개인 맞춤형 포트폴리오 구성과 리스크 관리 방법을 배웁니다.',
+        duration: 60,
+        price: 75000,
+        category: '투자',
+        isActive: true
+      }
+    ]
   },
   {
     id: 'tutor_016',
@@ -549,14 +969,13 @@ export const sampleTutors: TutorItem[] = [
     pricePerHour: 52000,
     description: '임상영양사 출신이 알려주는 과학적인 영양 관리와 건강한 다이어트 방법을 배워보세요.',
     tags: ['영양학', '다이어트', '건강관리', '임상영양사'],
-    isOnline: true,
-    responseTime: '평균 2시간',
-    languages: ['한국어'],
+    responseTime: 120,
     education: ['이화여대 식품영양학과', '서울대학교 보건대학원'],
     certifications: ['임상영양사', '스포츠영양사'],
     introduction: '8년간 병원에서 임상영양사로 근무하며 다양한 환자들의 영양 관리를 담당했습니다. 개인별 맞춤 영양 관리법을 가르쳐드립니다.',
     achievements: ['영양학회 우수논문상', '건강관리 프로그램 개발'],
     portfolio: [],
+    consultationGuide: '현재 건강 상태와 주요 관심사(체중 관리, 영양 개선, 질병 예방 등)를 알려주세요. 현재 식습관, 운동 루틴, 건강상 주의사항이나 복용 중인 약물이 있다면 말씀해 주시면 안전하고 효과적인 맞춤형 건강 관리 계획을 제공해 드릴 수 있습니다. 특별한 다이어트 목표나 건강 개선 목표가 있다면 구체적으로 알려주세요.',
     availability: {
       'mon': ['09:00', '10:00', '14:00', '15:00', '19:00'],
       'tue': ['09:00', '10:00', '14:00', '15:00', '19:00'],
@@ -565,6 +984,35 @@ export const sampleTutors: TutorItem[] = [
       'fri': ['09:00', '10:00', '14:00', '15:00', '19:00'],
       'sat': ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00'],
       'sun': ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00']
-    }
+    },
+    services: [
+      {
+        id: 'service_016_1',
+        name: '맞춤 영양 관리',
+        description: '개인별 건강 상태에 맞춘 과학적인 영양 관리 계획을 제공합니다.',
+        duration: 60,
+        price: 52000,
+        category: '건강',
+        isActive: true
+      },
+      {
+        id: 'service_016_2',
+        name: '건강한 다이어트',
+        description: '요요 없는 건강한 다이어트와 체중 관리 방법을 배웁니다.',
+        duration: 50,
+        price: 45000,
+        category: '건강',
+        isActive: true
+      },
+      {
+        id: 'service_016_3',
+        name: '식단 설계 & 건강 컨설팅',
+        description: '개인 맞춤형 식단 설계와 종합적인 건강 관리 컨설팅을 제공합니다.',
+        duration: 90,
+        price: 70000,
+        category: '건강',
+        isActive: true
+      }
+    ]
   }
 ];

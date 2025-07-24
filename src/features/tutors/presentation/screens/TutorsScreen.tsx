@@ -3,24 +3,20 @@
 import React, { useState, useEffect } from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import { TutorsList } from '@/components/tutors/TutorsList';
-import { TutorsFilters } from '@/components/tutors/TutorsFilters';
 import { TutorsSearchBar } from '@/components/tutors/TutorsSearchBar';
-import { TutorsStats } from '@/components/tutors/TutorsStats';
+import { TutorsHorizontalFilters } from '@/components/tutors/TutorsHorizontalFilters';
 import { useTutorsStore } from '@/store/tutorsStore';
 import { sampleTutors } from '@/data/sampleTutors';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
-import FilterListIcon from '@mui/icons-material/FilterList';
 
 export const TutorsScreen: React.FC = () => {
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
   const { 
     tutors, 
     filteredTutors, 
     addTutor, 
     searchQuery, 
     categoryFilter, 
-    sortBy,
-    clearFilters 
+    sortBy
   } = useTutorsStore();
   const [isInitialized, setIsInitialized] = useState(false);
 
@@ -50,9 +46,6 @@ export const TutorsScreen: React.FC = () => {
     console.log('TutorsScreen - filteredTutors count:', filteredTutors.length);
   }, [tutors.length, filteredTutors.length]);
 
-  const toggleFilters = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
 
   const getResultsText = () => {
     const total = filteredTutors.length;
@@ -82,47 +75,19 @@ export const TutorsScreen: React.FC = () => {
             <TutorsSearchBar />
           </div>
 
-          {/* 통계 및 필터 버튼 */}
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-            <div className="flex-1">
-              <TutorsStats />
-            </div>
-            <div className="flex items-center gap-4">
-              <p className="text-gray-600 font-medium">{getResultsText()}</p>
-              <button
-                onClick={toggleFilters}
-                className={`flex items-center gap-2 px-4 py-2 rounded-lg border transition-colors ${
-                  isFilterOpen 
-                    ? 'bg-primary text-white border-primary' 
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                <FilterListIcon sx={{ fontSize: 20 }} />
-                필터
-              </button>
-              {(searchQuery || categoryFilter !== 'all' || sortBy !== 'popular') && (
-                <button
-                  onClick={clearFilters}
-                  className="text-primary hover:text-primary/80 font-medium transition-colors"
-                >
-                  필터 초기화
-                </button>
-              )}
-            </div>
+          {/* 가로 필터 바 */}
+          <div className="mb-6">
+            <TutorsHorizontalFilters />
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* 필터 사이드바 */}
-            <div className={`lg:col-span-1 ${isFilterOpen ? 'block' : 'hidden lg:block'}`}>
-              <div className="bg-white rounded-2xl border border-gray-200 p-6 sticky top-8">
-                <TutorsFilters />
-              </div>
-            </div>
+          {/* 결과 수 표시 */}
+          <div className="flex items-center justify-between mb-6">
+            <p className="text-gray-600 font-medium">{getResultsText()}</p>
+          </div>
 
-            {/* 튜터 목록 */}
-            <div className="lg:col-span-3">
-              <TutorsList />
-            </div>
+          {/* 튜터 목록 */}
+          <div>
+            <TutorsList />
           </div>
         </div>
       </div>

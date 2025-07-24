@@ -8,6 +8,7 @@ export const ROUTES = {
   PROFILE_MANAGE: '/profile/manage',
   PROFILE_EDIT: '/profile/edit',
   PROFILE_USER: '/profile/user',
+  TUTOR_PROFILE: '/tutor-profile',
   TUTOR_DETAIL: (id = ':id') => `/tutor/${id}`,
   COMMUNITY: '/community',
   WRITE_POST: '/post/write',
