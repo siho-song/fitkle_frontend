@@ -1,7 +1,8 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { MessageTemplate, MessageTemplateFormData, UserType } from '@/types';
+import { MessageTemplate, MessageTemplateFormData } from '@/types/entities/chat';
+import type { UserType } from '@/features/auth/types/auth';
 
 // 기본 템플릿 생성 함수
 const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
@@ -10,9 +11,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
       id: 'greeting',
       title: '인사',
       content: '안녕하세요! 잘 부탁드립니다.',
-      description: '기본 인사 메시지',
-      userType,
-      isCustom: false,
+      category: '인사',
+      usage: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
@@ -20,9 +20,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
       id: 'thanks',
       title: '감사',
       content: '감사합니다!',
-      description: '감사 표현',
-      userType,
-      isCustom: false,
+      category: '인사',
+      usage: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     },
@@ -35,9 +34,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
         id: 'question',
         title: '질문',
         content: '질문이 있습니다. ',
-        description: '질문할 때 사용',
-        userType,
-        isCustom: false,
+        category: '질문',
+        usage: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
@@ -45,9 +43,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
         id: 'homework',
         title: '과제 제출',
         content: '과제 완료했습니다. 확인 부탁드려요.',
-        description: '과제 제출 시 사용',
-        userType,
-        isCustom: false,
+        category: '과제',
+        usage: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
@@ -59,9 +56,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
         id: 'feedback',
         title: '피드백',
         content: '잘 하셨습니다! 다음에는 이 부분을 조금 더 신경 써보세요.',
-        description: '피드백 제공 시 사용',
-        userType,
-        isCustom: false,
+        category: '피드백',
+        usage: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
@@ -69,9 +65,8 @@ const getDefaultTemplates = (userType: UserType): MessageTemplate[] => {
         id: 'assignment',
         title: '과제 안내',
         content: '다음 과제를 안내드립니다. ',
-        description: '과제 안내 시 사용',
-        userType,
-        isCustom: false,
+        category: '과제',
+        usage: 0,
         createdAt: new Date().toISOString(),
         updatedAt: new Date().toISOString(),
       },
@@ -129,9 +124,8 @@ export function useMessageTemplates(userType: UserType) {
       id: `custom-${Date.now()}`,
       title: formData.title,
       content: formData.content,
-      description: formData.description,
-      userType,
-      isCustom: true,
+      category: formData.category || '기타',
+      usage: 0,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     };
@@ -149,7 +143,7 @@ export function useMessageTemplates(userType: UserType) {
             ...template,
             title: formData.title,
             content: formData.content,
-            description: formData.description,
+            category: formData.category || template.category,
             updatedAt: new Date().toISOString(),
           }
         : template
@@ -161,11 +155,6 @@ export function useMessageTemplates(userType: UserType) {
 
   // 템플릿 삭제
   const deleteTemplate = (id: string) => {
-    const template = templates.find(t => t.id === id);
-    if (template && !template.isCustom) {
-      throw new Error('기본 템플릿은 삭제할 수 없습니다.');
-    }
-
     const newTemplates = templates.filter(template => template.id !== id);
     saveTemplates(newTemplates);
   };

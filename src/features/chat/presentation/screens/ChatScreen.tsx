@@ -1,18 +1,26 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useCallback, useRef } from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import { ChatList } from '@/components/chat/ChatList';
 import { ChatRoom } from '@/components/chat/ChatRoom';
 import { useUserType } from '@/features/auth/store/authStore';
 
 export const ChatScreen: React.FC = () => {
-  const [selectedChatId, setSelectedChatId] = useState<string>('1');
+  const [selectedChatId, setSelectedChatId] = useState<string>('');
+  const [updateTrigger, setUpdateTrigger] = useState<number>(0);
+  const chatListRef = useRef<HTMLDivElement>(null);
   const userType = useUserType();
+
 
   const handleChatSelect = (chatId: string) => {
     setSelectedChatId(chatId);
   };
+
+  const handleMessagesRead = useCallback((chatId: string, readCount: number) => {
+    // ChatList를 업데이트하되 스크롤 위치는 유지
+    setUpdateTrigger(prev => prev + 1);
+  }, []);
 
   return (
     <MainLayout disableContainer={true} showFooter={false}>
@@ -21,18 +29,24 @@ export const ChatScreen: React.FC = () => {
       <div className="min-h-[90vh] bg-white pt-6">
         <div className="h-[calc(90vh)] max-w-7xl mx-auto px-14 py-2 mb-10 flex gap-6">
         {/* 채팅 리스트 (왼쪽) */}
-        <div className="w-96 flex-shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 h-full overflow-hidden">
+        <div ref={chatListRef} className="w-96 flex-shrink-0 bg-white rounded-xl shadow-sm border border-gray-200 h-full overflow-hidden">
           <ChatList 
             onChatSelect={handleChatSelect}
             selectedChatId={selectedChatId}
             userType={userType || 'student'}
+            currentUserId="current_user"
+            updateTrigger={updateTrigger}
           />
         </div>
         
         {/* 채팅방 (오른쪽) */}
         <div className="flex-1 bg-white rounded-xl shadow-sm border border-gray-200 h-full overflow-hidden">
           {selectedChatId ? (
-            <ChatRoom chatId={selectedChatId} userType={userType || 'student'} />
+            <ChatRoom 
+              chatId={selectedChatId} 
+              userType={userType || 'student'} 
+              onMessagesRead={handleMessagesRead}
+            />
           ) : (
             <div className="h-full flex items-center justify-center">
               <div className="text-center">

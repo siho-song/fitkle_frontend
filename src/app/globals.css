@@ -71,6 +71,12 @@
   --color-primaryLight: #ddebb0;
   --color-primaryDark: #8a9e4e;
   --color-limeOlive: #b7c774;
+  --color-secondary: #5A3E52;
+
+  /* 경고 */
+  --color-warning: #D4524A;      /* 메인 경고색 */
+  --color-warningLight: #E0776F; /* 호버/비활성 */
+  --color-warningDark: #B73D35;  /* 액티브 */
 
   /* 중립 계열 (Gray Scale) */
   --color-grayDark: #4b5563;

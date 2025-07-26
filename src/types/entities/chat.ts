@@ -94,7 +94,6 @@ export interface MessageTemplate {
   title: string;
   content: string;
   category: string;
-  isPersonal: boolean;
   usage: number;
   createdAt: string;
   updatedAt: string;

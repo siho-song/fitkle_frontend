@@ -19,8 +19,19 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   disableContainer = false,
 }) => {
 
+  // 오버스크롤 완전 비활성화
+  React.useEffect(() => {
+    document.body.style.overscrollBehavior = 'none';
+    document.documentElement.style.overscrollBehavior = 'none';
+    
+    return () => {
+      document.body.style.overscrollBehavior = '';
+      document.documentElement.style.overscrollBehavior = '';
+    };
+  }, []);
+
   return (
-    <div className="min-h-screen flex flex-col bg-white overflow-y-auto">
+    <div className="min-h-screen flex flex-col bg-white overflow-y-auto" style={{ overscrollBehavior: 'none' }}>
       {showHeader && (
         <>
           <Header containerVariant={containerVariant} />

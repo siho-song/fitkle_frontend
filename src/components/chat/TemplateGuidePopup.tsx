@@ -1,17 +1,17 @@
 "use client";
 
-import React, { useState } from 'react';
+import React from 'react';
 import { HelpCircle } from 'lucide-react';
+import type { UserType } from '@/features/auth/types/auth';
 
 interface TemplateGuidePopupProps {
-  userType: 'tutor' | 'tutee';
+  userType: UserType;
 }
 
 export function TemplateGuidePopup({ userType }: TemplateGuidePopupProps) {
-  const [isVisible, setIsVisible] = useState(false);
 
   const tutorGuide = {
-    title: '메시지 템플릿 사용법 (튜터)',
+    title: '메시지 템플릿 사용법',
     content: [
       {
         step: '1',
@@ -43,7 +43,7 @@ export function TemplateGuidePopup({ userType }: TemplateGuidePopupProps) {
   };
 
   const tuteeGuide = {
-    title: '메시지 템플릿 사용법 (튜티)',
+    title: '메시지 템플릿 사용법',
     content: [
       {
         step: '1',
@@ -77,17 +77,7 @@ export function TemplateGuidePopup({ userType }: TemplateGuidePopupProps) {
   const guide = userType === 'tutor' ? tutorGuide : tuteeGuide;
 
   return (
-    <div className="relative">
-      <button
-        className="text-gray-500 hover:text-gray-700 transition-colors"
-        onMouseEnter={() => setIsVisible(true)}
-        onMouseLeave={() => setIsVisible(false)}
-      >
-        <HelpCircle size={20} />
-      </button>
-
-      {isVisible && (
-        <div className="absolute bottom-full right-0 mb-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 p-4 z-50">
+    <div className="absolute bottom-full left-0 mb-2 w-96 bg-white rounded-lg shadow-xl border border-gray-200 p-4 z-50">
           <div className="mb-3">
             <h3 className="font-semibold text-gray-900 mb-1">{guide.title}</h3>
             <p className="text-sm text-gray-600">
@@ -122,9 +112,7 @@ export function TemplateGuidePopup({ userType }: TemplateGuidePopupProps) {
           </div>
 
           {/* 화살표 */}
-          <div className="absolute top-full right-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white" />
+          <div className="absolute top-full left-4 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-white" />
         </div>
-      )}
-    </div>
   );
 }

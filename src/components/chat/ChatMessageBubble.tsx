@@ -3,23 +3,31 @@
 import React from 'react';
 import { ChatMessage, Session } from '@/types/entities/chat';
 import { SessionIndicator } from './SessionIndicator';
+import { HighlightedText } from './HighlightedText';
 
 interface ChatMessageBubbleProps {
   message: ChatMessage;
   isOwn: boolean;
   session?: Session;
   showAvatar?: boolean;
+  searchTerm?: string;
+  isCurrentSearchMatch?: boolean;
 }
 
 export function ChatMessageBubble({ 
   message, 
   isOwn, 
   session,
-  showAvatar = true 
+  showAvatar = true,
+  searchTerm = '',
+  isCurrentSearchMatch = false
 }: ChatMessageBubbleProps) {
   const formatTime = (timestamp: string) => {
     const date = new Date(timestamp);
     return new Intl.DateTimeFormat('ko-KR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
       hour: '2-digit',
       minute: '2-digit',
       hour12: false
@@ -71,14 +79,18 @@ export function ChatMessageBubble({
           className={`
             relative px-4 py-3 rounded-2xl text-sm
             ${isOwn 
-              ? 'bg-blue-500 text-white'
+              ? 'bg-primaryLight text-black'
               : 'bg-gray-100 text-gray-900'
             }
             ${isOwn ? 'rounded-br-md' : 'rounded-bl-md'}
           `}
         >
           <div className="whitespace-pre-wrap break-words">
-            {message.content}
+            <HighlightedText 
+              text={message.content} 
+              searchTerm={searchTerm}
+              isCurrentMatch={isCurrentSearchMatch}
+            />
           </div>
         </div>
 
@@ -86,7 +98,7 @@ export function ChatMessageBubble({
         <div className={`text-xs text-gray-400 mt-1 px-1 ${isOwn ? 'text-right' : 'text-left'}`}>
           {formatTime(message.timestamp)}
           {isOwn && message.isRead && (
-            <span className="ml-1 text-blue-500">읽음</span>
+            <span className="ml-1 text-secondary">읽음</span>
           )}
         </div>
       </div>

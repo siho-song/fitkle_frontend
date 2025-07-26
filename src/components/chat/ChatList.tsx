@@ -5,117 +5,74 @@ import CircleIcon from '@mui/icons-material/Circle';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import VideocamIcon from '@mui/icons-material/Videocam';
-import { ChatFilter, ChatFilterOptions } from './ChatFilter';
 import type { UserType } from '@/features/auth/types/auth';
-import { getChatRoomList, ChatRoom } from '@/mocks/chatData';
+import { getChatRoomList, getChatRoomData, ChatRoom } from '@/mocks/chatData';
+import { TabButton } from '@/components/common/TabButton';
 
 
 interface ChatListProps {
   onChatSelect: (chatId: string) => void;
   selectedChatId?: string;
   userType?: UserType;
+  currentUserId?: string;
+  updateTrigger?: number;
 }
 
-// 채팅 필터 타입
-type ChatFilterType = 'all' | 'unread' | 'consultation' | 'class';
-
-export function ChatList({ onChatSelect, selectedChatId, userType = 'student' }: ChatListProps) {
-  const [showFilters, setShowFilters] = useState(false);
-  const [activeFilter, setActiveFilter] = useState<ChatFilterType>('all');
-  const [filters, setFilters] = useState<ChatFilterOptions>({
-    searchTerm: '',
-    dateFilter: 'all'
-  });
+export function ChatList({ onChatSelect, selectedChatId, userType = 'student', currentUserId = 'current_user', updateTrigger }: ChatListProps) {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [activeFilter, setActiveFilter] = useState<'all' | 'unread' | 'consultation' | 'class'>('all');
   
-  const allChatRooms = getChatRoomList(userType);
+  // updateTrigger가 변경될 때마다 채팅방 데이터를 새로 가져옴
+  const allChatRooms = useMemo(() => {
+    return getChatRoomList(userType, currentUserId);
+  }, [userType, currentUserId, updateTrigger]);
   
-  // 채팅방에 날짜 정보 추가 (실제로는 API에서 가져올 데이터)
-  const chatRoomsWithDates = useMemo(() => {
-    return allChatRooms.map(room => ({
-      ...room,
-      lastMessageDate: new Date(2024, 0, Math.floor(Math.random() * 30) + 1) // 예시 날짜
-    }));
-  }, [allChatRooms]);
   
-  // 필터링된 채팅방 목록
+  // 검색 및 필터링된 채팅방 목록
   const filteredChatRooms = useMemo(() => {
-    let filtered = chatRoomsWithDates;
+    let filtered = allChatRooms;
     
-    // 채팅 타입 필터
+    // 필터 적용
     switch (activeFilter) {
       case 'unread':
         filtered = filtered.filter(room => room.unreadCount > 0);
         break;
       case 'consultation':
-        // 일반 상담만 (세션이 없거나 비활성 세션만 있는 경우)
-        filtered = filtered.filter(room => 
-          !room.activeSessionName || room.totalContexts === 1
-        );
+        filtered = filtered.filter(room => {
+          // 채팅방 데이터에서 컨텍스트 정보를 가져와서 일반 상담이 있는지 확인
+          const chatData = getChatRoomData(room.id, userType);
+          const hasGeneralConsultation = chatData.contexts.some(context => 
+            context.type === 'general' || context.name.includes('상담') || context.name.includes('멘토링')
+          );
+          return hasGeneralConsultation;
+        });
         break;
       case 'class':
-        // 클래스/세션이 있는 경우
-        filtered = filtered.filter(room => 
-          room.activeSessionName || (room.totalContexts && room.totalContexts > 1)
-        );
+        filtered = filtered.filter(room => {
+          // 채팅방 데이터에서 컨텍스트 정보를 가져와서 세션/클래스가 있는지 확인
+          const chatData = getChatRoomData(room.id, userType);
+          const hasClassSession = chatData.contexts.some(context => 
+            context.type === 'session' || context.name.includes('클래스') || 
+            context.name.includes('수업') || context.name.includes('강의')
+          );
+          return hasClassSession;
+        });
         break;
       case 'all':
       default:
-        // 모든 채팅방
+        // 전체 표시
         break;
     }
     
     // 이름으로 검색
-    if (filters.searchTerm) {
+    if (searchTerm) {
       filtered = filtered.filter(room => 
-        room.contactName.toLowerCase().includes(filters.searchTerm.toLowerCase())
+        room.contactName.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
     
-    // 날짜 필터
-    if (filters.dateFilter !== 'all') {
-      const now = new Date();
-      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-      
-      filtered = filtered.filter(room => {
-        const messageDate = room.lastMessageDate;
-        
-        switch (filters.dateFilter) {
-          case 'today':
-            return messageDate >= today;
-          case 'thisWeek':
-            const weekStart = new Date(today);
-            weekStart.setDate(today.getDate() - today.getDay());
-            return messageDate >= weekStart;
-          case 'thisMonth':
-            const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-            return messageDate >= monthStart;
-          case 'custom':
-            if (filters.customDateRange) {
-              const startDate = new Date(filters.customDateRange.startDate);
-              const endDate = new Date(filters.customDateRange.endDate);
-              return messageDate >= startDate && messageDate <= endDate;
-            }
-            return true;
-          default:
-            return true;
-        }
-      });
-    }
-    
     return filtered;
-  }, [chatRoomsWithDates, filters, activeFilter]);
-  const getMessageIcon = (type: string) => {
-    switch (type) {
-      case 'image':
-        return <PhotoCameraIcon sx={{ fontSize: 16 }} className="text-gray-500" />;
-      case 'video':
-        return <VideocamIcon sx={{ fontSize: 16 }} className="text-gray-500" />;
-      case 'file':
-        return <AttachFileIcon sx={{ fontSize: 16 }} className="text-gray-500" />;
-      default:
-        return null;
-    }
-  };
+  }, [allChatRooms, searchTerm, activeFilter, userType]);
 
 
   return (
@@ -124,51 +81,50 @@ export function ChatList({ onChatSelect, selectedChatId, userType = 'student' }:
       <div className="p-4 border-b border-gray-200 bg-white">
         <div className="flex items-center justify-between mb-3">
           <h2 className="text-xl font-bold text-gray-900">채팅</h2>
-          <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="p-2 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
-          >
-            🔍
-          </button>
         </div>
         
         {/* 필터 버튼들 */}
-        <div className="flex gap-2 overflow-x-auto">
-          {(['all', 'unread', 'consultation', 'class'] as ChatFilterType[]).map((filterType) => {
-            const filterLabels = {
-              all: '전체',
-              unread: '안읽음', 
-              consultation: '상담',
-              class: '클래스'
-            };
-            
-            const isActive = activeFilter === filterType;
-            
-            return (
-              <button
-                key={filterType}
-                onClick={() => setActiveFilter(filterType)}
-                className={`px-3 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors cursor-pointer ${
-                  isActive
-                    ? 'bg-blue-500 text-white'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-                }`}
-              >
-                {filterLabels[filterType]}
-              </button>
-            );
-          })}
+        <div className="flex gap-3 mb-3">
+          <TabButton
+            isActive={activeFilter === 'all'}
+            onClick={() => setActiveFilter('all')}
+          >
+            전체
+          </TabButton>
+          <TabButton
+            isActive={activeFilter === 'unread'}
+            onClick={() => setActiveFilter('unread')}
+          >
+            안읽음
+          </TabButton>
+          <TabButton
+            isActive={activeFilter === 'consultation'}
+            onClick={() => setActiveFilter('consultation')}
+          >
+            상담
+          </TabButton>
+          <TabButton
+            isActive={activeFilter === 'class'}
+            onClick={() => setActiveFilter('class')}
+          >
+            클래스
+          </TabButton>
         </div>
-      </div>
-      
-      {/* 필터 */}
-      {showFilters && (
-        <div className="border-b border-gray-200">
-          <div className="p-4">
-            <ChatFilter onFilterChange={setFilters} />
+
+        {/* 검색 입력 */}
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="채팅방 검색..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full px-4 py-2 pl-10 text-sm border border-gray-300 rounded-lg focus:outline-none focus:border-primary"
+          />
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            🔍
           </div>
         </div>
-      )}
+      </div>
 
       {/* 채팅 리스트 */}
       <div className="flex-1 overflow-y-auto">
@@ -176,7 +132,7 @@ export function ChatList({ onChatSelect, selectedChatId, userType = 'student' }:
           <div className="p-8 text-center text-gray-500">
             <div className="text-4xl mb-4">💬</div>
             <p>채팅방이 없습니다.</p>
-            {filters.searchTerm && (
+            {searchTerm && (
               <p className="text-sm mt-2">검색 조건을 변경해보세요.</p>
             )}
           </div>
@@ -223,7 +179,9 @@ export function ChatList({ onChatSelect, selectedChatId, userType = 'student' }:
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2 flex-1 min-w-0">
-                    {getMessageIcon(chat.messageType)}
+                    {chat.messageType === 'image' && <PhotoCameraIcon sx={{ fontSize: 16 }} className="text-gray-500" />}
+                    {chat.messageType === 'video' && <VideocamIcon sx={{ fontSize: 16 }} className="text-gray-500" />}
+                    {chat.messageType === 'file' && <AttachFileIcon sx={{ fontSize: 16 }} className="text-gray-500" />}
                     <p className="text-sm text-gray-600 truncate">
                       {chat.lastMessage}
                     </p>

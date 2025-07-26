@@ -12,18 +12,6 @@ interface MessageTemplateSelectorProps {
   onClose: () => void;
 }
 
-export function MessageTemplateSelector({ 
-  userType, 
-  onTemplateSelect, 
-  isOpen, 
-  onClose 
-}: MessageTemplateSelectorProps) {
-  return (
-    <MessageTemplateManager
-      userType={userType}
-      onTemplateSelect={onTemplateSelect}
-      isOpen={isOpen}
-      onClose={onClose}
-    />
-  );
+export function MessageTemplateSelector(props: MessageTemplateSelectorProps) {
+  return <MessageTemplateManager {...props} />;
 }

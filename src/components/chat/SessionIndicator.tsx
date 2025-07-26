@@ -12,26 +12,27 @@ interface SessionIndicatorProps {
   type: 'start' | 'end';
 }
 
-export function SessionIndicator({ session, type }: SessionIndicatorProps) {
-  const formatTime = (date: Date) => {
-    return new Intl.DateTimeFormat('ko-KR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      hour12: false
-    }).format(date);
-  };
+const formatTime = (date: Date) => {
+  return new Intl.DateTimeFormat('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).format(date);
+};
 
-  const formatDuration = (minutes: number) => {
-    if (minutes >= 60) {
-      const hours = Math.floor(minutes / 60);
-      const remainingMinutes = minutes % 60;
-      if (remainingMinutes === 0) {
-        return `${hours}시간`;
-      }
-      return `${hours}시간 ${remainingMinutes}분`;
+const formatDuration = (minutes: number) => {
+  if (minutes >= 60) {
+    const hours = Math.floor(minutes / 60);
+    const remainingMinutes = minutes % 60;
+    if (remainingMinutes === 0) {
+      return `${hours}시간`;
     }
-    return `${minutes}분`;
-  };
+    return `${hours}시간 ${remainingMinutes}분`;
+  }
+  return `${minutes}분`;
+};
+
+export function SessionIndicator({ session, type }: SessionIndicatorProps) {
 
   if (type === 'start') {
     return (

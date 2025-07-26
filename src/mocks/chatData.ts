@@ -231,6 +231,200 @@ export const tuteeChatRoomDataMap: { [key: string]: ChatRoomData } = {
         timestamp: '2024-01-16T14:51:00',
         isRead: true,
         senderType: 'student'
+      },
+      // 요리 클래스 세션 메시지들
+      {
+        id: '16',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '오늘 요리 클래스에서 배운 내용 정리해서 보내드릴게요! 🍝',
+        timestamp: '2024-01-16T15:00:00',
+        isRead: false,
+        sessionId: 'cooking_session_001',
+        senderType: 'tutor'
+      },
+      {
+        id: '17',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '다음 수업에서는 리조또 만들기를 해보겠습니다. 재료 리스트 확인해주세요.',
+        timestamp: '2024-01-16T15:05:00',
+        isRead: false,
+        sessionId: 'cooking_session_001',
+        senderType: 'tutor'
+      },
+      {
+        id: '18',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '오늘 수업 중에 질문하신 소스 농도 조절법에 대한 추가 자료도 첨부했어요. 꼭 읽어보시고 연습해보세요! 👨‍🍳',
+        timestamp: '2024-01-16T15:10:00',
+        isRead: false,
+        sessionId: 'cooking_session_001',
+        senderType: 'tutor'
+      },
+      // 이전 날짜 메시지들 (1월 15일)
+      {
+        id: '19',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '안녕하세요! 내일 요리 클래스 준비물이 뭔가요?',
+        timestamp: '2024-01-15T20:30:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '20',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '안녕하세요! 내일 파스타 만들기를 할 예정이니 앞치마만 준비해주시면 됩니다. 재료는 제가 준비해둘게요.',
+        timestamp: '2024-01-15T20:35:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      {
+        id: '21',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '네 알겠습니다! 혹시 어떤 종류의 파스타를 만들 예정인가요?',
+        timestamp: '2024-01-15T20:37:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '22',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '크림 파스타를 만들 예정입니다. 기본적인 면 삶는 법부터 크림소스 만들기까지 차근차근 알려드릴게요!',
+        timestamp: '2024-01-15T20:40:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      // 1월 14일 메시지들
+      {
+        id: '23',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '수업 예약 확인되었습니다! 1월 16일 오후 2시에 만나요. 질문 있으시면 언제든 연락주세요.',
+        timestamp: '2024-01-14T10:15:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      {
+        id: '24',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '네 감사합니다! 정말 기대되네요. 요리 초보라서 잘 따라갈 수 있을지 걱정되긴 하지만...',
+        timestamp: '2024-01-14T10:20:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '25',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '걱정하지 마세요! 초보자도 쉽게 따라할 수 있게 천천히 알려드릴게요. 모르는 게 있으면 언제든 질문하세요 😊',
+        timestamp: '2024-01-14T10:25:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      // 1월 13일 메시지들
+      {
+        id: '26',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '안녕하세요! 요리 클래스 신청하고 싶어서 연락드렸어요.',
+        timestamp: '2024-01-13T14:00:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '27',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '안녕하세요! 요리 클래스에 관심 가져주셔서 감사합니다. 어떤 요리를 배우고 싶으신가요?',
+        timestamp: '2024-01-13T14:05:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      {
+        id: '28',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '파스타 요리를 배우고 싶어요! 집에서 자주 해먹는데 항상 실패해서요 ㅠㅠ',
+        timestamp: '2024-01-13T14:10:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '29',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '파스타는 정말 기본기가 중요해요! 1:1 클래스로 진행하시면 개인별 맞춤 지도가 가능합니다. 언제 시간이 되시나요?',
+        timestamp: '2024-01-13T14:15:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      {
+        id: '30',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '이번 주 화요일(16일) 오후가 괜찮을까요?',
+        timestamp: '2024-01-13T14:20:00',
+        isRead: true,
+        senderType: 'student'
+      },
+      {
+        id: '31',
+        chatRoomId: '1',
+        senderId: 'tutor',
+        senderName: '김셰프',
+        type: 'text',
+        content: '네 좋습니다! 화요일 오후 2시는 어떠세요? 약 1시간 정도 소요될 예정입니다.',
+        timestamp: '2024-01-13T14:25:00',
+        isRead: true,
+        senderType: 'tutor'
+      },
+      {
+        id: '32',
+        chatRoomId: '1',
+        senderId: 'current_user',
+        senderName: '나',
+        type: 'text',
+        content: '완벽해요! 그럼 화요일 오후 2시로 예약 부탁드릴게요.',
+        timestamp: '2024-01-13T14:30:00',
+        isRead: true,
+        senderType: 'student'
       }
     ]
   },
@@ -1732,15 +1926,85 @@ export const mockChatRooms = {
   '15': { name: '정철학', avatar: '🤔', category: '철학', isOnline: true, rating: 4.7, responseTime: '평균 10분' },
 };
 
-// 채팅방 목록 가져오기 함수
-export const getChatRoomList = (userType: UserType = 'student'): ChatRoom[] => {
-  return userType === 'tutor' ? tutorChatRooms : tuteeChatRooms;
+// 동적으로 읽지 않은 메시지 수를 계산하는 함수
+const calculateDynamicUnreadCount = (chatId: string, userType: UserType, currentUserId: string = 'current_user'): number => {
+  const chatData = getChatRoomData(chatId, userType);
+  if (!chatData) return 0;
+  
+  // 현재 사용자가 보내지 않은 읽지 않은 메시지 수 계산
+  return chatData.messages.filter(msg => 
+    !msg.isRead && msg.senderId !== currentUserId
+  ).length;
+};
+
+// 채팅방 목록 가져오기 함수 (동적 읽지 않은 메시지 수 포함)
+export const getChatRoomList = (userType: UserType = 'student', currentUserId: string = 'current_user'): ChatRoom[] => {
+  const staticRooms = userType === 'tutor' ? tutorChatRooms : tuteeChatRooms;
+  
+  // 각 채팅방의 읽지 않은 메시지 수를 동적으로 계산
+  return staticRooms.map(room => ({
+    ...room,
+    unreadCount: calculateDynamicUnreadCount(room.id, userType, currentUserId)
+  }));
 };
 
 // 데이터 가져오기 함수
 export const getChatRoomData = (chatId: string, userType: string = 'student'): ChatRoomData => {
   const dataMap = userType === 'student' ? tuteeChatRoomDataMap : tutorChatRoomDataMap;
   return dataMap[chatId] || dataMap['1']; // 기본값
+};
+
+// 메시지 읽음 처리 함수
+export const markMessagesAsRead = (
+  chatId: string, 
+  userType: UserType, 
+  messageIds: string[], 
+  currentUserId: string = 'current_user'
+): void => {
+  const dataMap = userType === 'student' ? tuteeChatRoomDataMap : tutorChatRoomDataMap;
+  const chatData = dataMap[chatId];
+  
+  if (chatData) {
+    chatData.messages = chatData.messages.map(msg => {
+      if (messageIds.includes(msg.id) && msg.senderId !== currentUserId) {
+        return { ...msg, isRead: true };
+      }
+      return msg;
+    });
+  }
+};
+
+// 컨텍스트별 읽지 않은 메시지를 읽음 처리하는 함수
+export const markContextMessagesAsRead = (
+  chatId: string,
+  userType: UserType,
+  contextId: string,
+  sessionId?: string,
+  currentUserId: string = 'current_user'
+): number => {
+  const dataMap = userType === 'student' ? tuteeChatRoomDataMap : tutorChatRoomDataMap;
+  const chatData = dataMap[chatId];
+  
+  if (!chatData) return 0;
+  
+  let readCount = 0;
+  
+  chatData.messages = chatData.messages.map(msg => {
+    // 현재 사용자가 보낸 메시지가 아니고, 읽지 않은 메시지인 경우
+    if (!msg.isRead && msg.senderId !== currentUserId) {
+      // 컨텍스트별 메시지 필터링
+      if (contextId === 'general' && !msg.sessionId) {
+        readCount++;
+        return { ...msg, isRead: true };
+      } else if (sessionId && msg.sessionId === sessionId) {
+        readCount++;
+        return { ...msg, isRead: true };
+      }
+    }
+    return msg;
+  });
+  
+  return readCount;
 };
 
 // 채팅방 정보 가져오기 함수
