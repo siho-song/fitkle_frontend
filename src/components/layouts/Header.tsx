@@ -10,6 +10,7 @@ import Image from "next/image";
 import { Logo } from "../common/Logo";
 import { NotificationDropdown } from "../notification/NotificationDropdown";
 import SearchIcon from '@mui/icons-material/Search';
+import { useSearchBarContext } from '@/contexts/SearchBarContext';
 
 import { HeaderProps } from '@/types';
 
@@ -23,6 +24,20 @@ export const Header: React.FC<HeaderProps> = ({
   const { isLoggedIn, hydrate } = useAuthStore();
   const router = useRouter();
   const pathname = usePathname();
+  
+  // Hero 검색창 가시성 상태 (홈페이지에서만 사용)
+  const getHeroSearchVisibility = () => {
+    if (pathname !== '/') return true; // 홈페이지가 아니면 항상 true
+    
+    try {
+      const context = useSearchBarContext();
+      return context.isHeroSearchVisible;
+    } catch {
+      return true; // Context가 없으면 기본값
+    }
+  };
+  
+  const isHeroSearchVisible = getHeroSearchVisibility();
 
   useEffect(() => {
     hydrate();
@@ -32,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
     const handleScroll = () => {
       // 메인 페이지에서만 스크롤 효과 적용
       if (pathname === '/') {
-        const scrolled = window.scrollY > 200;
+        const scrolled = window.scrollY > 50;
         setIsScrolled(scrolled);
       } else {
         setIsScrolled(false);
@@ -79,22 +94,28 @@ export const Header: React.FC<HeaderProps> = ({
             </Link>
           </nav>
           
-          {/* 스크롤 시 나타나는 검색바 - 메인 페이지에서만 */}
-          {isScrolled && pathname === '/' && (
+          {/* Hero 검색창이 안 보일 때만 표시 - 메인 페이지에서만 */}
+          {pathname === '/' && !isHeroSearchVisible && (
             <div className="flex-1 max-w-md mx-8">
-              <form onSubmit={handleSearch} className="relative">
+              <form onSubmit={handleSearch} className="relative group">
                 <input
                   type="text"
-                  placeholder="튜터, 분야를 검색해보세요"
+                  placeholder="어떤 분야를 배우고 싶으신가요?"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full px-4 py-2 pr-10 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                  className="w-full px-4 py-2 pr-12 bg-white border-2 border-gray-200 rounded-2xl 
+                           shadow-sm focus:shadow-sm transition-all duration-300
+                           placeholder-gray-400
+                           focus:border-primary focus:ring-4 focus:ring-primary/10 focus:outline-none"
                 />
-                <button
-                  type="submit"
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-primary transition-colors"
-                >
-                  <SearchIcon sx={{ fontSize: 20 }} />
+                                  <button
+                    type="submit"
+                    className="absolute right-2 top-1/2 transform -translate-y-1/2 
+                             bg-primary text-white w-8 h-8 rounded-lg hover:bg-primary/90 
+                             transition-all duration-300 flex items-center justify-center
+                             hover:scale-105 active:scale-95"
+                  >
+                    <SearchIcon sx={{ fontSize: 18 }} />
                 </button>
               </form>
             </div>

@@ -1,25 +1,38 @@
 "use client";
 import React from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
+import { SearchBarProvider } from '@/contexts/SearchBarContext';
 import { NewHeroSection } from '@/components/home/NewHeroSection';
-import { AppPromotionSection } from '@/components/home/AppPromotionSection';
-import { PopularTutorsSection } from '@/components/home/PopularTutorsSection';
+import { ServiceHighlightSection } from '@/components/home/ServiceHighlightSection';
+import { MatchingProcessSection } from '@/components/home/MatchingProcessSection';
+import { ChatLearningSection } from '@/components/home/ChatLearningSection';
+import { FeaturedTutorsSection } from '@/components/home/FeaturedTutorsSection';
 import { StudentReviewsSection } from '@/components/home/StudentReviewsSection';
 
 export const HomeScreen: React.FC = () => {
   return (
-    <MainLayout disableContainer={false}>
-      {/* 새로운 히어로 섹션 - 슬로건 및 검색바 */}
-      <NewHeroSection />
-      
-      {/* 앱 소개 및 마케팅 배너 */}
-      <AppPromotionSection />
-      
-      {/* 카테고리별 인기 튜터 */}
-      <PopularTutorsSection />
-      
-      {/* 수강생 후기 */}
-      <StudentReviewsSection />
-    </MainLayout>
+    <SearchBarProvider>
+      <MainLayout disableContainer={true}>
+        <div className="space-y-8">
+          {/* 메인 히어로 섹션 - 서비스 소개 및 검색 */}
+          <NewHeroSection />
+          
+          {/* 서비스 핵심 가치 홍보 섹션 */}
+          <ServiceHighlightSection />
+          
+          {/* 매칭 프로세스 시각화 - 5단계 프로세스 */}
+          <MatchingProcessSection />
+          
+          {/* 1:1 채팅 학습의 장점 */}
+          <ChatLearningSection />
+          
+          {/* 추천 튜터 섹션 - 매칭 중심 */}
+          <FeaturedTutorsSection />
+          
+          {/* 수강생 후기 */}
+          <StudentReviewsSection />
+        </div>
+      </MainLayout>
+    </SearchBarProvider>
   );
-}; 
+};

@@ -191,8 +191,8 @@ export const StudentReviewsSection: React.FC = () => {
   );
 
   return (
-    <section className="py-20 bg-gradient-to-br from-gray-50 to-blue-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="py-16">
+      <div className="max-w-7xl mx-auto px-14">
         {/* 헤더 */}
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
@@ -205,7 +205,7 @@ export const StudentReviewsSection: React.FC = () => {
 
         {/* 리뷰 슬라이더 */}
         <div className="relative">
-          <div className="overflow-hidden">
+          <div className="overflow-hidden min-h-[600px]">
             <div 
               className="flex transition-transform duration-500 ease-in-out"
               style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -245,7 +245,7 @@ export const StudentReviewsSection: React.FC = () => {
 
         {/* 페이지네이션 */}
         {totalSlides > 1 && (
-          <div className="flex justify-center gap-2 mt-12">
+          <div className="flex justify-center gap-2">
             {Array.from({ length: totalSlides }).map((_, index) => (
               <button
                 key={index}
