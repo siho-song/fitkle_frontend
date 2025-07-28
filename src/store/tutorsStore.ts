@@ -57,7 +57,9 @@ const filterAndSortTutors = (state: TutorsStore): TutorItem[] => {
   return filtered;
 };
 
-export const useTutorsStore = create<TutorsStore>()((set, get) => ({
+export const useTutorsStore = create<TutorsStore>()(
+  persist(
+    (set, get) => ({
   tutors: [],
   searchQuery: '',
   categoryFilter: 'all',
@@ -81,6 +83,31 @@ export const useTutorsStore = create<TutorsStore>()((set, get) => ({
         filteredTutors: filterAndSortTutors({
           ...state,
           tutors: newTutors
+        })
+      };
+    });
+  },
+
+  loadTutors: (tutorsList) => {
+    set((state) => {
+      // 새로운 튜터들만 필터링
+      const newTutors = tutorsList.filter(tutor => 
+        !state.tutors.some(existing => existing.id === tutor.id)
+      );
+      
+      if (newTutors.length === 0) {
+        console.log('No new tutors to load');
+        return state;
+      }
+      
+      const allTutors = [...state.tutors, ...newTutors];
+      console.log(`Loading ${newTutors.length} new tutors. Total: ${allTutors.length}`);
+      
+      return {
+        tutors: allTutors,
+        filteredTutors: filterAndSortTutors({
+          ...state,
+          tutors: allTutors
         })
       };
     });
@@ -139,4 +166,24 @@ export const useTutorsStore = create<TutorsStore>()((set, get) => ({
     const categories = Array.from(new Set(state.tutors.map(tutor => tutor.category)));
     return categories.sort();
   }
-}));
+}),
+    {
+      name: 'tutors-store',
+      partialize: (state) => ({
+        tutors: state.tutors,
+        searchQuery: state.searchQuery,
+        categoryFilter: state.categoryFilter,
+        priceRange: state.priceRange,
+        ratingFilter: state.ratingFilter,
+        sortBy: state.sortBy,
+        onlineOnly: state.onlineOnly
+      }),
+      onRehydrateStorage: () => (state) => {
+        if (state) {
+          // 복원 후 필터된 튜터 목록 재계산
+          state.filteredTutors = filterAndSortTutors(state);
+        }
+      }
+    }
+  )
+);

@@ -1,12 +1,13 @@
-import { TutorItem } from '@/types';
+import { TutorItem, Education, Certification, Award, WorkExperience } from '@/types';
+import { getTutorPortfolios } from './samplePortfolios';
+import { getCategoryByName } from '@/constants/categories';
 
 export const sampleTutors: TutorItem[] = [
   {
     id: 'tutor_001',
     name: '김민수',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    category: '프로그래밍',
-    categoryEmoji: '💻',
+    category: getCategoryByName('프로그래밍')!,
     specialties: ['React', 'JavaScript', 'TypeScript', 'Next.js'],
     rating: 4.9,
     reviewCount: 127,
@@ -16,38 +17,72 @@ export const sampleTutors: TutorItem[] = [
     description: 'React 개발 실무 경험을 바탕으로 실전 프로젝트 중심의 수업을 진행합니다.',
     tags: ['프론트엔드', '웹개발', '실무경험', '프로젝트'],
     responseTime: 120,
-    education: ['서울대학교 컴퓨터공학과', '카이스트 대학원'],
-    certifications: ['AWS Certified Developer', 'Google Cloud Professional'],
-    introduction: '안녕하세요! 현재 네이버에서 프론트엔드 개발자로 일하고 있는 김민수입니다. 실무에서 쌓은 경험을 바탕으로 실전 중심의 수업을 제공합니다.',
-    achievements: ['네이버 메인 페이지 리뉴얼 프로젝트 리드', '오픈소스 컨트리뷰터'],
-    portfolio: [
+    education: [
       {
-        id: 'portfolio_001_1',
-        title: '네이버 메인 페이지 리뉴얼',
-        description: 'React와 Next.js를 활용한 네이버 메인 페이지 전면 리뉴얼 프로젝트입니다. 사용자 경험 개선과 성능 최적화에 중점을 두었습니다.',
-        images: [
-          'https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?w=600&h=400&fit=crop',
-          'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop'
-        ],
-        category: '웹개발',
-        technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
-        projectDate: '2023-12',
-        client: '네이버'
+        id: 'edu_001_1',
+        tutorId: 'tutor_001',
+        institution: '서울대학교',
+        degree: '학사',
+        major: '컴퓨터공학과',
+        graduationYear: '2018',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
       },
       {
-        id: 'portfolio_001_2',
-        title: 'E-commerce 플랫폼 구축',
-        description: '중소기업을 위한 완전한 E-commerce 솔루션을 개발했습니다. 결제 시스템부터 관리자 대시보드까지 포함합니다.',
-        images: [
-          'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-          'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&h=400&fit=crop'
-        ],
-        category: '풀스택개발',
-        technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-        projectDate: '2023-08',
-        projectUrl: 'https://example-ecommerce.com'
+        id: 'edu_001_2',
+        tutorId: 'tutor_001',
+        institution: '카이스트',
+        degree: '석사',
+        major: '전산학과',
+        graduationYear: '2020',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
       }
     ],
+    certifications: [
+      {
+        id: 'cert_001_1',
+        tutorId: 'tutor_001',
+        name: 'AWS Certified Developer',
+        issuer: 'Amazon Web Services',
+        issuedDate: '2022-03-15',
+        expiryDate: '2025-03-15',
+        credentialId: 'AWS-DEV-2022-001',
+        verificationUrl: 'https://aws.amazon.com/verification/cert_001_1',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_001_2',
+        tutorId: 'tutor_001',
+        name: 'Google Cloud Professional',
+        issuer: 'Google Cloud',
+        issuedDate: '2022-08-20',
+        expiryDate: '2024-08-20',
+        credentialId: 'GCP-PRO-2022-001',
+        verificationUrl: 'https://cloud.google.com/certification/verify/cert_001_2',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [],
+    workExperience: [
+      {
+        id: 'work_001_1',
+        tutorId: 'tutor_001',
+        company: '네이버',
+        position: '시니어 프론트엔드 개발자',
+        startDate: '2020-07-01',
+        description: '메인 서비스 프론트엔드 개발 및 팀 리딩 담당',
+        achievements: ['네이버 메인 페이지 리뉴얼 프로젝트 리드', '오픈소스 컨트리뷰터'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    introduction: '안녕하세요! 현재 네이버에서 프론트엔드 개발자로 일하고 있는 김민수입니다. 실무에서 쌓은 경험을 바탕으로 실전 중심의 수업을 제공합니다.',
+    portfolio: getTutorPortfolios('tutor_001'),
     consultationGuide: '상담 시 현재 프로그래밍 경험 수준(초급/중급/고급), 관심 있는 기술 스택(React, JavaScript, TypeScript 등), 구체적인 학습 목표(취업 준비, 개인 프로젝트, 실무 스킬 향상 등)를 알려주시면 더욱 맞춤형 수업을 제공할 수 있습니다. 현재 진행 중인 프로젝트나 막히는 부분이 있다면 함께 공유해 주세요.',
     availability: {
       'mon': ['19:00', '20:00', '21:00'],
@@ -92,8 +127,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_002',
     name: '이영희',
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-    category: '디자인',
-    categoryEmoji: '🎨',
+    category: getCategoryByName('디자인')!,
     specialties: ['UI/UX 디자인', 'Figma', 'Adobe Creative Suite', '프로토타이핑'],
     rating: 4.8,
     reviewCount: 89,
@@ -103,38 +137,82 @@ export const sampleTutors: TutorItem[] = [
     description: 'Google에서 UX 디자이너로 근무한 경험을 바탕으로 실무 중심의 디자인 교육을 제공합니다.',
     tags: ['UX디자인', 'UI디자인', '실무경험', 'Google'],
     responseTime: 60,
-    education: ['홍익대학교 시각디자인과', 'Parsons School of Design'],
-    certifications: ['Google UX Design Certificate', 'Adobe Certified Expert'],
-    introduction: 'Google에서 5년간 UX 디자이너로 일한 경험이 있습니다. 디자인 씽킹부터 프로토타이핑까지 전 과정을 가르쳐드립니다.',
-    achievements: ['Google Material Design 가이드라인 참여', 'UX Korea 컨퍼런스 연사'],
-    portfolio: [
+    education: [
       {
-        id: 'portfolio_002_1',
-        title: 'Google Material Design 3.0',
-        description: 'Google의 Material Design 3.0 시스템 구축에 참여했습니다. 새로운 컴포넌트 디자인과 가이드라인을 제작했습니다.',
-        images: [
-          'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&h=400&fit=crop',
-          'https://images.unsplash.com/photo-1559028006-448665bd7c7f?w=600&h=400&fit=crop'
-        ],
-        category: 'UI/UX 디자인',
-        technologies: ['Figma', 'Adobe XD', 'Principle', 'Sketch'],
-        projectDate: '2023-10',
-        client: 'Google'
+        id: 'edu_002_1',
+        tutorId: 'tutor_002',
+        institution: '홍익대학교',
+        degree: '학사',
+        major: '시각디자인과',
+        graduationYear: '2015',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
       },
       {
-        id: 'portfolio_002_2',
-        title: '스타트업 모바일 앱 디자인',
-        description: '핀테크 스타트업의 모바일 뱅킹 앱 전체 UI/UX를 디자인했습니다. 사용자 테스트를 통해 최적화된 인터페이스를 구현했습니다.',
-        images: [
-          'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&h=400&fit=crop',
-          'https://images.unsplash.com/photo-1551650975-87deedd944c3?w=600&h=400&fit=crop'
-        ],
-        category: '모바일 디자인',
-        technologies: ['Figma', 'Protopie', 'After Effects'],
-        projectDate: '2023-06',
-        projectUrl: 'https://example-fintech.com'
+        id: 'edu_002_2',
+        tutorId: 'tutor_002',
+        institution: 'Parsons School of Design',
+        degree: '석사',
+        major: 'UX Design',
+        graduationYear: '2017',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
       }
     ],
+    certifications: [
+      {
+        id: 'cert_002_1',
+        tutorId: 'tutor_002',
+        name: 'Google UX Design Certificate',
+        issuer: 'Google',
+        issuedDate: '2021-05-10',
+        credentialId: 'GUX-2021-002',
+        verificationUrl: 'https://grow.google/certificates/ux-design/',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_002_2',
+        tutorId: 'tutor_002',
+        name: 'Adobe Certified Expert',
+        issuer: 'Adobe',
+        issuedDate: '2020-12-01',
+        credentialId: 'ACE-2020-002',
+        verificationUrl: 'https://www.adobe.com/training-services/certification.html',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_002_1',
+        tutorId: 'tutor_002',
+        title: 'UX Korea 컨퍼런스 연사',
+        organization: 'UX Korea',
+        awardDate: '2023-09-15',
+        description: 'Google Material Design 가이드라인 참여 경험 발표',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_002_1',
+        tutorId: 'tutor_002',
+        company: 'Google',
+        position: 'UX Designer',
+        startDate: '2018-03-01',
+        endDate: '2023-07-31',
+        description: 'Google 제품의 사용자 경험 디자인 및 Material Design 가이드라인 개발 참여',
+        achievements: ['Google Material Design 가이드라인 참여', 'Android 앱 UX 개선 프로젝트 리드'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    introduction: 'Google에서 5년간 UX 디자이너로 일한 경험이 있습니다. 디자인 씽킹부터 프로토타이핑까지 전 과정을 가르쳐드립니다.',
+    portfolio: getTutorPortfolios('tutor_002'),
     consultationGuide: '디자인 경험 수준과 사용해본 도구들(Figma, Adobe 제품군 등)에 대해 알려주세요. 어떤 분야의 디자인에 관심이 있는지(웹/앱 UI, UX 리서치, 브랜딩 등), 포트폴리오 제작이나 취업 준비 등 구체적인 목표를 공유해 주시면 체계적인 학습 로드맵을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['09:00', '10:00', '14:00', '15:00'],
@@ -179,8 +257,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_003',
     name: '박철수',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face',
-    category: '언어',
-    categoryEmoji: '🗣️',
+    category: getCategoryByName('언어')!,
     specialties: ['영어회화', '비즈니스 영어', 'TOEIC', 'IELTS'],
     rating: 4.7,
     reviewCount: 156,
@@ -190,11 +267,93 @@ export const sampleTutors: TutorItem[] = [
     description: '10년간의 영어 교육 경험과 해외 거주 경험을 바탕으로 실용적인 영어를 가르칩니다.',
     tags: ['영어회화', '비즈니스영어', '토익', '해외거주'],
     responseTime: 30,
-    education: ['연세대학교 영어영문학과', 'University of California, Berkeley'],
-    certifications: ['TESOL Certificate', 'Cambridge CELTA'],
+    education: [
+      {
+        id: 'edu_003_1',
+        tutorId: 'tutor_003',
+        institution: '연세대학교',
+        degree: '학사',
+        major: '영어영문학과',
+        graduationYear: '2010',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'edu_003_2',
+        tutorId: 'tutor_003',
+        institution: 'University of California, Berkeley',
+        degree: '석사',
+        major: 'TESOL',
+        graduationYear: '2014',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_003_1',
+        tutorId: 'tutor_003',
+        name: 'TESOL Certificate',
+        issuer: 'UC Berkeley Extension',
+        issuedDate: '2014-06-01',
+        credentialId: 'TESOL-2014-003',
+        verificationUrl: 'https://extension.berkeley.edu/tesol/verify',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_003_2',
+        tutorId: 'tutor_003',
+        name: 'Cambridge CELTA',
+        issuer: 'Cambridge University',
+        issuedDate: '2015-01-15',
+        credentialId: 'CELTA-2015-003',
+        verificationUrl: 'https://www.cambridgeenglish.org/teaching-english/teaching-qualifications/celta/',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_003_1',
+        tutorId: 'tutor_003',
+        title: 'YBM 우수 강사상',
+        organization: 'YBM',
+        awardDate: '2022-12-01',
+        description: '우수한 영어 교육 성과를 인정받아 수상',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'award_003_2',
+        tutorId: 'tutor_003',
+        title: '토익 만점 달성자',
+        organization: 'ETS',
+        awardDate: '2021-03-15',
+        description: 'TOEIC 990점 만점 달성',
+        rank: '990/990',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_003_1',
+        tutorId: 'tutor_003',
+        company: 'California Language Institute',
+        position: 'ESL Instructor',
+        startDate: '2014-09-01',
+        endDate: '2019-06-30',
+        description: '미국 현지 ESL 교육 기관에서 한국인 대상 영어 교육',
+        achievements: ['연간 우수 강사상 3회 수상', '학생 만족도 95% 이상 유지'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
     introduction: '미국에서 5년간 거주하며 현지에서 영어 교육을 담당했습니다. 자연스러운 영어 표현을 중심으로 가르쳐드립니다.',
-    achievements: ['YBM 우수 강사상', '토익 만점 달성자'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_003'),
     consultationGuide: '현재 영어 실력 수준(초급/중급/고급), 주요 학습 목표(회화, 비즈니스 영어, 시험 준비 등), 선호하는 학습 스타일을 알려주세요. TOEIC이나 IELTS 등 목표 점수가 있거나, 특정 상황에서 사용할 영어(프레젠테이션, 면접, 일상 대화 등)가 있다면 구체적으로 말씀해 주시면 효과적인 맞춤 수업을 진행할 수 있습니다.',
     availability: {
       'mon': ['06:00', '07:00', '08:00', '20:00', '21:00'],
@@ -239,8 +398,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_004',
     name: '정수현',
     avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face',
-    category: '음악',
-    categoryEmoji: '🎵',
+    category: getCategoryByName('음악')!,
     specialties: ['피아노', '작곡', '음악이론', '재즈'],
     rating: 4.9,
     reviewCount: 73,
@@ -250,11 +408,81 @@ export const sampleTutors: TutorItem[] = [
     description: '클래식부터 재즈까지, 체계적인 피아노 교육과 음악 이론을 함께 가르쳐드립니다.',
     tags: ['피아노', '클래식', '재즈', '음악이론'],
     responseTime: 240,
-    education: ['서울대학교 음악대학 작곡과', 'Juilliard School'],
-    certifications: ['국제피아노콩쿠르 입상', '음악지도사 자격증'],
+    education: [
+      {
+        id: 'edu_004_1',
+        tutorId: 'tutor_004',
+        institution: '서울대학교',
+        degree: '학사',
+        major: '작곡과',
+        graduationYear: '2012',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'edu_004_2',
+        tutorId: 'tutor_004',
+        institution: 'Juilliard School',
+        degree: '석사',
+        major: 'Piano Performance',
+        graduationYear: '2016',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_004_1',
+        tutorId: 'tutor_004',
+        name: '음악지도사 자격증',
+        issuer: '한국음악협회',
+        issuedDate: '2016-12-01',
+        credentialId: 'MUS-2016-004',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_004_1',
+        tutorId: 'tutor_004',
+        title: '쇼팽 국제피아노 콩쿠르 본선 진출',
+        organization: 'Chopin International Piano Competition',
+        awardDate: '2015-10-15',
+        description: '세계적인 피아노 콩쿠르 본선 진출',
+        rank: '본선 진출',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'award_004_2',
+        tutorId: 'tutor_004',
+        title: '국제피아노콩쿠르 입상',
+        organization: 'International Piano Competition',
+        awardDate: '2014-08-20',
+        description: '국제 피아노 콩쿠르에서 입상',
+        rank: '3등',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_004_1',
+        tutorId: 'tutor_004',
+        company: 'KBS',
+        position: '객원 연주자',
+        startDate: '2017-01-01',
+        description: 'KBS 클래식 음악회 정기 출연 및 연주',
+        achievements: ['KBS 클래식 음악회 출연', '월간 정기 연주회 진행'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
     introduction: '줄리어드 음대 출신으로 클래식부터 재즈까지 다양한 장르의 피아노를 가르칩니다. 학생 개인의 수준에 맞춘 맞춤 수업을 제공합니다.',
-    achievements: ['쇼팽 국제피아노 콩쿠르 본선 진출', 'KBS 클래식 음악회 출연'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_004'),
     consultationGuide: '피아노 연주 경험과 현재 수준을 알려주세요(완전 초보자, 기초 연주 가능, 중급 이상 등). 선호하는 음악 장르(클래식, 재즈, 팝 등)와 학습 목표(취미, 음대 입시, 연주회 준비 등)를 구체적으로 말씀해 주시면 개인 맞춤형 커리큘럼을 제공해 드릴 수 있습니다. 배우고 싶은 특정 곡이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['14:00', '15:00', '16:00', '17:00'],
@@ -299,8 +527,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_005',
     name: '최지원',
     avatar: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop&crop=face',
-    category: '요리',
-    categoryEmoji: '👨‍🍳',
+    category: getCategoryByName('요리')!,
     specialties: ['한식', '베이킹', '디저트', '홈쿠킹'],
     rating: 4.6,
     reviewCount: 94,
@@ -310,11 +537,81 @@ export const sampleTutors: TutorItem[] = [
     description: '르꼬르동 블루 출신 셰프가 알려주는 홈쿠킹부터 전문 요리까지 배워보세요.',
     tags: ['한식', '베이킹', '홈쿠킹', '르꼬르동블루'],
     responseTime: 120,
-    education: ['Le Cordon Bleu Paris', '경희대학교 조리학과'],
-    certifications: ['조리기능장', '제과제빵기능사'],
+    education: [
+      {
+        id: 'edu_005_1',
+        tutorId: 'tutor_005',
+        institution: '경희대학교',
+        degree: '학사',
+        major: '조리학과',
+        graduationYear: '2016',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'edu_005_2',
+        tutorId: 'tutor_005',
+        institution: 'Le Cordon Bleu Paris',
+        degree: '디플로마',
+        major: 'Culinary Arts',
+        graduationYear: '2018',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_005_1',
+        tutorId: 'tutor_005',
+        name: '조리기능장',
+        issuer: '한국산업인력공단',
+        issuedDate: '2019-05-15',
+        credentialId: 'COOK-2019-005',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_005_2',
+        tutorId: 'tutor_005',
+        name: '제과제빵기능사',
+        issuer: '한국산업인력공단',
+        issuedDate: '2017-03-20',
+        credentialId: 'BAKE-2017-005',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_005_1',
+        tutorId: 'tutor_005',
+        title: '요리 대회 금상 수상',
+        organization: '한국요리학회',
+        awardDate: '2020-11-15',
+        description: '전국 요리 대회에서 금상 수상',
+        rank: '금상',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_005_1',
+        tutorId: 'tutor_005',
+        company: 'Michelin 1 Star Restaurant',
+        position: '수셰프',
+        startDate: '2018-09-01',
+        endDate: '2022-12-31',
+        description: '미슐랭 1스타 레스토랑에서 수셰프로 근무하며 메뉴 개발 및 운영 총괄',
+        achievements: ['미슐랭 1스타 레스토랑 수셰프', '신메뉴 5개 개발', '매출 30% 증가 기여'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
     introduction: '파리 르꼬르동 블루에서 수학한 후 미슐랭 레스토랑에서 근무했습니다. 기초부터 전문 요리까지 단계별로 가르쳐드립니다.',
-    achievements: ['미슐랭 1스타 레스토랑 수셰프', '요리 대회 금상 수상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_005'),
     consultationGuide: '요리 경험 수준과 주방 환경(사용 가능한 도구, 오븐 유무 등)을 알려주세요. 관심 있는 요리 분야(한식, 베이킹, 디저트 등), 특별히 배우고 싶은 요리나 기법이 있는지 구체적으로 말씀해 주시면 단계별 맞춤 수업을 준비해 드릴 수 있습니다. 식재료 알레르기나 식단 제한사항이 있다면 미리 알려주세요.',
     availability: {
       'mon': ['10:00', '11:00', '15:00', '16:00'],
@@ -359,8 +656,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_006',
     name: '강민호',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face',
-    category: '운동',
-    categoryEmoji: '💪',
+    category: getCategoryByName('운동')!,
     specialties: ['헬스', '요가', '필라테스', '홈트레이닝'],
     rating: 4.8,
     reviewCount: 112,
@@ -370,11 +666,81 @@ export const sampleTutors: TutorItem[] = [
     description: '개인의 체력과 목표에 맞춘 맞춤형 운동 프로그램을 제공합니다.',
     tags: ['헬스', '요가', '필라테스', '다이어트'],
     responseTime: 60,
-    education: ['체육대학교 운동학과', 'NSCA 자격증'],
-    certifications: ['생활스포츠지도사', '요가강사자격증', 'NSCA-CPT'],
+    education: [
+      {
+        id: 'edu_006_1',
+        tutorId: 'tutor_006',
+        institution: '체육대학교',
+        degree: '학사',
+        major: '운동학과',
+        graduationYear: '2015',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_006_1',
+        tutorId: 'tutor_006',
+        name: '생활스포츠지도사',
+        issuer: '문화체육관광부',
+        issuedDate: '2016-02-10',
+        credentialId: 'SPORT-2016-006',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_006_2',
+        tutorId: 'tutor_006',
+        name: '요가강사자격증',
+        issuer: '한국요가협회',
+        issuedDate: '2017-06-15',
+        credentialId: 'YOGA-2017-006',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_006_3',
+        tutorId: 'tutor_006',
+        name: 'NSCA-CPT',
+        issuer: 'National Strength and Conditioning Association',
+        issuedDate: '2018-04-20',
+        expiryDate: '2026-04-20',
+        credentialId: 'NSCA-2018-006',
+        verificationUrl: 'https://www.nsca.com/certification/nsca-cpt/',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_006_1',
+        tutorId: 'tutor_006',
+        title: '피트니스 대회 입상',
+        organization: '한국피트니스협회',
+        awardDate: '2019-08-25',
+        description: '전국 피트니스 대회에서 입상',
+        rank: '2등',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_006_1',
+        tutorId: 'tutor_006',
+        company: '피트니스 센터',
+        position: '퍼스널 트레이너',
+        startDate: '2016-03-01',
+        description: '7년간 피트니스 센터에서 퍼스널 트레이너로 근무',
+        achievements: ['월 평균 PT 세션 200개 이상', '고객 만족도 98% 유지', '유튜브 운동채널 10만 구독자'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
     introduction: '7년간 피트니스 센터에서 PT를 담당했습니다. 개인별 맞춤 운동 프로그램으로 건강한 몸만들기를 도와드립니다.',
-    achievements: ['피트니스 대회 입상', '유튜브 운동채널 10만 구독자'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_006'),
     consultationGuide: '현재 운동 경험과 체력 수준, 주요 운동 목표(체중 감량, 근육 증가, 체력 향상, 자세 교정 등)를 알려주세요. 관심 있는 운동 종목(헬스, 요가, 필라테스 등)과 운동 가능한 환경(헬스장, 홈트레이닝 등), 부상 이력이나 건강상 주의사항이 있다면 미리 말씀해 주시면 안전하고 효과적인 맞춤 운동 프로그램을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['06:00', '07:00', '18:00', '19:00', '20:00'],
@@ -419,8 +785,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_007',
     name: '윤서연',
     avatar: 'https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=150&h=150&fit=crop&crop=face',
-    category: '어학',
-    categoryEmoji: '📚',
+    category: getCategoryByName('언어')!,
     specialties: ['중국어', 'HSK', '비즈니스 중국어', '중국 문화'],
     rating: 4.7,
     reviewCount: 68,
@@ -430,11 +795,79 @@ export const sampleTutors: TutorItem[] = [
     description: '베이징대 출신이 알려주는 정통 중국어, HSK부터 비즈니스 중국어까지 완벽 마스터!',
     tags: ['중국어', 'HSK', '베이징대', '비즈니스중국어'],
     responseTime: 120,
-    education: ['베이징대학교 중어중문학과', '서울대학교 중어중문학과'],
-    certifications: ['HSK 6급', '중국어교원자격증'],
+    education: [
+      {
+        id: 'edu_007_1',
+        tutorId: 'tutor_007',
+        institution: '서울대학교',
+        degree: '학사',
+        major: '중어중문학과',
+        graduationYear: '2016',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'edu_007_2',
+        tutorId: 'tutor_007',
+        institution: '베이징대학교',
+        degree: '석사',
+        major: '중어중문학과',
+        graduationYear: '2019',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_007_1',
+        tutorId: 'tutor_007',
+        name: 'HSK 6급',
+        issuer: '공자학원 국가한반',
+        issuedDate: '2019-12-15',
+        credentialId: 'HSK6-2019-007',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_007_2',
+        tutorId: 'tutor_007',
+        name: '중국어교원자격증',
+        issuer: '교육부',
+        issuedDate: '2020-03-10',
+        credentialId: 'TCH-2020-007',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_007_1',
+        tutorId: 'tutor_007',
+        title: 'HSK 만점 달성',
+        organization: '공자학원',
+        awardDate: '2019-12-15',
+        description: 'HSK 6급 만점 달성',
+        rank: '만점',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'award_007_2',
+        tutorId: 'tutor_007',
+        title: '중국어 번역대회 우수상',
+        organization: '한중번역협회',
+        awardDate: '2021-09-20',
+        description: '전국 중국어 번역대회에서 우수상 수상',
+        rank: '우수상',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [],
     introduction: '베이징대에서 5년간 수학하며 현지 문화와 언어를 완벽히 습득했습니다. 기초부터 고급까지 단계별 맞춤 수업을 제공합니다.',
-    achievements: ['HSK 만점 달성', '중국어 번역대회 우수상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_007'),
     consultationGuide: '현재 중국어 수준(완전 초보자, 기초 회화 가능, 중급 이상 등)과 학습 목표(HSK 시험 준비, 비즈니스 중국어, 여행 회화 등)를 알려주세요. 선호하는 학습 방식(회화 중심, 문법 중심, 실용 표현 등)과 특별히 관심 있는 중국 문화 분야가 있다면 함께 말씀해 주시면 흥미롭고 실용적인 수업을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['09:00', '10:00', '14:00', '15:00', '20:00'],
@@ -452,7 +885,7 @@ export const sampleTutors: TutorItem[] = [
         description: '자연스러운 중글 표현과 발음 교정에 중점을 둔 수업입니다.',
         duration: 50,
         price: 40000,
-        category: '어학',
+        category: '언어',
         isActive: true
       },
       {
@@ -461,7 +894,7 @@ export const sampleTutors: TutorItem[] = [
         description: 'HSK 각 급수별 맞춤형 학습과 실전 문제 풀이를 제공합니다.',
         duration: 60,
         price: 45000,
-        category: '어학',
+        category: '언어',
         isActive: true
       },
       {
@@ -470,7 +903,7 @@ export const sampleTutors: TutorItem[] = [
         description: '비즈니스 상황에서 사용하는 중글과 중국 문화를 함께 배웁니다.',
         duration: 90,
         price: 60000,
-        category: '어학',
+        category: '언어',
         isActive: true
       }
     ]
@@ -479,8 +912,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_008',
     name: '임태양',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
-    category: '사진',
-    categoryEmoji: '📸',
+    category: getCategoryByName('사진')!,
     specialties: ['인물 사진', '풍경 사진', 'Lightroom', 'Photoshop'],
     rating: 4.9,
     reviewCount: 45,
@@ -490,11 +922,81 @@ export const sampleTutors: TutorItem[] = [
     description: '사진 작가가 알려주는 전문적인 사진 촬영 기법과 보정 노하우를 배워보세요.',
     tags: ['사진촬영', '인물사진', '보정', '작가'],
     responseTime: 180,
-    education: ['중앙대학교 사진학과', '뉴욕 사진학교'],
-    certifications: ['사진기능사', 'Adobe Certified Expert'],
+    education: [
+      {
+        id: 'edu_008_1',
+        tutorId: 'tutor_008',
+        institution: '중앙대학교',
+        degree: '학사',
+        major: '사진학과',
+        graduationYear: '2017',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'edu_008_2',
+        tutorId: 'tutor_008',
+        institution: '뉴욕 사진학교',
+        degree: '디플로마',
+        major: 'Professional Photography',
+        graduationYear: '2019',
+        status: 'graduated',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    certifications: [
+      {
+        id: 'cert_008_1',
+        tutorId: 'tutor_008',
+        name: '사진기능사',
+        issuer: '한국산업인력공단',
+        issuedDate: '2018-05-15',
+        credentialId: 'PHOTO-2018-008',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      },
+      {
+        id: 'cert_008_2',
+        tutorId: 'tutor_008',
+        name: 'Adobe Certified Expert',
+        issuer: 'Adobe',
+        issuedDate: '2019-03-10',
+        credentialId: 'ACE-2019-008',
+        verificationUrl: 'https://www.adobe.com/training-services/certification.html',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    awards: [
+      {
+        id: 'award_008_1',
+        tutorId: 'tutor_008',
+        title: '사진공모전 대상 수상',
+        organization: '한국사진학회',
+        awardDate: '2021-10-15',
+        description: '전국 사진공모전에서 대상 수상',
+        rank: '대상',
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
+    workExperience: [
+      {
+        id: 'work_008_1',
+        tutorId: 'tutor_008',
+        company: '프리랜스 사진스튜디오',
+        position: '전문 사진작가',
+        startDate: '2019-01-01',
+        description: '6년간 프로 사진작가로 활동하며 다양한 분야의 사진 촬영',
+        achievements: ['개인전 5회 개최', '상업 사진 촬영 500건 이상', '인물 사진 전문가 인증'],
+        createdAt: '2024-01-01T00:00:00Z',
+        updatedAt: '2024-01-01T00:00:00Z'
+      }
+    ],
     introduction: '6년간 프로 사진작가로 활동하며 다양한 분야의 사진을 촬영했습니다. 기초부터 전문 기법까지 체계적으로 가르쳐드립니다.',
-    achievements: ['사진공모전 대상 수상', '개인전 5회 개최'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_008'),
     consultationGuide: '사진 촬영 경험과 보유하고 계신 장비(카메라, 렌즈 등)를 알려주세요. 관심 있는 사진 분야(인물, 풍경, 상품, 스트리트 등)와 학습 목표(취미, 포트폴리오 제작, 전문 작가 준비 등)를 구체적으로 말씀해 주시면 단계별 맞춤 수업과 실습 프로젝트를 제공해 드릴 수 있습니다. 특히 배우고 싶은 촬영 기법이나 보정 스킬이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['13:00', '14:00', '15:00', '16:00'],
@@ -539,8 +1041,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_009',
     name: '김소희',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face',
-    category: '프로그래밍',
-    categoryEmoji: '💻',
+    category: getCategoryByName('프로그래밍')!,
     specialties: ['Python', 'Django', '머신러닝', '데이터 분석'],
     rating: 4.8,
     reviewCount: 92,
@@ -554,7 +1055,7 @@ export const sampleTutors: TutorItem[] = [
     certifications: ['TensorFlow Developer Certificate', 'AWS ML Specialty'],
     introduction: '네이버 AI 연구소에서 5년간 머신러닝 엔지니어로 근무했습니다. 실무에서 사용하는 기술을 중심으로 가르쳐드립니다.',
     achievements: ['NIPS 논문 발표', 'Kaggle Competition 상위 1%'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_009'),
     consultationGuide: '프로그래밍 경험 수준과 Python 기초 지식 정도를 알려주세요. 관심 있는 분야(웹 개발, 데이터 분석, 머신러닝, AI 등)와 구체적인 학습 목표(취업 준비, 개인 프로젝트, 데이터 분석 업무 등)를 말씀해 주시면 실무 중심의 맞춤 교육을 제공해 드릴 수 있습니다. 특별히 해결하고 싶은 문제나 데이터가 있다면 함께 다뤄보겠습니다.',
     availability: {
       'mon': ['19:00', '20:00', '21:00', '22:00'],
@@ -599,8 +1100,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_010',
     name: '박준혁',
     avatar: 'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=150&h=150&fit=crop&crop=face',
-    category: '비즈니스',
-    categoryEmoji: '💼',
+    category: getCategoryByName('비즈니스')!,
     specialties: ['마케팅', '브랜딩', 'SNS 마케팅', '창업'],
     rating: 4.7,
     reviewCount: 134,
@@ -614,7 +1114,7 @@ export const sampleTutors: TutorItem[] = [
     certifications: ['Google Ads 인증', 'Facebook Marketing 인증'],
     introduction: '3개의 스타트업 창업 경험과 삼성전자 마케팅팀 경력이 있습니다. 이론보다는 실제 성공 사례 중심으로 가르쳐드립니다.',
     achievements: ['스타트업 EXIT 경험', '마케팅 대상 수상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_010'),
     consultationGuide: '비즈니스 경험과 현재 상황(창업 준비, 마케팅 담당자, 개인 사업 등)을 알려주세요. 특히 관심 있는 분야(디지털 마케팅, 브랜딩, 창업, SNS 마케팅 등)와 해결하고 싶은 구체적인 문제나 목표를 말씀해 주시면 실전 경험을 바탕으로 한 맞춤형 컨설팅을 제공해 드릴 수 있습니다. 현재 진행 중인 프로젝트나 사업이 있다면 함께 공유해 주세요.',
     availability: {
       'mon': ['10:00', '11:00', '15:00', '16:00', '20:00'],
@@ -659,8 +1159,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_011',
     name: '이하늘',
     avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
-    category: '언어',
-    categoryEmoji: '🗣️',
+    category: getCategoryByName('언어')!,
     specialties: ['일본어', 'JLPT', '비즈니스 일본어', '일본 문화'],
     rating: 4.6,
     reviewCount: 78,
@@ -674,7 +1173,7 @@ export const sampleTutors: TutorItem[] = [
     certifications: ['JLPT N1', '일본어교원자격증'],
     introduction: '도쿄대에서 6년간 수학하며 일본 현지 문화와 언어를 완벽히 습득했습니다. 자연스러운 일본어 표현 중심으로 가르쳐드립니다.',
     achievements: ['JLPT N1 만점 달성', '일본어 번역대회 대상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_011'),
     consultationGuide: '현재 일본어 수준(완전 초보자, 기초 회화 가능, JLPT 급수 등)과 학습 목표(JLPT 합격, 비즈니스 일본어, 일본 유학/취업 준비 등)를 알려주세요. 선호하는 학습 방식(회화 중심, 문법 체계적 학습, 실생활 표현 등)과 일본 문화나 특정 분야에 관심이 있다면 함께 말씀해 주시면 흥미롭고 실용적인 수업을 제공해 드릴 수 있습니다.',
     availability: {
       'mon': ['18:00', '19:00', '20:00', '21:00'],
@@ -719,8 +1218,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_012',
     name: '조현우',
     avatar: 'https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop&crop=face',
-    category: '데이터 분석',
-    categoryEmoji: '📊',
+    category: getCategoryByName('데이터 분석')!,
     specialties: ['Excel', 'SQL', 'Tableau', 'Power BI'],
     rating: 4.8,
     reviewCount: 156,
@@ -734,7 +1232,7 @@ export const sampleTutors: TutorItem[] = [
     certifications: ['Microsoft Excel Expert', 'Tableau Certified Professional'],
     introduction: '삼성전자에서 9년간 데이터 분석 업무를 담당했습니다. 실무에서 바로 쓸 수 있는 데이터 분석 스킬을 가르쳐드립니다.',
     achievements: ['삼성전자 우수사원상', 'Tableau 공식 트레이너'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_012'),
     consultationGuide: '데이터 분석 경험과 현재 사용하고 계신 도구들(Excel, SQL, BI 툴 등)을 알려주세요. 업무 분야나 분석하고 싶은 데이터 종류, 구체적인 학습 목표(업무 효율성 향상, 커리어 전환, 자격증 취득 등)를 말씀해 주시면 실무 중심의 맞춤 교육을 제공해 드릴 수 있습니다. 특별히 해결하고 싶은 데이터 분석 과제가 있다면 함께 다뤄보겠습니다.',
     availability: {
       'mon': ['19:00', '20:00', '21:00'],
@@ -779,8 +1277,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_013',
     name: '송미라',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face',
-    category: '미술',
-    categoryEmoji: '🎨',
+    category: getCategoryByName('미술')!,
     specialties: ['수채화', '유화', '드로잉', '캐릭터 디자인'],
     rating: 4.9,
     reviewCount: 67,
@@ -794,7 +1291,7 @@ export const sampleTutors: TutorItem[] = [
     certifications: ['미술교사자격증', '미술치료사자격증'],
     introduction: '12년간 작가로 활동하며 다수의 개인전과 단체전을 가졌습니다. 기초 드로잉부터 전문 회화까지 체계적으로 가르쳐드립니다.',
     achievements: ['개인전 8회 개최', '미술대전 대상 수상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_013'),
     consultationGuide: '미술 경험과 관심 있는 분야(수채화, 유화, 드로잉, 캐릭터 디자인 등)를 알려주세요. 현재 수준과 학습 목표(취미, 입시 준비, 작품 활동 등), 사용 가능한 재료나 작업 공간에 대해 말씀해 주시면 개인 맞춤형 커리큘럼을 제공해 드릴 수 있습니다. 그리고 싶은 특정 주제나 스타일이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['10:00', '11:00', '14:00', '15:00', '16:00'],
@@ -839,8 +1336,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_014',
     name: '한지수',
     avatar: 'https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=150&h=150&fit=crop&crop=face',
-    category: '수학',
-    categoryEmoji: '📐',
+    category: getCategoryByName('수학')!,
     specialties: ['고등수학', '미적분', '통계', '대학수학'],
     rating: 4.7,
     reviewCount: 203,
@@ -852,9 +1348,9 @@ export const sampleTutors: TutorItem[] = [
     responseTime: 120,
     education: ['서울대학교 수학과', '서울대학교 수학교육학과 석사'],
     certifications: ['수학교사자격증', '대학강사자격증'],
-    introduction: '15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.',
+    introduction: '15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다. 15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.15년간 고등학교와 대학에서 수학을 가르친 경험이 있습니다. 개념부터 심화까지 단계별 맞춤 수업을 제공합니다.',
     achievements: ['수학 올림피아드 출제위원', '교육청 우수강사상'],
-    portfolio: [],
+    portfolio: getTutorPortfolios('tutor_014'),
     consultationGuide: '현재 수학 수준과 학습 목표(내신 향상, 수능 준비, 대학수학 선행 등)를 구체적으로 알려주세요. 특히 어려워하는 단원이나 개념, 선호하는 학습 방식(개념 중심, 문제 풀이 중심, 단계별 설명 등)을 말씀해 주시면 개인 맞춤형 수업 계획을 세워드릴 수 있습니다. 목표 점수나 시험 일정이 있다면 함께 알려주세요.',
     availability: {
       'mon': ['17:00', '18:00', '19:00', '20:00'],
@@ -899,8 +1395,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_015',
     name: '권태진',
     avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face',
-    category: '투자',
-    categoryEmoji: '💰',
+    category: getCategoryByName('투자')!,
     specialties: ['주식투자', '부동산', '암호화폐', '재테크'],
     rating: 4.6,
     reviewCount: 89,
@@ -959,8 +1454,7 @@ export const sampleTutors: TutorItem[] = [
     id: 'tutor_016',
     name: '최연주',
     avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150&h=150&fit=crop&crop=face',
-    category: '건강',
-    categoryEmoji: '🏥',
+    category: getCategoryByName('건강')!,
     specialties: ['영양학', '다이어트', '건강관리', '식단관리'],
     rating: 4.8,
     reviewCount: 142,

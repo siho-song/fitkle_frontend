@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { TutorItem } from '@/types/entities/tutor';
 import SchoolIcon from '@mui/icons-material/School';
 import ScheduleIcon from '@mui/icons-material/Schedule';
@@ -8,6 +9,7 @@ import WorkIcon from '@mui/icons-material/Work';
 import BusinessCenterIcon from '@mui/icons-material/BusinessCenter';
 import ReviewsIcon from '@mui/icons-material/Reviews';
 import { TutorDetailReviews as TutorDetailReviewsContent } from './TutorDetailReviews';
+import { TutorDetailPortfolio } from './TutorDetailPortfolio';
 
 interface TutorDetailTabsProps {
   tutor: TutorItem;
@@ -17,9 +19,42 @@ type TabType = 'qualifications' | 'schedule' | 'portfolio' | 'services' | 'revie
 
 export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
   const [activeTab, setActiveTab] = useState<TabType>('qualifications');
-  const [isSticky, setIsSticky] = useState(false);
-  const tabsRef = useRef<HTMLDivElement>(null);
-  const [tabsOffsetTop, setTabsOffsetTop] = useState(0);
+  const router = useRouter();
+  
+  // 수동 스크롤 감지로 변경
+  const [isSticky, setIsSticky] = React.useState(false);
+  
+  React.useEffect(() => {
+    const handleScroll = () => {
+      const trigger = document.getElementById('sticky-trigger');
+      if (trigger) {
+        const triggerRect = trigger.getBoundingClientRect();
+        // 트리거가 화면 상단을 지나갔으면 sticky
+        setIsSticky(triggerRect.top <= 0);
+      }
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    // 초기 상태 설정
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleTabClick = (tabId: TabType) => {
+    setActiveTab(tabId);
+    
+    // sticky trigger 위치로 스크롤 (탭바가 상단에 딱 맞게 위치)
+    const triggerElement = document.getElementById('sticky-trigger');
+    if (triggerElement) {
+      const offsetTop = triggerElement.offsetTop;
+      
+      window.scrollTo({
+        top: offsetTop,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   const tabs = [
     { id: 'qualifications' as TabType, label: '자격 및 경력', icon: SchoolIcon },
@@ -28,35 +63,6 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
     { id: 'services' as TabType, label: '서비스', icon: BusinessCenterIcon },
     { id: 'reviews' as TabType, label: '후기', icon: ReviewsIcon },
   ];
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (tabsRef.current) {
-        const currentScrollY = window.scrollY;
-        const shouldBeSticky = currentScrollY >= tabsOffsetTop;
-        setIsSticky(shouldBeSticky);
-      }
-    };
-
-    const updateTabsOffset = () => {
-      if (tabsRef.current) {
-        const rect = tabsRef.current.getBoundingClientRect();
-        setTabsOffsetTop(window.scrollY + rect.top);
-      }
-    };
-
-    // 초기 위치 설정
-    updateTabsOffset();
-    
-    // 스크롤 이벤트 리스너 추가
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', updateTabsOffset);
-
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', updateTabsOffset);
-    };
-  }, [tabsOffsetTop]);
 
   const formatDuration = (minutes: number) => {
     if (minutes >= 60) {
@@ -91,7 +97,7 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
     switch (activeTab) {
       case 'qualifications':
         return (
-          <div className="space-y-8">
+          <div id="tab-content-qualifications" className="space-y-8">
             {/* 학력 */}
             <div>
               <h3 className="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">
@@ -137,7 +143,7 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
 
       case 'schedule':
         return (
-          <div className="space-y-6">
+          <div id="tab-content-schedule" className="space-y-6">
             <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
               <ScheduleIcon className="text-primary" />
               수업 가능 시간
@@ -181,73 +187,14 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
 
       case 'portfolio':
         return (
-          <div className="space-y-6">
-            <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
-              <WorkIcon className="text-primary" />
-              포트폴리오
-            </h3>
-            {tutor.portfolio.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {tutor.portfolio.map((item) => (
-                  <div key={item.id} className="border border-gray-200 rounded-lg overflow-hidden">
-                    {item.images.length > 0 && (
-                      <div className="aspect-video bg-gray-100 overflow-hidden">
-                        <img
-                          src={item.images[0]}
-                          alt={item.title}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    )}
-                    <div className="p-4">
-                      <div className="flex items-center justify-between mb-2">
-                        <h4 className="font-bold text-lg text-gray-900">{item.title}</h4>
-                        <span className="px-2 py-1 bg-primary/10 text-primary rounded-full text-xs font-medium">
-                          {item.category}
-                        </span>
-                      </div>
-                      <p className="text-gray-600 text-sm mb-3">{item.description}</p>
-                      <div className="text-xs text-gray-500 mb-3">
-                        프로젝트 기간: {item.projectDate}
-                      </div>
-                      {item.technologies && item.technologies.length > 0 && (
-                        <div className="flex flex-wrap gap-1 mb-3">
-                          {item.technologies.map((tech, index) => (
-                            <span
-                              key={index}
-                              className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs"
-                            >
-                              {tech}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-                      {item.projectUrl && (
-                        <a
-                          href={item.projectUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-primary hover:text-primary/80 text-sm font-medium"
-                        >
-                          프로젝트 보기 →
-                        </a>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="text-center py-12">
-                <WorkIcon className="mx-auto text-gray-300 mb-4" sx={{ fontSize: 64 }} />
-                <p className="text-gray-500">등록된 포트폴리오가 없습니다.</p>
-              </div>
-            )}
+          <div id="tab-content-portfolio">
+            <TutorDetailPortfolio tutor={tutor} />
           </div>
         );
 
       case 'services':
         return (
-          <div className="space-y-6">
+          <div id="tab-content-services" className="space-y-6">
             <h3 className="text-xl font-bold text-gray-900 flex items-center gap-2">
               <BusinessCenterIcon className="text-primary" />
               제공 서비스
@@ -255,7 +202,11 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
             {tutor.services && tutor.services.length > 0 ? (
               <div className="space-y-4">
                 {tutor.services.filter(service => service.isActive).map((service) => (
-                  <div key={service.id} className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow">
+                  <div 
+                    key={service.id} 
+                    className="border border-gray-200 rounded-lg p-6 hover:shadow-md transition-shadow cursor-pointer"
+                    onClick={() => router.push(`/service/${service.id}?tutorId=${tutor.id}`)}
+                  >
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
@@ -298,7 +249,7 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
 
       case 'reviews':
         return (
-          <div className="space-y-6">
+          <div id="tab-content-reviews">
             <TutorDetailReviewsContent tutor={tutor} />
           </div>
         );
@@ -312,7 +263,6 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
     <div className="relative">
       {/* 탭 네비게이션 */}
       <div
-        ref={tabsRef}
         className={`bg-white border-b border-gray-200 transition-all duration-200 ${
           isSticky 
             ? 'fixed top-0 left-0 right-0 z-40 shadow-md' 
@@ -328,8 +278,8 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
               return (
                 <button
                   key={tab.id}
-                  onClick={() => setActiveTab(tab.id)}
-                  className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm whitespace-nowrap transition-colors ${
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`flex items-center gap-2 py-4 border-b-2 font-medium text-sm whitespace-nowrap transition-colors cursor-pointer ${
                     activeTab === tab.id
                       ? 'border-primary text-primary'
                       : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
@@ -348,11 +298,17 @@ export function TutorDetailTabs({ tutor }: TutorDetailTabsProps) {
       {isSticky && <div className="h-16"></div>}
 
       {/* 탭 컨텐츠 */}
-      <div className="bg-white rounded-2xl border border-gray-200 mt-6">
-        <div className="max-w-7xl mx-auto px-6 py-8">
+      {activeTab === 'reviews' ? (
+        <div className="mt-6">
           {renderTabContent()}
         </div>
-      </div>
+      ) : (
+        <div className="bg-white rounded-2xl border border-gray-200 mt-6">
+          <div className="max-w-7xl mx-auto px-6 py-8">
+            {renderTabContent()}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -25,12 +25,12 @@ export const PopularTutorsSection: React.FC = () => {
   
   // 실제 데이터에 존재하는 카테고리만 필터링
   const availableCategories = staticCategories.filter(category => 
-    category === '전체' || sampleTutors.some(tutor => tutor.category === category)
+    category === '전체' || sampleTutors.some(tutor => tutor.category.name === category)
   );
 
   const filteredTutors = selectedCategory === '전체' 
     ? sampleTutors 
-    : sampleTutors.filter(tutor => tutor.category === selectedCategory);
+    : sampleTutors.filter(tutor => tutor.category.name === selectedCategory);
 
   // 평점 순으로 정렬하여 상위 튜터들만 표시
   const topTutors = filteredTutors.sort((a, b) => b.rating - a.rating).slice(0, 8);
@@ -74,8 +74,8 @@ export const PopularTutorsSection: React.FC = () => {
         <div className="text-center mb-4">
           <h3 className="font-bold text-lg text-gray-900 mb-1">{tutor.name}</h3>
           <p className="text-sm text-gray-600 flex items-center justify-center gap-1">
-            <span>{tutor.categoryEmoji}</span>
-            {tutor.category}
+            <span>{tutor.category.emoji}</span>
+            {tutor.category.name}
           </p>
         </div>
 

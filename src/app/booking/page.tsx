@@ -147,8 +147,8 @@ export default function BookingPage() {
                 <div>
                   <h3 className="font-bold text-lg text-gray-900">{tutor.name}</h3>
                   <p className="text-gray-600 flex items-center gap-1">
-                    <span>{tutor.categoryEmoji}</span>
-                    {tutor.category}
+                    <span>{tutor.category.emoji}</span>
+                    {tutor.category.name}
                   </p>
                 </div>
               </div>

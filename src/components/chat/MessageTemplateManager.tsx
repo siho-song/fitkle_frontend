@@ -159,7 +159,11 @@ export function MessageTemplateManager({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50" style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
+    <div 
+      className="fixed inset-0 flex items-center justify-center z-50" 
+      style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}
+      onClick={handleBackdropClick}
+    >
       <div className="bg-white rounded-xl shadow-xl w-full max-w-4xl h-[700px] overflow-hidden">
         <div className="flex h-full">
           {/* 사이드바 */}

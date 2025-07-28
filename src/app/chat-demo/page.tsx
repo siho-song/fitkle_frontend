@@ -1,42 +1,13 @@
 "use client";
 
 import React, { useState } from 'react';
-import { SmartChatRoom } from '@/components/chat/SmartChatRoom';
+import { ChatRoom } from '@/components/chat/ChatRoom';
 import { sampleChatRoom } from '@/data/sampleChatData';
-import { ChatMessage } from '@/types/entities/chat';
 
 export default function ChatDemoPage() {
-  const [chatRoom, setChatRoom] = useState(sampleChatRoom);
+  const [chatRoom] = useState(sampleChatRoom);
   const currentUserId = 'student_001'; // 현재 사용자를 학생으로 설정
 
-  const handleSendMessage = (content: string, contextId: string) => {
-    const newMessage: ChatMessage = {
-      id: `msg_${Date.now()}`,
-      chatRoomId: chatRoom.id,
-      senderId: currentUserId,
-      senderName: '김학생',
-      type: 'text',
-      content,
-      timestamp: new Date().toISOString(),
-      isRead: false,
-      senderType: 'student',
-      sessionId: contextId === 'general' ? undefined : contextId
-    };
-
-    setChatRoom(prev => ({
-      ...prev,
-      messages: [...(prev.messages || []), newMessage],
-      lastMessage: newMessage,
-      lastMessageAt: newMessage.timestamp
-    }));
-  };
-
-  const handleContextChange = (contextId: string) => {
-    setChatRoom(prev => ({
-      ...prev,
-      activeContextId: contextId
-    }));
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -52,11 +23,10 @@ export default function ChatDemoPage() {
 
         <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden">
           <div style={{ height: '600px' }}>
-            <SmartChatRoom
-              chatRoom={chatRoom}
+            <ChatRoom
+              chatId={chatRoom.id}
               currentUserId={currentUserId}
-              onSendMessage={handleSendMessage}
-              onContextChange={handleContextChange}
+              userType="student"
             />
           </div>
         </div>

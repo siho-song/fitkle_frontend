@@ -13,7 +13,7 @@ export const TutorsScreen: React.FC = () => {
   const { 
     tutors, 
     filteredTutors, 
-    addTutor, 
+    loadTutors, 
     searchQuery, 
     categoryFilter, 
     sortBy
@@ -24,21 +24,15 @@ export const TutorsScreen: React.FC = () => {
   useEffect(() => {
     if (!isInitialized && tutors.length === 0) {
       console.log('Loading sample tutors:', sampleTutors.length);
-      // 중복을 방지하기 위해 배치로 추가
-      const addAllTutors = () => {
-        sampleTutors.forEach(tutor => {
-          // 이미 존재하는지 확인
-          const existingTutor = tutors.find(t => t.id === tutor.id);
-          if (!existingTutor) {
-            addTutor(tutor);
-          }
-        });
-      };
-      addAllTutors();
+      loadTutors(sampleTutors);
       setIsInitialized(true);
       console.log('Sample tutors loaded');
+    } else if (tutors.length > 0 && !isInitialized) {
+      // 이미 데이터가 있는 경우 (persistence에서 복원됨)
+      console.log('Tutors restored from persistence:', tutors.length);
+      setIsInitialized(true);
     }
-  }, [isInitialized]); // dependency 최소화
+  }, [isInitialized, tutors.length, loadTutors]);
 
   // 디버깅용
   useEffect(() => {

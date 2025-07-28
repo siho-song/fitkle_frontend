@@ -99,6 +99,48 @@
   --color-textDefault: #6b7280;
   --color-textMuted: #d1d5db;
   --color-textHeading: #000000;
+
+  /* === 뱃지 색상 (투명도 적용) === */
+  
+  /* Sage Green */
+  --badge-sage-light: rgba(156, 175, 136, 0.2);
+  --badge-sage-text: #5A6B48;
+  --badge-sage-border: rgba(156, 175, 136, 0.4);
+
+  /* Lavender */
+  --badge-lavender-light: rgba(142, 124, 195, 0.15);
+  --badge-lavender-text: #6A5B87;
+  --badge-lavender-border: rgba(142, 124, 195, 0.4);
+
+  /* Terracotta */
+  --badge-terracotta-light: rgba(196, 133, 107, 0.2);
+  --badge-terracotta-text: #8B5A42;
+  --badge-terracotta-border: rgba(196, 133, 107, 0.4);
+
+  /* Slate Blue */
+  --badge-slate-light: rgba(107, 124, 147, 0.2);
+  --badge-slate-text: #4A5663;
+  --badge-slate-border: rgba(107, 124, 147, 0.4);
+
+  /* Mauve */
+  --badge-mauve-light: rgba(184, 134, 157, 0.2);
+  --badge-mauve-text: #7A5A6B;
+  --badge-mauve-border: rgba(184, 134, 157, 0.4);
+
+  /* Bronze */
+  --badge-bronze-light: rgba(166, 139, 91, 0.2);
+  --badge-bronze-text: #735F3D;
+  --badge-bronze-border: rgba(166, 139, 91, 0.4);
+
+  /* Dusty Blue */
+  --badge-dusty-blue-light: rgba(123, 154, 171, 0.2);
+  --badge-dusty-blue-text: #4A6773;
+  --badge-dusty-blue-border: rgba(123, 154, 171, 0.4);
+
+  /* Warm Gray */
+  --badge-warm-gray-light: rgba(155, 144, 129, 0.2);
+  --badge-warm-gray-text: #6B6356;
+  --badge-warm-gray-border: rgba(155, 144, 129, 0.4);
 }
 
 html, body {
@@ -130,4 +172,54 @@ html, body {
 * {
   scrollbar-width: thin;
   scrollbar-color: #e5e7eb transparent;
+}
+
+/* === 뱃지 색상 클래스 (투명도 적용) === */
+
+.badge-sage {
+  background: var(--badge-sage-light);
+  color: var(--badge-sage-text);
+  border-color: var(--badge-sage-border);
+}
+
+.badge-lavender {
+  background: var(--badge-lavender-light);
+  color: var(--badge-lavender-text);
+  border-color: var(--badge-lavender-border);
+}
+
+.badge-terracotta {
+  background: var(--badge-terracotta-light);
+  color: var(--badge-terracotta-text);
+  border-color: var(--badge-terracotta-border);
+}
+
+.badge-slate {
+  background: var(--badge-slate-light);
+  color: var(--badge-slate-text);
+  border-color: var(--badge-slate-border);
+}
+
+.badge-mauve {
+  background: var(--badge-mauve-light);
+  color: var(--badge-mauve-text);
+  border-color: var(--badge-mauve-border);
+}
+
+.badge-bronze {
+  background: var(--badge-bronze-light);
+  color: var(--badge-bronze-text);
+  border-color: var(--badge-bronze-border);
+}
+
+.badge-dusty-blue {
+  background: var(--badge-dusty-blue-light);
+  color: var(--badge-dusty-blue-text);
+  border-color: var(--badge-dusty-blue-border);
+}
+
+.badge-warm-gray {
+  background: var(--badge-warm-gray-light);
+  color: var(--badge-warm-gray-text);
+  border-color: var(--badge-warm-gray-border);
 }

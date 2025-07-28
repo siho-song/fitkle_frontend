@@ -30,6 +30,7 @@ export interface TutorsStore extends BaseStore {
   
   // 액션들
   addTutor: (tutor: TutorItem) => void;
+  loadTutors: (tutors: TutorItem[]) => void;
   setSearchQuery: (query: string) => void;
   setCategoryFilter: (category: string) => void;
   setPriceRange: (range: [number, number]) => void;

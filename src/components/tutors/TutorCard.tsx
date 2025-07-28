@@ -51,8 +51,8 @@ export function TutorCard({ tutor }: TutorCardProps) {
             <div>
               <h3 className="font-bold text-xl text-gray-900">{tutor.name}</h3>
               <p className="text-gray-600 flex items-center gap-1">
-                <span>{tutor.categoryEmoji}</span>
-                {tutor.category}
+                <span>{tutor.category.emoji}</span>
+                {tutor.category.name}
               </p>
               <p className="text-sm text-gray-500">{tutor.experience} 경력</p>
             </div>

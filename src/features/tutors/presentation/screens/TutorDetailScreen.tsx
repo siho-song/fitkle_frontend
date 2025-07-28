@@ -3,11 +3,13 @@
 import React from 'react';
 import { MainLayout } from '@/components/layouts/MainLayout';
 import { TutorDetailHeader } from '@/components/tutors/detail/TutorDetailHeader';
+import { TutorSpecialties } from '@/components/tutors/detail/TutorSpecialties';
 import { TutorDetailTabs } from '@/components/tutors/detail/TutorDetailTabs';
 import { TutorDetailBooking } from '@/components/tutors/detail/TutorDetailBooking';
 import { useTutorsStore } from '@/store/tutorsStore';
 import { useEffect, useState } from 'react';
 import { TutorItem } from '@/types/entities/tutor';
+import { sampleTutors } from '@/data/sampleTutors';
 import PersonSearchIcon from '@mui/icons-material/PersonSearch';
 import Link from 'next/link';
 
@@ -16,14 +18,51 @@ interface TutorDetailScreenProps {
 }
 
 export const TutorDetailScreen: React.FC<TutorDetailScreenProps> = ({ tutorId }) => {
-  const { tutors } = useTutorsStore();
+  const { tutors, addTutor } = useTutorsStore();
   const [tutor, setTutor] = useState<TutorItem | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const foundTutor = tutors.find(t => t.id === tutorId);
-    setTutor(foundTutor || null);
-  }, [tutorId, tutors]);
+    const loadTutor = async () => {
+      setIsLoading(true);
+      
+      // 먼저 스토어에서 찾기
+      let foundTutor = tutors.find(t => t.id === tutorId);
+      
+      // 스토어에 없으면 샘플 데이터에서 가져오기
+      if (!foundTutor) {
+        try {
+          // 실제 프로젝트에서는 API 호출: const response = await fetch(`/api/tutors/${tutorId}`)
+          foundTutor = sampleTutors.find(t => t.id === tutorId);
+          if (foundTutor) {
+            // 스토어에 추가하여 캐싱
+            addTutor(foundTutor);
+          }
+        } catch (error) {
+          console.error('Failed to fetch tutor:', error);
+        }
+      }
+      
+      setTutor(foundTutor || null);
+      setIsLoading(false);
+    };
 
+    loadTutor();
+  }, [tutorId, tutors, addTutor]);
+
+  // 로딩 상태
+  if (isLoading) {
+    return (
+      <MainLayout>
+        <div className="py-16 text-center">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-primary mx-auto mb-4"></div>
+          <p className="text-gray-500">튜터 정보를 불러오는 중...</p>
+        </div>
+      </MainLayout>
+    );
+  }
+
+  // 튜터를 찾을 수 없는 경우
   if (!tutor) {
     return (
       <MainLayout>
@@ -55,6 +94,14 @@ export const TutorDetailScreen: React.FC<TutorDetailScreenProps> = ({ tutorId })
               <div className="mb-8">
                 <TutorDetailHeader tutor={tutor} />
               </div>
+              
+              {/* 전문 분야 */}
+              <div className="mb-8">
+                <TutorSpecialties tutor={tutor} />
+              </div>
+              
+              {/* 스티키 감지용 트리거 - 이 지점을 지나면 탭바가 고정됨 */}
+              <div id="sticky-trigger" className="h-0"></div>
               
               {/* 탭 컨텐츠 */}
               <TutorDetailTabs tutor={tutor} />

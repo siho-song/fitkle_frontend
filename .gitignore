@@ -106,4 +106,4 @@ temp/
 
 # Use cases documentation (sensitive business logic)
 /usecases/
-/images/
+# /images/
